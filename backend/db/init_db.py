@@ -1,5 +1,5 @@
-from schemas.database import engine
-from schemas.model import *
+from session import engine
+from backend.models import *
 
 
 # 모든 테이블 생성

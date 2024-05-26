@@ -7,8 +7,6 @@ class User(Base):
     __tablename__ = 'user'
     user_id = Column(String, primary_key=True, nullable=False)
     password = Column(String, nullable=False, comment='해쉬 암호화해서 저장')
-    token = Column(String, nullable=True)
-    field = Column(String(255), nullable=True)
     cat_profiles = relationship('CatProfile', back_populates='user')
 
 class CatProfile(Base):
