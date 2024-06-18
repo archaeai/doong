@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+@media (min-width: 768px) {
+    html {
+        font-size: 18px; /* 1rem = 18px */
+    }
+}
+
+@media (min-width: 1024px) {
+    html {
+        font-size: 20px; /* 1rem = 20px */
+    }
+}
+
+body {
+    font-family: 'Gaegu', cursive;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #DFF0E6;
+    color: #808080;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.card-box {
+    background-color: #FFFACD;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    width: 18.75rem; /* 300px */
+    text-align: center;
+}
+
+.cat-image {
+    width: 8.75rem;
+    height: auto;
+}
+
+h2 {
+    font-family: "Gaegu", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    margin: 0;
+    font-size: 35px;
+    margin-bottom: 1.25rem; /* 20px */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], input[type="password"] {
+    font-family: 'Gaegu', cursive;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.625rem; /* 10px */
+    margin-bottom: 1.25rem; /* 20px */
+}
+
+form button {
+    font-weight: 700;
+    font-size: 16px;
+    background-color: #ADD8E6;
+    color: #2C3E50;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.625rem; /* 10px */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #2C3E50;
+    color: #FFFFFA;
+}
+
+a {
+    display: block;
+    margin-top: 0.9375rem;
+    font-size: 12px;
+    color: #808080;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
