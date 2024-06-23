@@ -4,26 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f386d129-9774-4b52-8c78-026b5e4d5d48" name="Changes" comment="데이터 베이스 설정 및 생성 코드 추가">
-      <change afterPath="$PROJECT_DIR$/backend/api/deps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/api/router.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/api/user.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/core/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/core/security.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/crud/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/crud/user.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/db/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/db/base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/db/init_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/db/session.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/doong.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/doong.iml" afterDir="false" />
+    <list default="true" id="f386d129-9774-4b52-8c78-026b5e4d5d48" name="Changes" comment="login 기능 및 프로젝트 폴더 생성">
+      <change afterPath="$PROJECT_DIR$/backend/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/cat_profile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/cat_status.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/daily_task_log.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/default_task.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/diary.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/api/non_daily_task_log.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/crud/cat_profile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/crud/cat_status.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/crud/daily_task_log.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/crud/default_task.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/crud/diary.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/crud/non_daily_task_log.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nginx/default.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/db_init.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/database.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/schemas/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/crud/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/crud/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/db/base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/db/init_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/init_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/schemas.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +40,7 @@
         <option value="FastAPI main" />
         <option value="FastAPI test_main" />
         <option value="Python Script" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -86,6 +91,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;HTTP Request.test_main | #1.executor&quot;: &quot;Run&quot;,
+    &quot;Python.init_db.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -110,8 +116,31 @@
       <recent name="$PROJECT_DIR$/backend/schemas" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.init_db">
     <configuration name="test_main | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test_main.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="init_db" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="doong" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend/db" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/init_db.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -154,6 +183,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.init_db" />
         <item itemvalue="Python.main" />
         <item itemvalue="HTTP Request.test_main | #1" />
       </list>
@@ -175,7 +205,9 @@
       <option name="presentableId" value="Default" />
       <updated>1716613987837</updated>
       <workItem from="1716613993052" duration="322000" />
-      <workItem from="1716701944969" duration="3119000" />
+      <workItem from="1716701944969" duration="26113000" />
+      <workItem from="1717654562028" duration="413000" />
+      <workItem from="1717657348981" duration="8969000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -201,7 +233,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716640278093</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="login 기능 및 프로젝트 폴더 생성">
+      <option name="closed" value="true" />
+      <created>1716705159759</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716705159759</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,9 +250,21 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="데이터 베이스 설정 및 생성 코드 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="데이터 베이스 설정 및 생성 코드 추가" />
+    <MESSAGE value="login 기능 및 프로젝트 폴더 생성" />
+    <option name="LAST_COMMIT_MESSAGE" value="login 기능 및 프로젝트 폴더 생성" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/backend/models.py</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/doong$main.coverage" NAME="main Coverage Results" MODIFIED="1716614287712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
+    <SUITE FILE_PATH="coverage/doong$init_db.coverage" NAME="init_db Coverage Results" MODIFIED="1717308283529" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend/db" />
   </component>
 </project>

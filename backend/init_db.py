@@ -1,5 +1,5 @@
-from session import engine
-from backend.models import *
+from db.session import engine
+from models import *
 
 
 # 모든 테이블 생성

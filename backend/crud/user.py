@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from backend.models import User
 from backend.schemas import UserCreate
+from backend.core.security import get_password_hash
 
 
 def get_user(db: Session, user_id: str):
@@ -8,7 +9,8 @@ def get_user(db: Session, user_id: str):
 
 
 def create_user(db: Session, user: UserCreate):
-    db_user = User(user_id=user.user_id, password=user.password)
+    hashed_password = get_password_hash(user.password)
+    db_user = User(user_id=user.user_id, password=hashed_password)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

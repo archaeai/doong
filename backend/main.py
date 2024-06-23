@@ -10,5 +10,5 @@ from fastapi import FastAPI
 from backend.api.router import api_router
 
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 app.include_router(api_router)
