@@ -4,7 +4,7 @@ import CatDetailedInfo from "./CatDetailedInfo";
 import CatRoutainInfo from "./CatRoutineInfo";
 import "./AddCatModal.css";
 
-const AddCatModal = ({ onClose }) => {
+const AddCatModals = ({ onClose }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",

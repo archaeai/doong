@@ -1,10 +1,22 @@
-import React from "react";
+import { useContext } from "react";
+import { CatContext } from "../contexts/CatContext";
 
-const AddHeader = () => {
-  return <div className="header">추가하기</div>;
-};
+export default function AddHeader({ openModal }) {
+  const { cats, selectCat } = useContext(CatContext);
 
-export default AddHeader;
+  return (
+    <header>
+      <nav>
+        {cats.map((cat) => (
+          <button key={cat.id} onClick={() => selectCat(cat)}>
+            {cat.name}
+          </button>
+        ))}
+        <button onClick={openModal}>+</button>
+      </nav>
+    </header>
+  );
+}
 
 // import React, { useState } from "react";
 // import CatProfile from "./ProfileCard";

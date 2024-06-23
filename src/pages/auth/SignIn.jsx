@@ -1,4 +1,4 @@
-import UserForm from "./UserForm";
+import AuthForm from "./AuthForm";
 
 export default function SignInPage() {
   function handleSignIn(data) {
@@ -7,7 +7,7 @@ export default function SignInPage() {
   }
 
   return (
-    <UserForm
+    <AuthForm
       title="시작하기"
       buttonText="로그인"
       onSubmit={handleSignIn}

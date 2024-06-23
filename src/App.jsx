@@ -6,9 +6,11 @@ import CalendarPage from "./pages/Calendar";
 import DiaryPage from "./pages/Diary";
 import ReportPage from "./pages/Report";
 import SettingsPage from "./pages/Settings";
-import SignInPage from "./pages/user/SignIn";
-import SignUpPage from "./pages/user/SignUp";
+import SignInPage from "./pages/auth/SignIn";
+import SignUpPage from "./pages/auth/SignUp";
 import RootLayout from "./pages/Root";
+
+import { CatProvider } from "./contexts/CatContext";
 
 const router = createBrowserRouter([
   {
@@ -29,10 +31,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
-      {/* <LoginPage /> */}
-      {/* <SignUpPage /> */}
-      {/* <HomePage /> */}
+      <CatProvider>
+        <RouterProvider router={router} />
+      </CatProvider>
     </>
   );
 }

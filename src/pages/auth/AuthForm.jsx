@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import catImage from "../../assets/cat-logo.png";
-import "./UserForm.css";
+import "./AuthForm.css";
 
-export default function UserForm({
+export default function AuthForm({
   title,
   buttonText,
   onSubmit,

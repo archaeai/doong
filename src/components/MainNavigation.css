@@ -1,3 +1,28 @@
-ul {
+.main-navigation {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--color-secondary);
+  /* max-width: 60rem; */
+  margin: auto;
+  padding: 2rem;
   display: flex;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.main-navigation ul {
+  display: flex;
+  gap: 1rem;
+}
+
+.main-navigation a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.main-navigation a:hover,
+.main-navigation a.active {
+  color: var(--color-muted-text);
+  text-decoration: underline;
 }
