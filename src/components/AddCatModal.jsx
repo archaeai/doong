@@ -1,9 +1,18 @@
 import React, { useState, useContext } from "react";
+import Select from "react-select";
 import { CatContext } from "../contexts/CatContext";
 import "../styles/Modal.css";
+import breeds from "../data/breeds.json";
 
 export default function AddCatModal({ closeModal }) {
-  const [cat, setCat] = useState({ name: "", age: "", breed: "" });
+  const [cat, setCat] = useState({
+    name: "",
+    age: "",
+    breed: "",
+    birthDate: "",
+    adoptDate: "",
+  });
+
   const { addCat } = useContext(CatContext);
 
   const handleChange = (event) => {
@@ -11,6 +20,13 @@ export default function AddCatModal({ closeModal }) {
     setCat((prevCat) => ({
       ...prevCat,
       [name]: value,
+    }));
+  };
+
+  const handleBreedChange = (selectedOption) => {
+    setCat((prevCat) => ({
+      ...prevCat,
+      breed: selectedOption ? selectedOption.value : "",
     }));
   };
 
@@ -24,7 +40,7 @@ export default function AddCatModal({ closeModal }) {
     <div className="modal-background">
       <div className="modal">
         <form onSubmit={handleSubmit}>
-          <h2>새 고양이 친구의 정보를 입력해주세요.</h2>
+          <h2>새 친구의 정보를 입력해주세요.</h2>
           <div>
             <label htmlFor="name">이름</label>
             <input
@@ -37,12 +53,12 @@ export default function AddCatModal({ closeModal }) {
           </div>
           <div>
             <label htmlFor="breed">품종</label>
-            <input
-              type="text"
+            <Select
               name="breed"
-              value={cat.breed}
-              onChange={handleChange}
-              placeholder="품종을 입력하세요."
+              options={breeds}
+              value={breeds.find((option) => option.value === cat.breed)}
+              onChange={handleBreedChange}
+              placeholder="품종을 검색하세요."
             />
           </div>
           <div>
