@@ -6,10 +6,10 @@ import AddHeader from "../components/AddHeader";
 import CatProfile from "../components/CatProfile";
 import UpcomingSchedule from "../components/UpcomingSchedule";
 import DailyRoutine from "../components/DailyRoutine";
-import AddCatModal from "../components/AddCatModal";
+import AddCatModal from "../components/AddCatModal/AddCatModal";
 
 export default function HomePage() {
-  const { selectedCat } = useContext(CatContext);
+  const { selectedCat, cats } = useContext(CatContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {

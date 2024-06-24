@@ -1,54 +1,49 @@
-export default function CatBasicInfo({
-  formData,
-  handleChange,
-  handleNextStep,
-}) {
+import Select from "react-select";
+import breeds from "../../data/breeds.json";
+
+export default function CatBasicInfo({ cat, handleChange, handleBreedChange }) {
   return (
     <>
-      <h2>고양이 추가 - 기본 정보</h2>
-      <form>
-        <label>
-          이름:
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="16자 이내로 작성해주세요"
-          />
-        </label>
-        <label>
-          품종:
-          <input
-            type="text"
-            name="breed"
-            value={formData.breed}
-            onChange={handleChange}
-          />
-          <button>품종 검색</button>
-        </label>
-        <label>
-          출생일:
-          <input
-            type="date"
-            name="birthDate"
-            value={formData.birthDate}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          입양일:
-          <input
-            type="date"
-            name="adoptionDate"
-            value={formData.adoptionDate}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="button" onClick={handleNextStep}>
-          다음
-        </button>
-      </form>
+      <div>
+        <label htmlFor="name">이름</label>
+        <input
+          type="text"
+          name="name"
+          value={cat.name}
+          onChange={handleChange}
+          placeholder="이름을 입력하세요."
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="breed">품종</label>
+        <Select
+          name="breed"
+          options={breeds}
+          value={breeds.find((option) => option.value === cat.breed)}
+          onChange={handleBreedChange}
+          placeholder="품종을 검색하세요."
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="birthDate">출생일</label>
+        <input
+          type="date"
+          name="birthDate"
+          value={cat.birthDate}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="adoptDate">입양일</label>
+        <input
+          type="date"
+          name="adoptDate"
+          value={cat.adoptDate}
+          onChange={handleChange}
+        />
+      </div>
     </>
   );
 }
