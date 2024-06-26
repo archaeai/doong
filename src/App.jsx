@@ -11,6 +11,7 @@ import SignUpPage from "./pages/auth/SignUp";
 import RootLayout from "./pages/Root";
 
 import { CatProvider } from "./contexts/CatContext";
+import { DiaryProvider } from "./contexts/DiaryContext";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,9 @@ function App() {
   return (
     <>
       <CatProvider>
-        <RouterProvider router={router} />
+        <DiaryProvider>
+          <RouterProvider router={router} />
+        </DiaryProvider>
       </CatProvider>
     </>
   );

@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 export const CatContext = createContext({
   cats: [],
@@ -13,7 +12,7 @@ export const CatProvider = ({ children }) => {
   const [selectedCat, setSelectedCat] = useState(null);
 
   const addCat = (cat) => {
-    const newCat = { ...cat, id: uuidv4() };
+    const newCat = { ...cat, id: cats.length + 1 };
     setCats((prevCats) => [...prevCats, newCat]);
     setSelectedCat(newCat);
   };
