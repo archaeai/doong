@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { DiaryContext } from "../contexts/DiaryContext";
+import "../styles/DiaryForm.css";
 
-export default function DiaryForm({ closeModal }) {
+const DiaryForm = ({ closeModal }) => {
   const { addDiaryEntry } = useContext(DiaryContext);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [error, setError] = useState(false);
@@ -26,15 +27,18 @@ export default function DiaryForm({ closeModal }) {
       return;
     }
 
+    console.log(data);
+
     setError(false);
     addDiaryEntry(data);
     closeModal();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form-container">
       <h2>일기 쓰기</h2>
-      <div className="control">
+
+      <div className="form-group">
         <label htmlFor="photo">1. 오늘의 사진을 추가해주세요. (필수)</label>
         <input
           id="photo"
@@ -53,57 +57,63 @@ export default function DiaryForm({ closeModal }) {
         )}
       </div>
 
-      <div className="control">
+      <div className="form-group">
         <label>2. 오늘의 기분은 어땠나요? (필수)</label>
-        <div>
-          <label>
-            <input type="radio" name="mood" value="행복" required />
-            행복
-          </label>
-          <label>
-            <input type="radio" name="mood" value="스트레스" required />
-            스트레스
-          </label>
-          <label>
-            <input type="radio" name="mood" value="불안" required />
-            불안
-          </label>
+        <div className="radio-button-group">
+          <input type="radio" id="happy" name="mood" value="행복" required />
+          <label htmlFor="happy">행복</label>
+
+          <input
+            type="radio"
+            id="stress"
+            name="mood"
+            value="스트레스"
+            required
+          />
+          <label htmlFor="stress">스트레스</label>
+
+          <input type="radio" id="anxious" name="mood" value="불안" required />
+          <label htmlFor="anxious">불안</label>
         </div>
       </div>
 
-      <div className="control">
+      <div className="form-group">
         <label>3. 오늘의 활동량은 어땠나요? (필수)</label>
-        <div>
-          <label>
-            <input type="radio" name="activity" value="높음" required />
-            높음
-          </label>
-          <label>
-            <input type="radio" name="activity" value="보통" required />
-            보통
-          </label>
-          <label>
-            <input type="radio" name="activity" value="낮음" required />
-            낮음
-          </label>
+        <div className="radio-button-group">
+          <input type="radio" id="high" name="activity" value="높음" required />
+          <label htmlFor="high">높음</label>
+
+          <input
+            type="radio"
+            id="medium"
+            name="activity"
+            value="보통"
+            required
+          />
+          <label htmlFor="medium">보통</label>
+
+          <input type="radio" id="low" name="activity" value="낮음" required />
+          <label htmlFor="low">낮음</label>
         </div>
       </div>
 
-      <div className="control">
+      <div className="form-group">
         <label>4. 오늘의 식사는 어땠나요? (필수)</label>
-        <div>
-          <label>
-            <input type="radio" name="meal" value="적정" required />
-            적정
-          </label>
-          <label>
-            <input type="radio" name="meal" value="부족" required />
-            부족
-          </label>
-          <label>
-            <input type="radio" name="meal" value="남음" required />
-            남음
-          </label>
+        <div className="radio-button-group">
+          <input type="radio" id="adequate" name="meal" value="적정" required />
+          <label htmlFor="adequate">적정</label>
+
+          <input
+            type="radio"
+            id="insufficient"
+            name="meal"
+            value="부족"
+            required
+          />
+          <label htmlFor="insufficient">부족</label>
+
+          <input type="radio" id="leftover" name="meal" value="남음" required />
+          <label htmlFor="leftover">남음</label>
         </div>
       </div>
 
@@ -121,4 +131,6 @@ export default function DiaryForm({ closeModal }) {
       </div>
     </form>
   );
-}
+};
+
+export default DiaryForm;
