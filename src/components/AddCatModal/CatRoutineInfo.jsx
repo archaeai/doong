@@ -29,7 +29,7 @@ export default function CatRoutainInfo({
         마지막 전체모래갈이일:
         <input
           type="date"
-          name="fleaDate"
+          name="litterDate"
           value={catData.litterDate}
           onChange={handleChange}
         />

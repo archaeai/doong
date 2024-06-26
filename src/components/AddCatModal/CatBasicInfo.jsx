@@ -14,6 +14,7 @@ export default function CatBasicInfo({
       <div>
         <label htmlFor="name">이름</label>
         <input
+          id="name"
           type="text"
           name="name"
           value={catData.name}
@@ -25,6 +26,7 @@ export default function CatBasicInfo({
       <div>
         <label htmlFor="breed">품종</label>
         <Select
+          id="breed"
           name="breed"
           options={breeds}
           value={breeds.find((option) => option.value === catData.breed)}
@@ -36,6 +38,7 @@ export default function CatBasicInfo({
       <div>
         <label htmlFor="birthDate">출생일</label>
         <input
+          id="birthDate"
           type="date"
           name="birthDate"
           value={catData.birthDate}
@@ -45,6 +48,7 @@ export default function CatBasicInfo({
       <div>
         <label htmlFor="adoptDate">입양일</label>
         <input
+          id="adoptDate"
           type="date"
           name="adoptDate"
           value={catData.adoptDate}
