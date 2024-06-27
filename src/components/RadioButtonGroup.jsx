@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function RadioButtonGroup({ label, name, options, error }) {
   return (
     <div className="form-group">

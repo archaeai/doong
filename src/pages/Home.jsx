@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import useModal from "../hooks/useModal";
 import { CatContext } from "../contexts/CatContext";
 
 import profileImg from "../assets/cat-image.png";
@@ -10,14 +11,7 @@ import AddCatModal from "../components/AddCatModal/AddCatModal";
 
 export default function HomePage() {
   const { selectedCat, cats } = useContext(CatContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <div>

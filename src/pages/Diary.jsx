@@ -1,17 +1,10 @@
-import { useState } from "react";
+import useModal from "../hooks/useModal";
+
 import DiaryForm from "../components/DiaryForm";
 import Modal from "../UI/Modal";
 
 export default function DiaryPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <>
