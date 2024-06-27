@@ -51,6 +51,7 @@ export default function AuthForm({
             value={enteredValues.password}
             aria-label="비밀번호"
             required
+            minLength={6}
           />
           <button type="submit">{buttonText}</button>
         </form>

@@ -1,5 +1,11 @@
 import { useContext, useState } from "react";
 import { DiaryContext } from "../contexts/DiaryContext";
+import RadioButtonGroup from "./RadioButtonGroup";
+import {
+  isNotEmpty,
+  isRadioSelected,
+  isFileSelected,
+} from "../utils/validation";
 import "../styles/DiaryForm.css";
 
 const DiaryForm = ({ closeModal }) => {
@@ -8,7 +14,7 @@ const DiaryForm = ({ closeModal }) => {
   const [error, setError] = useState(false);
 
   const handleChange = (event) => {
-    const { name, value, type, files } = event.target;
+    const { type, files } = event.target;
     if (type === "file" && files.length > 0) {
       const file = files[0];
       setPhotoPreview(URL.createObjectURL(file));
@@ -20,9 +26,14 @@ const DiaryForm = ({ closeModal }) => {
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
-    data.photo = fd.get("photo");
 
-    if (!data.mood || !data.activity || !data.meal) {
+    const isFormValid =
+      isFileSelected(fd.get("photo")) &&
+      isRadioSelected(data.mood) &&
+      isRadioSelected(data.activity) &&
+      isRadioSelected(data.meal);
+
+    if (!isFormValid) {
       setError(true);
       return;
     }
@@ -34,8 +45,26 @@ const DiaryForm = ({ closeModal }) => {
     closeModal();
   };
 
+  const moodOptions = [
+    { value: "행복", label: "행복" },
+    { value: "스트레스", label: "스트레스" },
+    { value: "불안", label: "불안" },
+  ];
+
+  const activityOptions = [
+    { value: "높음", label: "높음" },
+    { value: "보통", label: "보통" },
+    { value: "낮음", label: "낮음" },
+  ];
+
+  const mealOptions = [
+    { value: "적정", label: "적정" },
+    { value: "부족", label: "부족" },
+    { value: "남음", label: "남음" },
+  ];
+
   return (
-    <form onSubmit={handleSubmit} className="form-container">
+    <form onSubmit={handleSubmit} noValidate className="form-container">
       <h2>일기 쓰기</h2>
 
       <div className="form-group">
@@ -57,65 +86,24 @@ const DiaryForm = ({ closeModal }) => {
         )}
       </div>
 
-      <div className="form-group">
-        <label>2. 오늘의 기분은 어땠나요? (필수)</label>
-        <div className="radio-button-group">
-          <input type="radio" id="happy" name="mood" value="행복" required />
-          <label htmlFor="happy">행복</label>
-
-          <input
-            type="radio"
-            id="stress"
-            name="mood"
-            value="스트레스"
-            required
-          />
-          <label htmlFor="stress">스트레스</label>
-
-          <input type="radio" id="anxious" name="mood" value="불안" required />
-          <label htmlFor="anxious">불안</label>
-        </div>
-      </div>
-
-      <div className="form-group">
-        <label>3. 오늘의 활동량은 어땠나요? (필수)</label>
-        <div className="radio-button-group">
-          <input type="radio" id="high" name="activity" value="높음" required />
-          <label htmlFor="high">높음</label>
-
-          <input
-            type="radio"
-            id="medium"
-            name="activity"
-            value="보통"
-            required
-          />
-          <label htmlFor="medium">보통</label>
-
-          <input type="radio" id="low" name="activity" value="낮음" required />
-          <label htmlFor="low">낮음</label>
-        </div>
-      </div>
-
-      <div className="form-group">
-        <label>4. 오늘의 식사는 어땠나요? (필수)</label>
-        <div className="radio-button-group">
-          <input type="radio" id="adequate" name="meal" value="적정" required />
-          <label htmlFor="adequate">적정</label>
-
-          <input
-            type="radio"
-            id="insufficient"
-            name="meal"
-            value="부족"
-            required
-          />
-          <label htmlFor="insufficient">부족</label>
-
-          <input type="radio" id="leftover" name="meal" value="남음" required />
-          <label htmlFor="leftover">남음</label>
-        </div>
-      </div>
+      <RadioButtonGroup
+        label="2. 오늘의 기분은 어땠나요? (필수)"
+        name="mood"
+        options={moodOptions}
+        required
+      />
+      <RadioButtonGroup
+        label="3. 오늘의 활동량은 어땠나요? (필수)"
+        name="activity"
+        options={activityOptions}
+        required
+      />
+      <RadioButtonGroup
+        label="4. 오늘의 식사는 어땠나요? (필수)"
+        name="meal"
+        options={mealOptions}
+        required
+      />
 
       {/* 나머지 폼 필드들... */}
       {error && (
