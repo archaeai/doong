@@ -35,8 +35,6 @@ const DiaryForm = ({ closeModal }) => {
       newErrors.activity = "활동량을 선택해주세요";
     if (!isRadioSelected(data.meal)) newErrors.meal = "식사량을 선택해주세요";
 
-    console.log("New Errors: ", newErrors);
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -111,11 +109,11 @@ const DiaryForm = ({ closeModal }) => {
 
       {/* 나머지 폼 필드들... */}
       <div className="form-actions">
-        <button type="reset" className="button button-flat">
-          Reset
+        <button type="button" onClick={closeModal} className="button">
+          닫기
         </button>
         <button type="submit" className="button">
-          Submit
+          저장
         </button>
       </div>
     </form>
