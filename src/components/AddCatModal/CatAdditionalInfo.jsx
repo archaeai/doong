@@ -1,66 +1,40 @@
+import RadioButton from "../../UI/RadioButton";
+
 export default function CatAdditionalInfo({
   catData,
   handleChange,
   handlePrevStep,
   handleNextStep,
 }) {
+  const genderOptions = [
+    { value: "male", label: "수컷" },
+    { value: "female", label: "암컷" },
+  ];
+
+  const neuteredOptions = [
+    { value: "yes", label: "수술함" },
+    { value: "no", label: "수술안함" },
+  ];
+
   return (
     <>
       <h2>새 친구의 추가 정보를 입력해주세요.</h2>
-      <fieldset>
-        <legend>성별</legend>
-        <div>
-          <input
-            id="male"
-            type="radio"
-            name="gender"
-            value="male"
-            checked={catData.gender === "male"}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="male">수컷</label>
-        </div>
-        <div>
-          <input
-            id="female"
-            type="radio"
-            name="gender"
-            value="female"
-            checked={catData.gender === "female"}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="female">암컷</label>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>중성화 수술을 받았나요?</legend>
-        <div>
-          <input
-            id="yes"
-            type="radio"
-            name="neutered"
-            value="yes"
-            checked={catData.neutered === "yes"}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="yes">수술함</label>
-        </div>
-        <div>
-          <input
-            id="no"
-            type="radio"
-            name="neutered"
-            value="no"
-            checked={catData.neutered === "no"}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="no">수술안함</label>
-        </div>
-      </fieldset>
+      <RadioButton
+        label="성별"
+        name="gender"
+        options={genderOptions}
+        error={catData.genderError}
+        onChange={handleChange}
+        selectedValue={catData.gender}
+      />
+      <RadioButton
+        label="중성화 수술을 받았나요?"
+        name="neutered"
+        options={neuteredOptions}
+        error={catData.neuteredError}
+        onChange={handleChange}
+        selectedValue={catData.neutered}
+      />
       <div>
         <label htmlFor="weight">체중</label>
         <input

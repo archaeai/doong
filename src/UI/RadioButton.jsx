@@ -1,28 +1,30 @@
-import React from "react";
-import "./RadioButton.css";
-
 export default function RadioButton({
-  id,
+  label,
   name,
-  value,
-  checked,
+  options,
+  error,
   onChange,
-  children,
+  selectedValue,
 }) {
   return (
-    <>
-      <input
-        type="radio"
-        id={id}
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-        className="radio-input"
-      />
-      <label htmlFor={id} className="radio-label">
-        {children}
-      </label>
-    </>
+    <div className="form-group">
+      <label>{label}</label>
+      <div className="radio-button-group">
+        {options.map((option) => (
+          <div key={option.value}>
+            <input
+              type="radio"
+              id={option.value}
+              name={name}
+              value={option.value}
+              checked={selectedValue === option.value}
+              onChange={onChange}
+            />
+            <label htmlFor={option.value}>{option.label}</label>
+          </div>
+        ))}
+      </div>
+      {error && <p className="control-error">{error}</p>}
+    </div>
   );
 }

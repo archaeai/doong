@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { DiaryContext } from "../contexts/DiaryContext";
-import RadioButtonGroup from "./RadioButtonGroup";
+import RadioButton from "../UI/RadioButton";
 import {
   isNotEmpty,
   isRadioSelected,
@@ -88,19 +88,19 @@ const DiaryForm = ({ closeModal }) => {
         {errors.photo && <p className="control-error">{errors.photo}</p>}
       </div>
 
-      <RadioButtonGroup
+      <RadioButton
         label="2. 오늘의 기분은 어땠나요? (필수)"
         name="mood"
         options={moodOptions}
         error={errors.mood}
       />
-      <RadioButtonGroup
+      <RadioButton
         label="3. 오늘의 활동량은 어땠나요? (필수)"
         name="activity"
         options={activityOptions}
         error={errors.activity}
       />
-      <RadioButtonGroup
+      <RadioButton
         label="4. 오늘의 식사는 어땠나요? (필수)"
         name="meal"
         options={mealOptions}
