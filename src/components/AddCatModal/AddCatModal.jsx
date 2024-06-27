@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import Modal from "../../UI/Modal";
 
 import CatBasicInfo from "./CatBasicInfo";
 import CatAdditionalInfo from "./CatAdditionalInfo";
@@ -7,7 +8,7 @@ import CatRoutainInfo from "./CatRoutineInfo";
 import { CatContext } from "../../contexts/CatContext";
 import "../../styles/Modal.css";
 
-export default function AddCatModal({ closeModal }) {
+export default function AddCatModal({ isOpen, closeModal }) {
   const [step, setStep] = useState(1);
   const { addCat } = useContext(CatContext);
   const [catData, setCatData] = useState({
@@ -57,36 +58,34 @@ export default function AddCatModal({ closeModal }) {
   };
 
   return (
-    <div className="modal-background">
-      <div className="modal">
-        <form onSubmit={handleSubmit}>
-          {step === 1 && (
-            <CatBasicInfo
-              catData={catData}
-              handleChange={handleChange}
-              handleBreedChange={handleBreedChange}
-              closeModal={closeModal}
-              handleNextStep={handleNextStep}
-            />
-          )}
-          {step === 2 && (
-            <CatAdditionalInfo
-              catData={catData}
-              handleChange={handleChange}
-              handlePrevStep={handlePrevStep}
-              handleNextStep={handleNextStep}
-            />
-          )}
-          {step === 3 && (
-            <CatRoutainInfo
-              catData={catData}
-              handleChange={handleChange}
-              handlePrevStep={handlePrevStep}
-              handleSubmit={handleSubmit}
-            />
-          )}
-        </form>
-      </div>
-    </div>
+    <Modal isOpen={isOpen} onClose={closeModal}>
+      <form onSubmit={handleSubmit}>
+        {step === 1 && (
+          <CatBasicInfo
+            catData={catData}
+            handleChange={handleChange}
+            handleBreedChange={handleBreedChange}
+            closeModal={closeModal}
+            handleNextStep={handleNextStep}
+          />
+        )}
+        {step === 2 && (
+          <CatAdditionalInfo
+            catData={catData}
+            handleChange={handleChange}
+            handlePrevStep={handlePrevStep}
+            handleNextStep={handleNextStep}
+          />
+        )}
+        {step === 3 && (
+          <CatRoutainInfo
+            catData={catData}
+            handleChange={handleChange}
+            handlePrevStep={handlePrevStep}
+            handleSubmit={handleSubmit}
+          />
+        )}
+      </form>
+    </Modal>
   );
 }

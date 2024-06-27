@@ -55,7 +55,7 @@ export default function HomePage() {
           </div>
         </div>
       )}
-      {isModalOpen && <AddCatModal closeModal={closeModal} />}
+      <AddCatModal isOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
 }

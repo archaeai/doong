@@ -6,7 +6,7 @@ export default function RadioButtonGroup({ label, name, options, error }) {
       <label>{label}</label>
       <div className="radio-button-group">
         {options.map((option) => (
-          <React.Fragment key={option.value}>
+          <div key={option.value}>
             <input
               type="radio"
               id={option.value}
@@ -14,7 +14,7 @@ export default function RadioButtonGroup({ label, name, options, error }) {
               value={option.value}
             />
             <label htmlFor={option.value}>{option.label}</label>
-          </React.Fragment>
+          </div>
         ))}
       </div>
       {error && <p className="control-error">{error}</p>}
