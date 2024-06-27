@@ -11,7 +11,7 @@ import "../styles/DiaryForm.css";
 const DiaryForm = ({ closeModal }) => {
   const { addDiaryEntry } = useContext(DiaryContext);
   const [photoPreview, setPhotoPreview] = useState(null);
-  const [error, setError] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
     const { type, files } = event.target;
@@ -27,20 +27,24 @@ const DiaryForm = ({ closeModal }) => {
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
 
-    const isFormValid =
-      isFileSelected(fd.get("photo")) &&
-      isRadioSelected(data.mood) &&
-      isRadioSelected(data.activity) &&
-      isRadioSelected(data.meal);
+    const newErrors = {};
+    if (!isFileSelected(fd.get("photo")))
+      newErrors.photo = "사진을 추가해주세요";
+    if (!isRadioSelected(data.mood)) newErrors.mood = "기분을 선택해주세요";
+    if (!isRadioSelected(data.activity))
+      newErrors.activity = "활동량을 선택해주세요";
+    if (!isRadioSelected(data.meal)) newErrors.meal = "식사량을 선택해주세요";
 
-    if (!isFormValid) {
-      setError(true);
+    console.log("New Errors: ", newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
     console.log(data);
 
-    setError(false);
+    setErrors({});
     addDiaryEntry(data);
     closeModal();
   };
@@ -75,7 +79,6 @@ const DiaryForm = ({ closeModal }) => {
           name="photo"
           accept="image/*"
           onChange={handleChange}
-          required
         />
         {photoPreview && (
           <img
@@ -84,31 +87,29 @@ const DiaryForm = ({ closeModal }) => {
             style={{ width: "100px", height: "100px", marginTop: "8px" }}
           />
         )}
+        {errors.photo && <p className="control-error">{errors.photo}</p>}
       </div>
 
       <RadioButtonGroup
         label="2. 오늘의 기분은 어땠나요? (필수)"
         name="mood"
         options={moodOptions}
-        required
+        error={errors.mood}
       />
       <RadioButtonGroup
         label="3. 오늘의 활동량은 어땠나요? (필수)"
         name="activity"
         options={activityOptions}
-        required
+        error={errors.activity}
       />
       <RadioButtonGroup
         label="4. 오늘의 식사는 어땠나요? (필수)"
         name="meal"
         options={mealOptions}
-        required
+        error={errors.meal}
       />
 
       {/* 나머지 폼 필드들... */}
-      {error && (
-        <div className="control-error">모든 필수 필드를 입력해주세요.</div>
-      )}
       <div className="form-actions">
         <button type="reset" className="button button-flat">
           Reset

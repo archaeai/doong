@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function RadioButtonGroup({ label, name, options }) {
+export default function RadioButtonGroup({ label, name, options, error }) {
   return (
     <div className="form-group">
       <label>{label}</label>
@@ -12,12 +12,12 @@ export default function RadioButtonGroup({ label, name, options }) {
               id={option.value}
               name={name}
               value={option.value}
-              required
             />
             <label htmlFor={option.value}>{option.label}</label>
           </React.Fragment>
         ))}
       </div>
+      {error && <p className="control-error">{error}</p>}
     </div>
   );
 }
