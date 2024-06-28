@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import useModal from "../hooks/useModal";
 import { CatContext } from "../contexts/CatContext";
+import useModal from "../hooks/useModal";
 
 import profileImg from "../assets/cat-image.png";
 import AddHeader from "../components/AddHeader";
 import CatProfile from "../components/CatProfile";
 import UpcomingSchedule from "../components/UpcomingSchedule";
 import DailyRoutine from "../components/DailyRoutine";
-import AddCatModal from "../components/AddCatModal/AddCatModal";
+import AddCatForm from "../components/AddCatForm/AddCatForm";
 
 export default function HomePage() {
   const { selectedCat, cats } = useContext(CatContext);
@@ -49,7 +49,7 @@ export default function HomePage() {
           </div>
         </div>
       )}
-      <AddCatModal isOpen={isModalOpen} closeModal={closeModal} />
+      <AddCatForm isOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
 }

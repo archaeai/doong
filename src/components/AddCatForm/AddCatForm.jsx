@@ -1,15 +1,20 @@
 import { useState, useContext } from "react";
 import { CatContext } from "../../contexts/CatContext";
+import useFormState from "../../hooks/useFormState";
 import Modal from "../../UI/Modal";
 import CatBasicInfo from "./CatBasicInfo";
 import CatAdditionalInfo from "./CatAdditionalInfo";
 import CatRoutainInfo from "./CatRoutineInfo";
 import "../../styles/Modal.css";
 
-export default function AddCatModal({ isOpen, closeModal }) {
+export default function AddCatForm({ isOpen, closeModal }) {
   const [step, setStep] = useState(1);
   const { addCat } = useContext(CatContext);
-  const [catData, setCatData] = useState({
+  const {
+    formData: catData,
+    handleChange,
+    handleSelectChange,
+  } = useFormState({
     name: "",
     breed: "",
     birthDate: "",
@@ -25,28 +30,6 @@ export default function AddCatModal({ isOpen, closeModal }) {
 
   const handleNextStep = () => setStep(step + 1);
   const handlePrevStep = () => setStep(step - 1);
-
-  const handleChange = (event) => {
-    const { name, value, type, files } = event.target;
-    if (type === "file") {
-      setCatData((prevCatData) => ({
-        ...prevCatData,
-        [name]: files[0],
-      }));
-    } else {
-      setCatData((prevCatData) => ({
-        ...prevCatData,
-        [name]: value,
-      }));
-    }
-  };
-
-  const handleSelectChange = (selectedOption) => {
-    setCatData((prevCatData) => ({
-      ...prevCatData,
-      breed: selectedOption ? selectedOption.value : "",
-    }));
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
