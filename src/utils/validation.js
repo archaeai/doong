@@ -1,5 +1,5 @@
 export function isNotEmpty(value) {
-  return value.tri() !== "";
+  return value.trim() !== "";
 }
 
 export function hasMinLength(value, minLength) {

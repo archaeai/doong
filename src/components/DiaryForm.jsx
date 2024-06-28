@@ -1,13 +1,9 @@
 import { useContext, useState } from "react";
 import { DiaryContext } from "../contexts/DiaryContext";
 import RadioButton from "../UI/RadioButton";
-import {
-  isNotEmpty,
-  isRadioSelected,
-  isFileSelected,
-} from "../utils/validation";
 import useFilePreview from "../hooks/useFilePreview";
 import useFormState from "../hooks/useFormState";
+import useFormValidation from "../hooks/useFormValidation";
 import "../styles/DiaryForm.css";
 
 const DiaryForm = ({ closeModal }) => {
@@ -19,27 +15,18 @@ const DiaryForm = ({ closeModal }) => {
     meal: "",
   });
   const { photoPreview, handleFilePreview } = useFilePreview();
-  const [errors, setErrors] = useState({});
+  const { errors, validateForm } = useFormValidation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // const newErrors = {};
-    // if (!isFileSelected(fd.get("photo")))
-    //   newErrors.photo = "사진을 추가해주세요";
-    // if (!isRadioSelected(data.mood)) newErrors.mood = "기분을 선택해주세요";
-    // if (!isRadioSelected(data.activity))
-    //   newErrors.activity = "활동량을 선택해주세요";
-    // if (!isRadioSelected(data.meal)) newErrors.meal = "식사량을 선택해주세요";
-
-    // if (Object.keys(newErrors).length > 0) {
-    //   setErrors(newErrors);
-    //   return;
-    // }
+    const newErrors = validateForm(diaryData);
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
 
     console.log(diaryData);
 
-    setErrors({});
     addDiaryEntry(diaryData);
     closeModal();
   };
