@@ -4,14 +4,17 @@ export default function useFormState(initialState, validateStep) {
   const [formData, setFormData] = useState(initialState);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
+  const [photoPreview, setPhotoPreview] = useState(null);
 
   const handleChange = (event) => {
     const { name, value, type, files } = event.target;
     if (type === "file") {
+      const file = files[0];
       setFormData((prevData) => ({
         ...prevData,
         [name]: files[0],
       }));
+      setPhotoPreview(URL.createObjectURL(file));
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -67,5 +70,6 @@ export default function useFormState(initialState, validateStep) {
     handleNextStep,
     handlePrevStep,
     handleSubmit,
+    photoPreview,
   };
 }

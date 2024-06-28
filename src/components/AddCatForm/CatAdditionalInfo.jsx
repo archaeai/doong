@@ -1,5 +1,4 @@
 import RadioButton from "../../UI/RadioButton";
-import useFilePreview from "../../hooks/useFilePreview";
 import { genderOptions, neuteredOptions } from "../../utils/formOptions";
 
 export default function CatAdditionalInfo({
@@ -7,10 +6,9 @@ export default function CatAdditionalInfo({
   handleChange,
   handlePrevStep,
   handleNextStep,
+  photoPreview,
   errors,
 }) {
-  const { photoPreview, handleFilePreview } = useFilePreview();
-
   const handleFileChange = (event) => {
     handleChange(event);
     handleFilePreview(event);
@@ -60,7 +58,7 @@ export default function CatAdditionalInfo({
           type="file"
           name="photo"
           accept="image/*"
-          onChange={handleFileChange}
+          onChange={handleChange}
           required
         />
         {photoPreview && (

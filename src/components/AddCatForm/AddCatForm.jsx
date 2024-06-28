@@ -34,6 +34,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
     handleNextStep,
     handlePrevStep,
     handleSubmit,
+    photoPreview,
   } = useFormState(initialState, validateCatForm);
 
   useEffect(() => {
@@ -67,6 +68,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
             handleChange={handleChange}
             handlePrevStep={handlePrevStep}
             handleNextStep={handleNextStep}
+            photoPreview={photoPreview}
             errors={errors}
           />
         )}

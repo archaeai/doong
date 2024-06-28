@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import useFilePreview from "../hooks/useFilePreview";
 import useFormState from "../hooks/useFormState";
 import { DiaryContext } from "../contexts/DiaryContext";
 import RadioButton from "../UI/RadioButton";
@@ -18,6 +17,7 @@ const DiaryForm = ({ closeModal }) => {
     handleChange,
     handleSubmit,
     errors,
+    photoPreview,
   } = useFormState(
     {
       photo: null,
@@ -27,7 +27,6 @@ const DiaryForm = ({ closeModal }) => {
     },
     validateDiaryForm
   );
-  const { photoPreview, handleFilePreview } = useFilePreview();
 
   const submitForm = (data) => {
     addDiaryEntry(data);
@@ -50,10 +49,7 @@ const DiaryForm = ({ closeModal }) => {
           type="file"
           name="photo"
           accept="image/*"
-          onChange={(event) => {
-            handleChange(event);
-            handleFilePreview(event);
-          }}
+          onChange={handleChange}
         />
         {photoPreview && (
           <img
