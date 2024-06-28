@@ -7,36 +7,40 @@ import {
   isFileSelected,
 } from "../utils/validation";
 import useFilePreview from "../hooks/useFilePreview";
+import useFormState from "../hooks/useFormState";
 import "../styles/DiaryForm.css";
 
 const DiaryForm = ({ closeModal }) => {
   const { addDiaryEntry } = useContext(DiaryContext);
+  const { formData: diaryData, handleChange } = useFormState({
+    photo: null,
+    mood: "",
+    activity: "",
+    meal: "",
+  });
   const { photoPreview, handleFilePreview } = useFilePreview();
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const fd = new FormData(event.target);
-    const data = Object.fromEntries(fd.entries());
+    // const newErrors = {};
+    // if (!isFileSelected(fd.get("photo")))
+    //   newErrors.photo = "사진을 추가해주세요";
+    // if (!isRadioSelected(data.mood)) newErrors.mood = "기분을 선택해주세요";
+    // if (!isRadioSelected(data.activity))
+    //   newErrors.activity = "활동량을 선택해주세요";
+    // if (!isRadioSelected(data.meal)) newErrors.meal = "식사량을 선택해주세요";
 
-    const newErrors = {};
-    if (!isFileSelected(fd.get("photo")))
-      newErrors.photo = "사진을 추가해주세요";
-    if (!isRadioSelected(data.mood)) newErrors.mood = "기분을 선택해주세요";
-    if (!isRadioSelected(data.activity))
-      newErrors.activity = "활동량을 선택해주세요";
-    if (!isRadioSelected(data.meal)) newErrors.meal = "식사량을 선택해주세요";
+    // if (Object.keys(newErrors).length > 0) {
+    //   setErrors(newErrors);
+    //   return;
+    // }
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    console.log(data);
+    console.log(diaryData);
 
     setErrors({});
-    addDiaryEntry(data);
+    addDiaryEntry(diaryData);
     closeModal();
   };
 
@@ -69,7 +73,10 @@ const DiaryForm = ({ closeModal }) => {
           type="file"
           name="photo"
           accept="image/*"
-          onChange={handleFilePreview}
+          onChange={(event) => {
+            handleChange(event);
+            handleFilePreview(event);
+          }}
         />
         {photoPreview && (
           <img
@@ -86,18 +93,24 @@ const DiaryForm = ({ closeModal }) => {
         name="mood"
         options={moodOptions}
         error={errors.mood}
+        onChange={handleChange}
+        selectedValue={diaryData.mood}
       />
       <RadioButton
         label="3. 오늘의 활동량은 어땠나요? (필수)"
         name="activity"
         options={activityOptions}
         error={errors.activity}
+        onChange={handleChange}
+        selectedValue={diaryData.activity}
       />
       <RadioButton
         label="4. 오늘의 식사는 어땠나요? (필수)"
         name="meal"
         options={mealOptions}
         error={errors.meal}
+        onChange={handleChange}
+        selectedValue={diaryData.meal}
       />
 
       {/* 나머지 폼 필드들... */}
