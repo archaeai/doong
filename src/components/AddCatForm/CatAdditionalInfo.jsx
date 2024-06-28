@@ -1,5 +1,6 @@
 import RadioButton from "../../UI/RadioButton";
 import useFilePreview from "../../hooks/useFilePreview";
+import { genderOptions, neuteredOptions } from "../../utils/formOptions";
 
 export default function CatAdditionalInfo({
   catData,
@@ -9,16 +10,6 @@ export default function CatAdditionalInfo({
   errors,
 }) {
   const { photoPreview, handleFilePreview } = useFilePreview();
-
-  const genderOptions = [
-    { value: "male", label: "수컷" },
-    { value: "female", label: "암컷" },
-  ];
-
-  const neuteredOptions = [
-    { value: "yes", label: "수술함" },
-    { value: "no", label: "수술안함" },
-  ];
 
   const handleFileChange = (event) => {
     handleChange(event);

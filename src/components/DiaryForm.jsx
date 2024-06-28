@@ -1,55 +1,46 @@
 import { useContext } from "react";
-import { DiaryContext } from "../contexts/DiaryContext";
-import RadioButton from "../UI/RadioButton";
 import useFilePreview from "../hooks/useFilePreview";
 import useFormState from "../hooks/useFormState";
+import { DiaryContext } from "../contexts/DiaryContext";
+import RadioButton from "../UI/RadioButton";
+import { validateDiaryForm } from "../utils/validation";
+import {
+  moodOptions,
+  activityOptions,
+  mealOptions,
+} from "../utils/formOptions";
 import "../styles/DiaryForm.css";
 
 const DiaryForm = ({ closeModal }) => {
   const { addDiaryEntry } = useContext(DiaryContext);
-  const { formData: diaryData, handleChange } = useFormState({
-    photo: null,
-    mood: "",
-    activity: "",
-    meal: "",
-  });
+  const {
+    formData: diaryData,
+    handleChange,
+    handleSubmit,
+    errors,
+  } = useFormState(
+    {
+      photo: null,
+      mood: "",
+      activity: "",
+      meal: "",
+    },
+    validateDiaryForm
+  );
   const { photoPreview, handleFilePreview } = useFilePreview();
-  const { errors, validateForm } = useFormValidation();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const newErrors = validateForm(diaryData);
-    if (Object.keys(newErrors).length > 0) {
-      return;
-    }
-
-    console.log(diaryData);
-
-    addDiaryEntry(diaryData);
+  const submitForm = (data) => {
+    addDiaryEntry(data);
     closeModal();
+    console.log("Submitted Data:", data);
   };
 
-  const moodOptions = [
-    { value: "행복", label: "행복" },
-    { value: "스트레스", label: "스트레스" },
-    { value: "불안", label: "불안" },
-  ];
-
-  const activityOptions = [
-    { value: "높음", label: "높음" },
-    { value: "보통", label: "보통" },
-    { value: "낮음", label: "낮음" },
-  ];
-
-  const mealOptions = [
-    { value: "적정", label: "적정" },
-    { value: "부족", label: "부족" },
-    { value: "남음", label: "남음" },
-  ];
-
   return (
-    <form onSubmit={handleSubmit} noValidate className="form-container">
+    <form
+      onSubmit={(event) => handleSubmit(event, submitForm)}
+      noValidate
+      className="form-container"
+    >
       <h2>일기 쓰기</h2>
 
       <div className="form-group">
