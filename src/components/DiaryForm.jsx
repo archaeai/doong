@@ -3,7 +3,6 @@ import { DiaryContext } from "../contexts/DiaryContext";
 import RadioButton from "../UI/RadioButton";
 import useFilePreview from "../hooks/useFilePreview";
 import useFormState from "../hooks/useFormState";
-import useFormValidation from "../hooks/useFormValidation";
 import "../styles/DiaryForm.css";
 
 const DiaryForm = ({ closeModal }) => {

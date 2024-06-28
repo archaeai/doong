@@ -1,7 +1,9 @@
 import { useState } from "react";
 
-export default function useFormState(initialState) {
+export default function useFormState(initialState, validateStep) {
   const [formData, setFormData] = useState(initialState);
+  const [step, setStep] = useState(1);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
     const { name, value, type, files } = event.target;
@@ -25,10 +27,45 @@ export default function useFormState(initialState) {
     }));
   };
 
+  const resetForm = () => {
+    setFormData(initialState);
+    setStep(1);
+    setErrors({});
+  };
+
+  const validateForm = () => {
+    const validationErrors = validateStep(formData, step);
+    setErrors(validationErrors);
+    return Object.keys(validationErrors).length === 0;
+  };
+
+  const handleNextStep = () => {
+    if (validateForm()) {
+      setStep(step + 1);
+    }
+  };
+
+  const handlePrevStep = () => setStep(step - 1);
+
+  const handleSubmit = (event, submitCallback) => {
+    event.preventDefault();
+    if (validateForm()) {
+      submitCallback(formData);
+      resetForm();
+    }
+  };
+
   return {
     formData,
     handleChange,
     handleSelectChange,
-    setFormData, // 필요에 따라 외부에서 상태를 직접 설정할 수 있도록 추가
+    setFormData,
+    step,
+    setStep,
+    resetForm,
+    errors,
+    handleNextStep,
+    handlePrevStep,
+    handleSubmit,
   };
 }
