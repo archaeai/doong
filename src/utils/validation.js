@@ -1,9 +1,9 @@
 export function isNotEmpty(value) {
-  return value.trim() !== "";
+  return value && value.trim() !== "";
 }
 
 export function hasMinLength(value, minLength) {
-  return value.length >= minLength;
+  return value && value.length >= minLength;
 }
 
 export function isEqualsToOtherValues(value, otherValue) {
@@ -17,3 +17,42 @@ export function isRadioSelected(value) {
 export function isFileSelected(file) {
   return file && file.size > 0;
 }
+
+export const validateCatForm = (formData, step) => {
+  const newErrors = {};
+  if (step === 1) {
+    if (!isNotEmpty(formData.name)) newErrors.name = "이름을 입력해주세요.";
+    if (!isNotEmpty(formData.breed)) newErrors.breed = "품종을 선택해주세요.";
+    if (!isNotEmpty(formData.birthDate))
+      newErrors.birthDate = "출생일을 선택해주세요.";
+    if (!isNotEmpty(formData.adoptDate))
+      newErrors.adoptDate = "입양일을 선택해주세요.";
+  } else if (step === 2) {
+    if (!isFileSelected(formData.photo))
+      newErrors.photo = "사진을 추가해주세요.";
+    if (!isRadioSelected(formData.gender))
+      newErrors.gender = "성별을 선택해주세요.";
+    if (!isRadioSelected(formData.neutered))
+      newErrors.neutered = "중성화 여부를 선택해주세요.";
+    if (!isNotEmpty(formData.weight)) newErrors.weight = "체중을 입력해주세요.";
+  } else if (step === 3) {
+    if (!isNotEmpty(formData.vaccinationDate))
+      newErrors.vaccinationDate = "종합접종일을 선택해주세요";
+    if (!isNotEmpty(formData.heartwormDate))
+      newErrors.heartwormDate = "심장사상충 접종일을 선택해주세요";
+    if (!isNotEmpty(formData.litterDate))
+      newErrors.litterDate = "전체 모래갈이일을 선택해주세요";
+  }
+  return newErrors;
+};
+
+export const validateDiaryForm = (formData) => {
+  const newErrors = {};
+  if (!isFileSelected(formData.photo)) newErrors.photo = "사진을 추가해주세요.";
+  if (!isRadioSelected(formData.mood)) newErrors.mood = "기분을 선택해주세요.";
+  if (!isRadioSelected(formData.activity))
+    newErrors.activity = "활동량을 선택해주세요.";
+  if (!isRadioSelected(formData.meal))
+    newErrors.meal = "식사량을 선택해주세요.";
+  return newErrors;
+};

@@ -7,6 +7,7 @@ export default function CatBasicInfo({
   handleSelectChange,
   closeModal,
   handleNextStep,
+  errors,
 }) {
   return (
     <>
@@ -22,6 +23,7 @@ export default function CatBasicInfo({
           placeholder="이름을 입력하세요."
           required
         />
+        {errors.name && <p className="control-error">{errors.name}</p>}
       </div>
       <div>
         <label htmlFor="breed">품종</label>
@@ -34,6 +36,7 @@ export default function CatBasicInfo({
           placeholder="품종을 검색하세요."
           required
         />
+        {errors.breed && <p className="control-error">{errors.breed}</p>}
       </div>
       <div>
         <label htmlFor="birthDate">출생일</label>
@@ -44,6 +47,9 @@ export default function CatBasicInfo({
           value={catData.birthDate}
           onChange={handleChange}
         />
+        {errors.birthDate && (
+          <p className="control-error">{errors.birthDate}</p>
+        )}
       </div>
       <div>
         <label htmlFor="adoptDate">입양일</label>
@@ -54,6 +60,9 @@ export default function CatBasicInfo({
           value={catData.adoptDate}
           onChange={handleChange}
         />
+        {errors.adoptDate && (
+          <p className="control-error">{errors.adoptDate}</p>
+        )}
       </div>
       <button type="button" onClick={closeModal}>
         닫기

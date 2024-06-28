@@ -6,6 +6,7 @@ export default function CatAdditionalInfo({
   handleChange,
   handlePrevStep,
   handleNextStep,
+  errors,
 }) {
   const { photoPreview, handleFilePreview } = useFilePreview();
 
@@ -27,22 +28,26 @@ export default function CatAdditionalInfo({
   return (
     <>
       <h2>새 친구의 추가 정보를 입력해주세요.</h2>
-      <RadioButton
-        label="성별"
-        name="gender"
-        options={genderOptions}
-        error={catData.genderError}
-        onChange={handleChange}
-        selectedValue={catData.gender}
-      />
-      <RadioButton
-        label="중성화 수술을 받았나요?"
-        name="neutered"
-        options={neuteredOptions}
-        error={catData.neuteredError}
-        onChange={handleChange}
-        selectedValue={catData.neutered}
-      />
+      <div>
+        <RadioButton
+          label="성별"
+          name="gender"
+          options={genderOptions}
+          onChange={handleChange}
+          selectedValue={catData.gender}
+        />
+        {errors.gender && <p>{errors.gender}</p>}
+      </div>
+      <div>
+        <RadioButton
+          label="중성화 수술을 받았나요?"
+          name="neutered"
+          options={neuteredOptions}
+          onChange={handleChange}
+          selectedValue={catData.neutered}
+        />
+        {errors.neutered && <p>{errors.neutered}</p>}
+      </div>
       <div>
         <label htmlFor="weight">체중</label>
         <input
@@ -55,9 +60,10 @@ export default function CatAdditionalInfo({
           required
         />
         <span>kg</span>
+        {errors.weight && <p>{errors.weight}</p>}
       </div>
       <div>
-        <label htmlFor="photo">사진을 선택해주세요</label>
+        <label htmlFor="weight">사진을 선택해주세요</label>
         <input
           id="photo"
           type="file"
@@ -73,6 +79,7 @@ export default function CatAdditionalInfo({
             style={{ width: "100px", height: "100px", marginTop: "8px" }}
           />
         )}
+        {errors.photo && <p>{errors.photo}</p>}
       </div>
       <button type="button" onClick={handlePrevStep}>
         이전

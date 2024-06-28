@@ -1,11 +1,27 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { CatContext } from "../../contexts/CatContext";
 import useFormState from "../../hooks/useFormState";
+import useFormValidation from "../../hooks/useFormValidation";
+import { validateCatForm } from "../../utils/validation";
 import Modal from "../../UI/Modal";
 import CatBasicInfo from "./CatBasicInfo";
 import CatAdditionalInfo from "./CatAdditionalInfo";
 import CatRoutainInfo from "./CatRoutineInfo";
 import "../../styles/Modal.css";
+
+const initialState = {
+  name: "",
+  breed: "",
+  birthDate: "",
+  adoptDate: "",
+  gender: "",
+  neutered: "",
+  weight: "",
+  photo: null,
+  vaccinationDate: "",
+  heartwormDate: "",
+  litterDate: "",
+};
 
 export default function AddCatForm({ isOpen, closeModal }) {
   const [step, setStep] = useState(1);
@@ -14,33 +30,51 @@ export default function AddCatForm({ isOpen, closeModal }) {
     formData: catData,
     handleChange,
     handleSelectChange,
-  } = useFormState({
-    name: "",
-    breed: "",
-    birthDate: "",
-    adoptDate: "",
-    gender: "",
-    neutered: "",
-    weight: "",
-    photo: null,
-    vaccinationDate: "",
-    heartwormDate: "",
-    litterDate: "",
-  });
+    setFormData,
+  } = useFormState({ initialState });
 
-  const handleNextStep = () => setStep(step + 1);
+  const { errors, runValidation } = useFormValidation({}, (formData) =>
+    validateCatForm(formData, step)
+  );
+
+  useEffect(() => {
+    if (!isOpen) {
+      // 모달이 닫힐 때 폼 초기화
+      setFormData(initialState);
+      setStep(1);
+    }
+  }, [isOpen, setFormData, initialState]);
+
+  const handleNextStep = () => {
+    console.log("Cat Data:", catData);
+    const newErrors = runValidation(catData);
+    console.log("New Errors:", newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+    setStep((prevStep) => {
+      console.log("Step updated:", prevStep + 1); // 추가 로그
+      return prevStep + 1;
+    });
+  };
   const handlePrevStep = () => setStep(step - 1);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const newErrors = runValidation(catData);
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
     addCat(catData);
     closeModal();
-    console.log(catData);
+    console.log("Submitted Data:", catData);
   };
 
   return (
     <Modal isOpen={isOpen} onClose={closeModal}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         {step === 1 && (
           <CatBasicInfo
             catData={catData}
@@ -48,6 +82,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
             handleSelectChange={handleSelectChange}
             closeModal={closeModal}
             handleNextStep={handleNextStep}
+            errors={errors}
           />
         )}
         {step === 2 && (
@@ -56,6 +91,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
             handleChange={handleChange}
             handlePrevStep={handlePrevStep}
             handleNextStep={handleNextStep}
+            errors={errors}
           />
         )}
         {step === 3 && (
@@ -64,6 +100,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
             handleChange={handleChange}
             handlePrevStep={handlePrevStep}
             handleSubmit={handleSubmit}
+            errors={errors}
           />
         )}
       </form>

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { DiaryContext } from "../contexts/DiaryContext";
 import RadioButton from "../UI/RadioButton";
 import useFilePreview from "../hooks/useFilePreview";

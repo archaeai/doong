@@ -2,6 +2,7 @@ export default function CatRoutainInfo({
   catData,
   handleChange,
   handlePrevStep,
+  errors,
 }) {
   return (
     <>
@@ -14,6 +15,7 @@ export default function CatRoutainInfo({
           value={catData.vaccinationDate}
           onChange={handleChange}
         />
+        {errors.vaccinationDate && <p>{errors.vaccinationDate}</p>}
       </label>
       <label>
         마지막 심장사상충 예방접종일:
@@ -23,6 +25,7 @@ export default function CatRoutainInfo({
           value={catData.heartwormDate}
           onChange={handleChange}
         />
+        {errors.heartwormDate && <p>{errors.heartwormDate}</p>}
       </label>
       <label>
         마지막 전체모래갈이일:
@@ -32,6 +35,7 @@ export default function CatRoutainInfo({
           value={catData.litterDate}
           onChange={handleChange}
         />
+        {errors.litterDate && <p>{errors.litterDate}</p>}
       </label>
       <button type="button" onClick={handlePrevStep}>
         이전
