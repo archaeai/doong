@@ -1,11 +1,9 @@
 import { useState, useContext } from "react";
+import { CatContext } from "../../contexts/CatContext";
 import Modal from "../../UI/Modal";
-
 import CatBasicInfo from "./CatBasicInfo";
 import CatAdditionalInfo from "./CatAdditionalInfo";
 import CatRoutainInfo from "./CatRoutineInfo";
-
-import { CatContext } from "../../contexts/CatContext";
 import "../../styles/Modal.css";
 
 export default function AddCatModal({ isOpen, closeModal }) {
@@ -43,7 +41,7 @@ export default function AddCatModal({ isOpen, closeModal }) {
     }
   };
 
-  const handleBreedChange = (selectedOption) => {
+  const handleSelectChange = (selectedOption) => {
     setCatData((prevCatData) => ({
       ...prevCatData,
       breed: selectedOption ? selectedOption.value : "",
@@ -64,7 +62,7 @@ export default function AddCatModal({ isOpen, closeModal }) {
           <CatBasicInfo
             catData={catData}
             handleChange={handleChange}
-            handleBreedChange={handleBreedChange}
+            handleSelectChange={handleSelectChange}
             closeModal={closeModal}
             handleNextStep={handleNextStep}
           />

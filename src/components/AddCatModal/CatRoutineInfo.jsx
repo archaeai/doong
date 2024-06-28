@@ -2,7 +2,6 @@ export default function CatRoutainInfo({
   catData,
   handleChange,
   handlePrevStep,
-  handleSubmit,
 }) {
   return (
     <>

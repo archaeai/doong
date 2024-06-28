@@ -6,20 +6,13 @@ import {
   isRadioSelected,
   isFileSelected,
 } from "../utils/validation";
+import useFilePreview from "../hooks/useFilePreview";
 import "../styles/DiaryForm.css";
 
 const DiaryForm = ({ closeModal }) => {
   const { addDiaryEntry } = useContext(DiaryContext);
-  const [photoPreview, setPhotoPreview] = useState(null);
+  const { photoPreview, handleFilePreview } = useFilePreview();
   const [errors, setErrors] = useState({});
-
-  const handleChange = (event) => {
-    const { type, files } = event.target;
-    if (type === "file" && files.length > 0) {
-      const file = files[0];
-      setPhotoPreview(URL.createObjectURL(file));
-    }
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -76,7 +69,7 @@ const DiaryForm = ({ closeModal }) => {
           type="file"
           name="photo"
           accept="image/*"
-          onChange={handleChange}
+          onChange={handleFilePreview}
         />
         {photoPreview && (
           <img

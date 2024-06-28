@@ -1,4 +1,5 @@
 import RadioButton from "../../UI/RadioButton";
+import useFilePreview from "../../hooks/useFilePreview";
 
 export default function CatAdditionalInfo({
   catData,
@@ -6,6 +7,8 @@ export default function CatAdditionalInfo({
   handlePrevStep,
   handleNextStep,
 }) {
+  const { photoPreview, handleFilePreview } = useFilePreview();
+
   const genderOptions = [
     { value: "male", label: "수컷" },
     { value: "female", label: "암컷" },
@@ -15,6 +18,11 @@ export default function CatAdditionalInfo({
     { value: "yes", label: "수술함" },
     { value: "no", label: "수술안함" },
   ];
+
+  const handleFileChange = (event) => {
+    handleChange(event);
+    handleFilePreview(event);
+  };
 
   return (
     <>
@@ -55,9 +63,16 @@ export default function CatAdditionalInfo({
           type="file"
           name="photo"
           accept="image/*"
-          onChange={handleChange}
+          onChange={handleFileChange}
           required
         />
+        {photoPreview && (
+          <img
+            src={photoPreview}
+            alt="Preview"
+            style={{ width: "100px", height: "100px", marginTop: "8px" }}
+          />
+        )}
       </div>
       <button type="button" onClick={handlePrevStep}>
         이전

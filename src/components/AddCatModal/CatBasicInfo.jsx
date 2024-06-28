@@ -4,7 +4,7 @@ import breeds from "../../data/breeds.json";
 export default function CatBasicInfo({
   catData,
   handleChange,
-  handleBreedChange,
+  handleSelectChange,
   closeModal,
   handleNextStep,
 }) {
@@ -30,7 +30,7 @@ export default function CatBasicInfo({
           name="breed"
           options={breeds}
           value={breeds.find((option) => option.value === catData.breed)}
-          onChange={handleBreedChange}
+          onChange={handleSelectChange}
           placeholder="품종을 검색하세요."
           required
         />
