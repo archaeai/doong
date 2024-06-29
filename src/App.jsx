@@ -9,20 +9,57 @@ import SettingsPage from "./pages/Settings";
 import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
 import RootLayout from "./pages/Root";
+import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 
 import { CatProvider } from "./contexts/CatContext";
 import { DiaryProvider } from "./contexts/DiaryContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: "calendar", element: <CalendarPage /> },
-      { path: "diary", element: <DiaryPage /> },
-      { path: "report", element: <ReportPage /> },
-      { path: "settings", element: <SettingsPage /> },
+      {
+        index: true,
+        element: (
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "calendar",
+        element: (
+          <ProtectedRoute>
+            <CalendarPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "diary",
+        element: (
+          <ProtectedRoute>
+            <DiaryPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "report",
+        element: (
+          <ProtectedRoute>
+            <ReportPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "settings",
+        element: (
+          <ProtectedRoute>
+            <SettingsPage />
+          </ProtectedRoute>
+        ),
+      },
       { path: "signin", element: <SignInPage /> },
       { path: "signup", element: <SignUpPage /> },
     ],
@@ -32,11 +69,13 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <CatProvider>
-        <DiaryProvider>
-          <RouterProvider router={router} />
-        </DiaryProvider>
-      </CatProvider>
+      <AuthProvider>
+        <CatProvider>
+          <DiaryProvider>
+            <RouterProvider router={router} />
+          </DiaryProvider>
+        </CatProvider>
+      </AuthProvider>
     </>
   );
 }
