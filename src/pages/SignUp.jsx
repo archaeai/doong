@@ -1,5 +1,5 @@
 import useFormState from "../hooks/useFormState";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateUserForm } from "../utils/validation";
 import catImage from "../assets/cat-logo.png";
 import "../styles/AuthForm.css";
@@ -15,9 +15,30 @@ export default function SignUpPage() {
     "signup"
   );
 
-  function handleSignUp(data) {
-    console.log("회원가입 데이터:", data);
-    // 회원가입 요청을 서버로 전송하는 로직 추가
+  const navigate = useNavigate();
+  async function handleSignUp(data) {
+    try {
+      const response = await fetch("http://127.0.0.1/api/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: data.username,
+          password: data.password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("회원가입 성공:", result);
+      navigate("/signin");
+    } catch (error) {
+      console.error("회원가입 중 에러 발생:", error);
+    }
   }
 
   return (

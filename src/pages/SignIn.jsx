@@ -1,5 +1,5 @@
 import useFormState from "../hooks/useFormState";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateUserForm } from "../utils/validation";
 import catImage from "../assets/cat-logo.png";
 import "../styles/AuthForm.css";
@@ -14,9 +14,35 @@ export default function SignInPage() {
     "signin"
   );
 
-  function handleSignIn(data) {
-    console.log("로그인 데이터:", data);
-    // 로그인 요청을 서버로 전송하는 로직 추가
+  const navigate = useNavigate();
+
+  async function handleSignIn(data) {
+    try {
+      const response = await fetch("http://127.0.0.1/api/users/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: data.username,
+          password: data.password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("로그인 성공:", result);
+      // JWT 토큰을 로컬 스토리지에 저장
+      localStorage.setItem("token", result.token);
+
+      // 홈 화면으로 이동
+      navigate("/");
+    } catch (error) {
+      console.error("로그인 중 에러 발생:", error);
+    }
   }
 
   return (
