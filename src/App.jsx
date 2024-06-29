@@ -6,8 +6,8 @@ import CalendarPage from "./pages/Calendar";
 import DiaryPage from "./pages/Diary";
 import ReportPage from "./pages/Report";
 import SettingsPage from "./pages/Settings";
-import SignInPage from "./pages/auth/SignIn";
-import SignUpPage from "./pages/auth/SignUp";
+import SignInPage from "./pages/SignIn";
+import SignUpPage from "./pages/SignUp";
 import RootLayout from "./pages/Root";
 
 import { CatProvider } from "./contexts/CatContext";

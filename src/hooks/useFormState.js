@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function useFormState(initialState, validateStep) {
+export default function useFormState(initialState, validateStep, formType) {
   const [formData, setFormData] = useState(initialState);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
@@ -37,7 +37,7 @@ export default function useFormState(initialState, validateStep) {
   };
 
   const validateForm = () => {
-    const validationErrors = validateStep(formData, step);
+    const validationErrors = validateStep(formData, formType);
     setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
   };

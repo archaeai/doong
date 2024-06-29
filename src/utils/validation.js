@@ -18,6 +18,24 @@ export function isFileSelected(file) {
   return file && file.size > 0;
 }
 
+export const validateUserForm = (formData, formType) => {
+  const newErrors = {};
+  if (!isNotEmpty(formData.username)) {
+    newErrors.username = "아이디를 입력해주세요.";
+  }
+  if (!isNotEmpty(formData.password)) {
+    newErrors.password = "비밀번호를 입력해주세요.";
+  } else if (!hasMinLength(formData.password, 6)) {
+    newErrors.password = "비밀번호는 최소 6자 이상이어야 합니다.";
+  }
+  if (formType === "signup") {
+    if (!isEqualsToOtherValues(formData.password, formData.confirmPassword)) {
+      newErrors.confirmPassword = "비밀번호가 일치하지 않습니다.";
+    }
+  }
+  return newErrors;
+};
+
 export const validateCatForm = (formData, step) => {
   const newErrors = {};
   if (step === 1) {
