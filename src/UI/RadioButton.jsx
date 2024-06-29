@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 export default function RadioButton({
   label,
   name,
@@ -6,6 +8,7 @@ export default function RadioButton({
   onChange,
   selectedValue,
 }) {
+  const groupId = useId();
   return (
     <div className="form-group">
       <label>{label}</label>
@@ -14,13 +17,13 @@ export default function RadioButton({
           <div key={option.value}>
             <input
               type="radio"
-              id={option.value}
+              id={`${groupId}-${option.value}`}
               name={name}
               value={option.value}
               checked={selectedValue === option.value}
               onChange={onChange}
             />
-            <label htmlFor={option.value}>{option.label}</label>
+            <label htmlFor={`${groupId}-${option.value}`}>{option.label}</label>
           </div>
         ))}
       </div>
