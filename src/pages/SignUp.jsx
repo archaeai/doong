@@ -1,11 +1,11 @@
 import useFormState from "../hooks/useFormState";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Form, useActionData } from "react-router-dom";
 import { validateUserForm } from "../utils/validation";
 import catImage from "../assets/cat-logo.png";
 import "../styles/AuthForm.css";
 
 export default function SignUpPage() {
-  const { formData, handleChange, handleSubmit, errors } = useFormState(
+  const { formData, handleChange, errors } = useFormState(
     {
       username: "",
       password: "",
@@ -15,40 +15,13 @@ export default function SignUpPage() {
     "signup"
   );
 
-  const navigate = useNavigate();
-  async function handleSignUp(data) {
-    try {
-      const response = await fetch("http://127.0.0.1/api/users/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: data.username,
-          password: data.password,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const result = await response.json();
-      console.log("회원가입 성공:", result);
-      navigate("/signin");
-    } catch (error) {
-      console.error("회원가입 중 에러 발생:", error);
-    }
-  }
+  const actionData = useActionData();
 
   return (
     <div className="card-container">
       <div className="card-box">
         <img src={catImage} alt="cat-image" className="cat-image" />
-        <form
-          onSubmit={(event) => handleSubmit(event, handleSignUp)}
-          noValidate
-        >
+        <Form method="post" action="/signup" noValidate>
           <h2>가입하기</h2>
           <input
             type="text"
@@ -85,7 +58,8 @@ export default function SignUpPage() {
             <p className="error">{errors.confirmPassword}</p>
           )}
           <button type="submit">회원가입</button>
-        </form>
+          {actionData?.error && <p className="error">{actionData.error}</p>}
+        </Form>
         <Link to="/signin">뒤로가기</Link>
       </div>
     </div>

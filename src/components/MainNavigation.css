@@ -8,7 +8,7 @@
   padding: 2rem;
   display: flex;
   justify-content: space-between;
-  z-index: 1000;
+  z-index: 3;
 }
 
 .main-navigation ul {

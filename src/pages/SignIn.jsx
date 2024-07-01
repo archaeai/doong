@@ -1,11 +1,11 @@
 import useFormState from "../hooks/useFormState";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Form, useActionData } from "react-router-dom";
 import { validateUserForm } from "../utils/validation";
 import catImage from "../assets/cat-logo.png";
 import "../styles/AuthForm.css";
 
 export default function SignInPage() {
-  const { formData, handleChange, handleSubmit, errors } = useFormState(
+  const { formData, handleChange, errors } = useFormState(
     {
       username: "",
       password: "",
@@ -14,45 +14,13 @@ export default function SignInPage() {
     "signin"
   );
 
-  const navigate = useNavigate();
-
-  async function handleSignIn(data) {
-    try {
-      const response = await fetch("http://127.0.0.1/api/users/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: data.username,
-          password: data.password,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const result = await response.json();
-      console.log("로그인 성공:", result);
-      // JWT 토큰을 로컬 스토리지에 저장
-      localStorage.setItem("token", result.token);
-
-      // 홈 화면으로 이동
-      navigate("/");
-    } catch (error) {
-      console.error("로그인 중 에러 발생:", error);
-    }
-  }
+  const actionData = useActionData();
 
   return (
     <div className="card-container">
       <div className="card-box">
         <img src={catImage} alt="cat-image" className="cat-image" />
-        <form
-          onSubmit={(event) => handleSubmit(event, handleSignIn)}
-          noValidate
-        >
+        <Form method="post" action="/signin" noValidate>
           <h2>시작하기</h2>
           <input
             type="text"
@@ -76,7 +44,8 @@ export default function SignInPage() {
           />
           {errors.password && <p className="error">{errors.password}</p>}
           <button type="submit">로그인</button>
-        </form>
+          {actionData?.error && <p className="error">{actionData.error}</p>}
+        </Form>
         <Link to="/signup">회원가입</Link>
       </div>
     </div>

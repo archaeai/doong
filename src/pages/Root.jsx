@@ -10,11 +10,9 @@ export default function RootLayout() {
       <main>
         <Outlet />
       </main>
-      {isAuthenticated && (
-        <footer>
-          <MainNavigation />
-        </footer>
-      )}
+      <footer>
+        <MainNavigation />
+      </footer>
     </>
   );
 }

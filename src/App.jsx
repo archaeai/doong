@@ -10,6 +10,8 @@ import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
 import RootLayout from "./pages/Root";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
+import { signInAction } from "./actions/signInAction";
+import { signUpAction } from "./actions/signUpAction";
 
 import { CatProvider } from "./contexts/CatContext";
 import { DiaryProvider } from "./contexts/DiaryContext";
@@ -18,7 +20,11 @@ import { AuthProvider } from "./contexts/AuthContext";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
+    element: (
+      <ProtectedRoute>
+        <RootLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -60,8 +66,8 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      { path: "signin", element: <SignInPage /> },
-      { path: "signup", element: <SignUpPage /> },
+      { path: "signin", element: <SignInPage />, action: signInAction },
+      { path: "signup", element: <SignUpPage />, action: signUpAction },
     ],
   },
 ]);
