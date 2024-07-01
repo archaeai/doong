@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Form, NavLink } from "react-router-dom";
 import "./MainNavigation.css";
 
 export default function MainNavigation() {
@@ -44,6 +44,11 @@ export default function MainNavigation() {
           >
             설정
           </NavLink>
+        </li>
+        <li>
+          <Form action="/logout" method="post">
+            <button>로그아웃</button>
+          </Form>
         </li>
       </ul>
     </nav>

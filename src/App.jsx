@@ -12,6 +12,7 @@ import RootLayout from "./pages/Root";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 import { signInAction } from "./actions/signInAction";
 import { signUpAction } from "./actions/signUpAction";
+import { action as logoutAction } from "./pages/Logout";
 
 import { CatProvider } from "./contexts/CatContext";
 import { DiaryProvider } from "./contexts/DiaryContext";
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       },
       { path: "signin", element: <SignInPage />, action: signInAction },
       { path: "signup", element: <SignUpPage />, action: signUpAction },
+      {
+        path: "logout",
+        action: logoutAction,
+      },
     ],
   },
 ]);
