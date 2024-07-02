@@ -74,3 +74,14 @@ export const validateDiaryForm = (formData) => {
     newErrors.meal = "식사량을 선택해주세요.";
   return newErrors;
 };
+
+export const validateEventForm = (formData) => {
+  const newErrors = {};
+  if (!isNotEmpty(formData.eventTitle)) {
+    newErrors.eventTitle = "일정 제목을 입력하세요.";
+  }
+  if (!isNotEmpty(formData.selectedDate)) {
+    newErrors.selectedDate = "날짜를 선택하세요.";
+  }
+  return newErrors;
+};

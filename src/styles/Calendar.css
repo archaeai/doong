@@ -5,9 +5,25 @@
   max-width: 1200px;
   height: 90%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 20px;
+  position: relative;
+}
+
+.add-event-text {
+  color: var(--color-navy);
+  font-size: 1em;
+  cursor: pointer;
+  margin-bottom: 10px; /* 텍스트와 캘린더 사이 간격 */
+  align-self: flex-end;
+  transition: color 0.3s;
+}
+
+.add-event-text:hover,
+.add-event-text:focus {
+  color: var(--color-grey);
 }
 
 .react-calendar {
@@ -58,12 +74,25 @@
 
 .react-calendar__tile {
   text-align: start;
-  height: 90px;
+  height: 95px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   position: relative;
+}
+
+/*추가된 이벤트*/
+.react-calendar__tile .event {
+  position: absolute;
+  top: 30px;
+  left: 5px;
+  right: 5px;
+  background-color: var(--color-yellow1);
+  color: var(--color-text);
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 12px;
 }
 
 .react-calendar__tile:enabled:hover,
