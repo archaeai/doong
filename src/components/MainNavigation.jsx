@@ -1,7 +1,12 @@
-import { Form, NavLink } from "react-router-dom";
+import { Form, NavLink, useRouteLoaderData } from "react-router-dom";
 import "./MainNavigation.css";
 
 export default function MainNavigation() {
+  const token = useRouteLoaderData("root");
+
+  if (!token) {
+    return null;
+  }
   return (
     <nav className="main-navigation">
       <ul>

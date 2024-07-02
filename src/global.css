@@ -24,6 +24,17 @@ body {
   --color-card-background-alt: #fffae2; /* 카드 대체 배경색 */
   --color-border: #d7b977; /* 테두리 색상 */
   --color-card-border: #feebb5; /* 카드 테두리 */
+
+  /* 색상 이름 변경 */
+  --color-grey: #808080;
+  --color-navy: #2c3e50;
+  --color-blue: #add8e6;
+  --color-mint: #dff0e6;
+  --color-pink: #ffc0cb;
+  --color-yellow1: #fffae2;
+  --color-yellow2: #feebb5;
+  --color-brown: #d7b977;
+  --color-ivory: #fffffa;
 }
 
 body {

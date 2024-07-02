@@ -9,63 +9,46 @@ import SettingsPage from "./pages/Settings";
 import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
 import RootLayout from "./pages/Root";
-import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 import { signInAction } from "./actions/signInAction";
 import { signUpAction } from "./actions/signUpAction";
 import { action as logoutAction } from "./pages/Logout";
+import { checkAuthLoader, tokenLoader } from "./utils/auth";
 
 import { CatProvider } from "./contexts/CatContext";
 import { DiaryProvider } from "./contexts/DiaryContext";
-import { AuthProvider } from "./contexts/AuthContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ProtectedRoute>
-        <RootLayout />
-      </ProtectedRoute>
-    ),
+    element: <RootLayout />,
+    // errorElement: <ErrorPage />,
+    id: "root",
+    loader: tokenLoader,
     children: [
       {
         index: true,
-        element: (
-          <ProtectedRoute>
-            <HomePage />
-          </ProtectedRoute>
-        ),
+        element: <HomePage />,
+        loader: checkAuthLoader,
       },
       {
         path: "calendar",
-        element: (
-          <ProtectedRoute>
-            <CalendarPage />
-          </ProtectedRoute>
-        ),
+        element: <CalendarPage />,
+        loader: checkAuthLoader,
       },
       {
         path: "diary",
-        element: (
-          <ProtectedRoute>
-            <DiaryPage />
-          </ProtectedRoute>
-        ),
+        element: <DiaryPage />,
+        loader: checkAuthLoader,
       },
       {
         path: "report",
-        element: (
-          <ProtectedRoute>
-            <ReportPage />
-          </ProtectedRoute>
-        ),
+        element: <ReportPage />,
+        loader: checkAuthLoader,
       },
       {
         path: "settings",
-        element: (
-          <ProtectedRoute>
-            <SettingsPage />
-          </ProtectedRoute>
-        ),
+        element: <SettingsPage />,
+        loader: checkAuthLoader,
       },
       { path: "signin", element: <SignInPage />, action: signInAction },
       { path: "signup", element: <SignUpPage />, action: signUpAction },
@@ -80,13 +63,11 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <AuthProvider>
-        <CatProvider>
-          <DiaryProvider>
-            <RouterProvider router={router} />
-          </DiaryProvider>
-        </CatProvider>
-      </AuthProvider>
+      <CatProvider>
+        <DiaryProvider>
+          <RouterProvider router={router} />
+        </DiaryProvider>
+      </CatProvider>
     </>
   );
 }
