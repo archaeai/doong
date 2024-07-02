@@ -1,0 +1,67 @@
+/* 글로벌 스타일 */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Gaegu", cursive;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* 설정 페이지 레이아웃 */
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  background-color: var(--color-yellow1);
+  padding: 10px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar nav ul li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: var(--color-yellow1); /* 기본 색상 */
+  transition: background-color 0.3s;
+}
+
+.sidebar nav ul li:hover,
+.sidebar nav ul li.active {
+  background-color: var(--color-yellow2); /* 선택된 색상 */
+}
+
+/* 메인 콘텐츠 스타일 */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: var(--color-card-background);
+  overflow-y: auto; /* 콘텐츠가 많아지면 스크롤 가능하게 함 */
+}
+
+/* 모바일 우선 접근법 */
+@media (min-width: 768px) {
+  .settings-container {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    width: 200px;
+    height: 100%;
+  }
+
+  .content {
+    flex-grow: 1;
+    padding: 40px;
+  }
+}
