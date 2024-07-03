@@ -9,12 +9,14 @@ import UpcomingSchedule from "../components/UpcomingSchedule";
 import DailyRoutine from "../components/DailyRoutine";
 import AddCatForm from "../components/AddCatForm/AddCatForm";
 
+import "../styles/Home.css";
+
 export default function HomePage() {
   const { selectedCat, cats } = useContext(CatContext);
   const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
-    <div>
+    <div className="home-container">
       <AddHeader openModal={openModal} />
       {selectedCat ? (
         <>

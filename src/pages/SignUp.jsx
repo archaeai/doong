@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useFormState from "../hooks/useFormState";
 import { Link, Form, useActionData } from "react-router-dom";
 import { validateUserForm } from "../utils/validation";
@@ -5,6 +6,13 @@ import catImage from "../assets/cat-logo.png";
 import "../styles/AuthForm.css";
 
 export default function SignUpPage() {
+  useEffect(() => {
+    document.body.classList.add("auth");
+    return () => {
+      document.body.classList.remove("auth");
+    };
+  }, []);
+
   const { formData, handleChange, errors } = useFormState(
     {
       username: "",

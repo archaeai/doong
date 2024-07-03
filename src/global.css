@@ -32,17 +32,24 @@ body {
   --color-mint: #dff0e6;
   --color-pink: #ffc0cb;
   --color-yellow1: #fffae2;
-  --color-yellow2: #feebb5;
+  --color-yellow2: #fffacd;
+  --color-yellow3: #feebb5;
   --color-brown: #d7b977;
   --color-ivory: #fffffa;
 }
 
 body {
   font-family: "Gaegu", cursive;
-  background-color: var(--color-background);
+  background-color: var(--color-yellow1);
   color: var(--color-muted-text);
   margin: 0;
   padding: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+body.auth {
+  background-color: var(--color-mint);
 }
 
 .hidden {
