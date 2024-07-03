@@ -56,7 +56,9 @@
   background-color: var(--color-ivory);
   border-radius: 4px;
   padding: 5px 10px;
-  font-size: 1em;
+  font-family: "Gaegu", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 }
@@ -98,15 +100,18 @@
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
   background-color: var(--color-yellow2);
+  color: var(--color-navy);
 }
 
 .react-calendar__tile--now {
   background: var(--color-yellow1);
+  color: var(--color-navy);
   border: 1px solid var(--color-brown);
 }
 
 .react-calendar__tile--active {
   background: var(--color-yellow2);
+  color: var(--color-navy);
 }
 
 .react-calendar__tile div {
