@@ -50,15 +50,13 @@
 
 @media (min-width: 768px) {
   .main-navigation {
-    position: fixed;
     top: 0;
     right: 0;
     bottom: initial;
     width: auto;
     background-color: transparent;
-    display: flex;
     justify-content: flex-end;
-    padding: 1.5rem 0;
+    padding: 0.5rem 1.5rem;
   }
 
   .main-navigation ul {
