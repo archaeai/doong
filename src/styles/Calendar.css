@@ -90,7 +90,6 @@
   position: relative;
 }
 
-/*추가된 이벤트*/
 .react-calendar__tile .event {
   position: absolute;
   top: 30px;
@@ -127,17 +126,6 @@
   font-size: 1em;
 }
 
-.react-calendar__month-view__days {
-  flex: 1;
-  overflow-y: auto; /* 세로 스크롤만 */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.react-calendar__month-view__days::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
 .react-calendar__month-view__days__day--weekend {
   color: var(--color-grey);
 }
@@ -158,7 +146,6 @@
   text-decoration: none;
 }
 
-/* 태블릿 가로 이상 화면 스타일 */
 @media (min-width: 768px) {
   .calendar-container {
     top: 80px;

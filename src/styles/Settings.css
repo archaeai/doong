@@ -1,9 +1,14 @@
-/* 설정 페이지 레이아웃 */
 .settings-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+  justify-content: center;
+  height: 80vh;
+  width: 90vw;
+  margin: 3%;
+  border: solid 4px var(--color-brown);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: auto;
 }
 
 .sidebar {
@@ -21,13 +26,13 @@
   cursor: pointer;
   padding: 10px;
   border-radius: 4px;
-  background-color: var(--color-yellow1);
+  background-color: var(--color-yellow1); /* 기본 색상 */
   transition: background-color 0.3s;
 }
 
-.sidebar nav ul li:hover:not(:has(button)),
-.sidebar nav ul li.active:not(:has(button)) {
-  background-color: var(--color-yellow2);
+.sidebar nav ul li:hover,
+.sidebar nav ul li.active {
+  background-color: var(--color-yellow2); /* 선택된 색상 */
 }
 
 /* 메인 콘텐츠 스타일 */
@@ -45,7 +50,7 @@
   border: none;
   background: none;
   cursor: pointer;
-  text-align: center;
+  text-align: left;
   border-radius: 4px;
   background-color: var(--color-ivory);
   transition: background-color 0.3s;
@@ -58,6 +63,8 @@
 @media (min-width: 768px) {
   .settings-container {
     flex-direction: row;
+    position: fixed;
+    top: 50px;
   }
 
   .sidebar {
