@@ -32,13 +32,13 @@ html {
   cursor: pointer;
   padding: 10px;
   border-radius: 4px;
-  background-color: var(--color-yellow1); /* 기본 색상 */
+  background-color: var(--color-yellow1);
   transition: background-color 0.3s;
 }
 
-.sidebar nav ul li:hover,
-.sidebar nav ul li.active {
-  background-color: var(--color-yellow2); /* 선택된 색상 */
+.sidebar nav ul li:hover:not(:has(button)),
+.sidebar nav ul li.active:not(:has(button)) {
+  background-color: var(--color-yellow2);
 }
 
 /* 메인 콘텐츠 스타일 */

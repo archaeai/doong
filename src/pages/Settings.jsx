@@ -26,11 +26,22 @@ export default function SettingsPage() {
       <aside className="sidebar">
         <nav>
           <ul>
-            <li onClick={() => setSelectedMenu("userSettings")}>프로필 정보</li>
-            <li onClick={() => setSelectedMenu("profileSettings")}>
+            <li
+              className={selectedMenu === "userSettings" ? "active" : ""}
+              onClick={() => setSelectedMenu("userSettings")}
+            >
+              회원 정보
+            </li>
+            <li
+              className={selectedMenu === "profileSettings" ? "active" : ""}
+              onClick={() => setSelectedMenu("profileSettings")}
+            >
               프로필 수정
             </li>
-            <li onClick={() => setSelectedMenu("RoutineSettings")}>
+            <li
+              className={selectedMenu === "RoutineSettings" ? "active" : ""}
+              onClick={() => setSelectedMenu("RoutineSettings")}
+            >
               루틴 수정
             </li>
             <li>
