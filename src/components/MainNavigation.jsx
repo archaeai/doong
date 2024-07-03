@@ -50,11 +50,6 @@ export default function MainNavigation() {
             설정
           </NavLink>
         </li>
-        <li>
-          <Form action="/logout" method="post">
-            <button>로그아웃</button>
-          </Form>
-        </li>
       </ul>
     </nav>
   );

@@ -57,6 +57,9 @@ export default function CalendarPage() {
       <Calendar
         onChange={setDate}
         value={date}
+        next2Label={null}
+        prev2Label={null}
+        showNeighboringMonth={false}
         onClickDay={handleDateClick}
         tileContent={({ date, view }) => view === "month" && renderEvents(date)}
         formatDay={(locale, date) => date.getDate().toString()}

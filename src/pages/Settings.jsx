@@ -21,14 +21,6 @@ export default function SettingsPage() {
     }
   };
 
-  const handleLogoutClick = (event) => {
-    event.preventDefault();
-    if (window.confirm("로그아웃하시겠습니까?")) {
-      const form = event.target.closest("form"); // form 요소를 찾아서 참조
-      form.submit(); // form 요소의 submit 메서드를 호출
-    }
-  };
-
   return (
     <div className="settings-container">
       <aside className="sidebar">
@@ -43,7 +35,7 @@ export default function SettingsPage() {
             </li>
             <li>
               <Form action="/logout" method="post">
-                <span onClick={handleLogoutClick}>로그아웃</span>
+                <button className="logout-button">로그아웃</button>
               </Form>
             </li>
           </ul>

@@ -49,6 +49,22 @@ html {
   overflow-y: auto; /* 콘텐츠가 많아지면 스크롤 가능하게 함 */
 }
 
+.logout-button {
+  display: inline-block;
+  width: 100%;
+  padding: 10x;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
+  background-color: var(--color-ivory);
+  transition: background-color 0.3s;
+  color: var(--color-navy);
+  font-family: "Gaegu", cursive;
+  font-size: 16px;
+}
+
 /* 모바일 우선 접근법 */
 @media (min-width: 768px) {
   .settings-container {
