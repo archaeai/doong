@@ -1,18 +1,5 @@
-.settings-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 80vh;
-  width: 90vw;
-  margin: 3%;
-  border: solid 4px var(--color-brown);
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: auto;
-}
-
 .sidebar {
-  background-color: var(--color-yellow1);
+  background-color: var(--color-yellow2);
   padding: 10px;
 }
 
@@ -26,13 +13,13 @@
   cursor: pointer;
   padding: 10px;
   border-radius: 4px;
-  background-color: var(--color-yellow1); /* 기본 색상 */
+  background-color: var(--color-yellow2); /* 기본 색상 */
   transition: background-color 0.3s;
 }
 
 .sidebar nav ul li:hover,
 .sidebar nav ul li.active {
-  background-color: var(--color-yellow2); /* 선택된 색상 */
+  background-color: var(--color-yellow3); /* 선택된 색상 */
 }
 
 /* 메인 콘텐츠 스타일 */
@@ -59,14 +46,7 @@
   font-size: 16px;
 }
 
-/* 모바일 우선 접근법 */
 @media (min-width: 768px) {
-  .settings-container {
-    flex-direction: row;
-    position: fixed;
-    top: 50px;
-  }
-
   .sidebar {
     width: 200px;
     height: 100%;

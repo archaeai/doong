@@ -22,7 +22,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="settings-container">
+    <div className="page-content">
       <aside className="sidebar">
         <nav>
           <ul>

@@ -1,3 +1,7 @@
 export default function ReportPage() {
-  return <h1>Report</h1>;
+  return (
+    <div className="page-content">
+      <h1>통계</h1>
+    </div>
+  );
 }
