@@ -35,7 +35,7 @@ html {
   height: auto;
 }
 
-h2 {
+.auth-form-heading {
   font-family: "Gaegu", sans-serif;
   font-weight: 700;
   font-style: normal;

@@ -16,7 +16,7 @@ export default function HomePage() {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
-    <div className="page-content">
+    <div className="page-content home-page-content">
       <AddHeader openModal={openModal} />
       {selectedCat ? (
         <>

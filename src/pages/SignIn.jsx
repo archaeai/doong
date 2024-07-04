@@ -29,7 +29,7 @@ export default function SignInPage() {
       <div className="card-box">
         <img src={catImage} alt="cat-image" className="cat-image" />
         <Form method="post" action="/signin" noValidate>
-          <h2>시작하기</h2>
+          <h2 className="auth-form-heading">시작하기</h2>
           <input
             type="text"
             name="username"
