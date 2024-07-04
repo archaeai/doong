@@ -50,34 +50,38 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="calendar-container">
-      <span className="add-event-text" onClick={handleOpenAddEvent}>
-        일정 추가
-      </span>
-      <Calendar
-        onChange={setDate}
-        value={date}
-        next2Label={null}
-        prev2Label={null}
-        showNeighboringMonth={false}
-        onClickDay={handleDateClick}
-        tileContent={({ date, view }) => view === "month" && renderEvents(date)}
-        formatDay={(locale, date) => date.getDate().toString()}
-      />
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        {isAddEvent ? (
-          <AddEventForm
-            onSubmit={handleAddEvent}
-            closeModal={closeModal}
-            initialDate={selectedDate}
-          />
-        ) : (
-          <EventListModal
-            events={events[selectedDate]}
-            closeModal={closeModal}
-          />
-        )}
-      </Modal>
+    <div className="page-content calendar-page-content">
+      <div className="calendar-container">
+        <span className="add-event-text" onClick={handleOpenAddEvent}>
+          일정 추가
+        </span>
+        <Calendar
+          onChange={setDate}
+          value={date}
+          next2Label={null}
+          prev2Label={null}
+          showNeighboringMonth={false}
+          onClickDay={handleDateClick}
+          tileContent={({ date, view }) =>
+            view === "month" && renderEvents(date)
+          }
+          formatDay={(locale, date) => date.getDate().toString()}
+        />
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          {isAddEvent ? (
+            <AddEventForm
+              onSubmit={handleAddEvent}
+              closeModal={closeModal}
+              initialDate={selectedDate}
+            />
+          ) : (
+            <EventListModal
+              events={events[selectedDate]}
+              closeModal={closeModal}
+            />
+          )}
+        </Modal>
+      </div>
     </div>
   );
 }
