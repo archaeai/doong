@@ -69,11 +69,12 @@ body.auth {
 
 @media (min-width: 768px) {
   .page-content {
-    height: calc(100vh - 100px);
-    width: calc(100vw - 40px);
+    height: calc(100vh - 6.25px);
+    width: calc(100vw - 2.5rem);
     flex-direction: row;
     position: fixed;
     top: 50px;
-    margin: 3%;
+    margin: 2%;
+    padding: 1.25rem;
   }
 }
