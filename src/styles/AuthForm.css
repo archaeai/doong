@@ -13,7 +13,7 @@ html {
   }
 }
 
-.card-container {
+.auth-form-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,7 @@ html {
   width: 100%;
 }
 
-.card-box {
+.auth-form-box {
   background-color: var(--color-yellow2);
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -50,8 +50,8 @@ form {
   flex-direction: column;
 }
 
-input[type="text"],
-input[type="password"] {
+.auth-form-box [type="text"],
+.auth-form-box [type="password"] {
   font-family: "Gaegu", cursive;
   border: none;
   border-radius: 25px;
@@ -60,7 +60,7 @@ input[type="password"] {
   margin-bottom: 1.25rem;
 }
 
-form button {
+.auth-form-box button {
   font-family: "Gaegu", sans-serif;
   font-weight: 700;
   font-size: 16px;
@@ -74,7 +74,7 @@ form button {
   transition: background-color 0.3s;
 }
 
-form button:hover {
+button:hover {
   background-color: var(--color-navy);
   color: var(--color-ivory);
 }

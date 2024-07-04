@@ -38,7 +38,7 @@ export default function CatAdditionalInfo({
         {errors.neutered && <p>{errors.neutered}</p>}
       </div>
       <div>
-        <label htmlFor="weight">체중</label>
+        <label htmlFor="weight">체중 (kg)</label>
         <input
           id="weight"
           type="number"
@@ -48,7 +48,6 @@ export default function CatAdditionalInfo({
           step="0.1"
           required
         />
-        <span>kg</span>
         {errors.weight && <p>{errors.weight}</p>}
       </div>
       <div>
@@ -70,12 +69,14 @@ export default function CatAdditionalInfo({
         )}
         {errors.photo && <p>{errors.photo}</p>}
       </div>
-      <button type="button" onClick={handlePrevStep}>
-        이전
-      </button>
-      <button type="button" onClick={handleNextStep}>
-        다음
-      </button>
+      <div className="add-cat-form-button-container">
+        <button type="button" onClick={handlePrevStep}>
+          이전
+        </button>
+        <button type="button" onClick={handleNextStep}>
+          다음
+        </button>
+      </div>
     </>
   );
 }

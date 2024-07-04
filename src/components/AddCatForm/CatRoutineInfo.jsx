@@ -37,10 +37,12 @@ export default function CatRoutainInfo({
         />
         {errors.litterDate && <p>{errors.litterDate}</p>}
       </label>
-      <button type="button" onClick={handlePrevStep}>
-        이전
-      </button>
-      <button type="submit">저장</button>
+      <div className="add-cat-form-button-container">
+        <button type="button" onClick={handlePrevStep}>
+          이전
+        </button>
+        <button type="submit">저장</button>
+      </div>
     </>
   );
 }

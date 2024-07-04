@@ -25,8 +25,8 @@ export default function SignInPage() {
   const actionData = useActionData();
 
   return (
-    <div className="card-container">
-      <div className="card-box">
+    <div className="auth-form-container">
+      <div className="auth-form-box">
         <img src={catImage} alt="cat-image" className="cat-image" />
         <Form method="post" action="/signin" noValidate>
           <h2 className="auth-form-heading">시작하기</h2>

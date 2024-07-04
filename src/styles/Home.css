@@ -1,3 +1,13 @@
+.add-cat-button {
+  background-color: var(--color-blue);
+  border-radius: 20px 20px 0 0;
+  border: none;
+  padding: 10px 20px;
+  font-family: "Gaegu" sans-serif;
+  font-size: 18px;
+  color: var(--color-grey);
+}
+
 /* @media (min-width: 768px) {
   .home-page-content {
     display: flex;

@@ -5,14 +5,20 @@ export default function AddHeader({ openModal }) {
   const { cats, selectCat } = useContext(CatContext);
 
   return (
-    <header>
-      <nav>
+    <header className="add-cat-header">
+      <nav className="add-cat-nav">
         {cats.map((cat) => (
-          <button key={cat.id} onClick={() => selectCat(cat)}>
+          <button
+            className="added-cat-button"
+            key={cat.id}
+            onClick={() => selectCat(cat)}
+          >
             {cat.name}
           </button>
         ))}
-        <button onClick={openModal}>+</button>
+        <button className="add-cat-button" onClick={openModal}>
+          +
+        </button>
       </nav>
     </header>
   );

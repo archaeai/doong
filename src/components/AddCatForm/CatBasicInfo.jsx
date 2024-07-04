@@ -28,6 +28,9 @@ export default function CatBasicInfo({
       <div>
         <label htmlFor="breed">품종</label>
         <Select
+          unstyled
+          className="react-select-container"
+          classNamePrefix="react-select"
           id="breed"
           name="breed"
           options={breeds}
@@ -64,12 +67,14 @@ export default function CatBasicInfo({
           <p className="control-error">{errors.adoptDate}</p>
         )}
       </div>
-      <button type="button" onClick={closeModal}>
-        닫기
-      </button>
-      <button type="button" onClick={handleNextStep}>
-        다음
-      </button>
+      <div className="add-cat-form-button-container">
+        <button type="button" onClick={closeModal}>
+          닫기
+        </button>
+        <button type="button" onClick={handleNextStep}>
+          다음
+        </button>
+      </div>
     </>
   );
 }
