@@ -6,7 +6,7 @@ import AddEventForm from "../components/AddEventForm";
 import EventListModal from "../components/EventListModal";
 import { getLocalISODateString } from "../utils/dateUtil";
 import "react-calendar/dist/Calendar.css";
-import "../styles/Calendar.css";
+import "../styles/Calendar_ver2.css";
 
 export default function CalendarPage() {
   const [date, setDate] = useState(new Date());
