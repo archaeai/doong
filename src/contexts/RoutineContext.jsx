@@ -22,9 +22,8 @@ export const RoutineProvider = ({ children }) => {
   const [statistics, setStatistics] = useState({});
 
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const toggleFormVisibility = () => {
-    setIsFormVisible(!isFormVisible);
-  };
+  const openForm = () => setIsFormVisible(true);
+  const closeForm = () => setIsFormVisible(false);
 
   // 데일리 루틴 추가 함수(설정페이지에서 추가)
   const addDailyRoutine = (newRoutine) => {
@@ -111,7 +110,8 @@ export const RoutineProvider = ({ children }) => {
         addUpcomingTodo,
         addMonthlyRoutine,
         updateStatistics,
-        toggleFormVisibility,
+        openForm,
+        closeForm,
       }}
     >
       {children}

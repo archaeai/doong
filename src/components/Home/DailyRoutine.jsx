@@ -9,7 +9,8 @@ export default function DailyRoutine() {
     addTodos,
     toggleTodoCompletion,
     isFormVisible,
-    toggleFormVisibility,
+    openForm,
+    closeForm,
   } = useContext(RoutineContext);
 
   const allTodos = [...todayTodos, ...addTodos];
@@ -18,14 +19,11 @@ export default function DailyRoutine() {
     <div className="home-schedule__container">
       <div className="home-schedule__add-header">
         <h3 className="home-schedule__heading">오늘 할일</h3>
-        <button
-          className="home-schedule__add-button"
-          onClick={toggleFormVisibility}
-        >
+        <button className="home-schedule__add-button" onClick={openForm}>
           +
         </button>
       </div>
-      {isFormVisible && <AddTodoForm />}
+      {isFormVisible && <AddTodoForm closeForm={closeForm} />}
       <ul className="checklist">
         {allTodos.map((todo) => (
           <li className="checklist__li" key={todo.id}>

@@ -55,7 +55,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.938rem;
 }
 
 .home-schedule__heading {
@@ -77,6 +76,7 @@
 .home-schedule__add-button:hover {
   background-color: transparent;
   color: var(--color-brown);
+  cursor: pointer;
 }
 
 .checklist {

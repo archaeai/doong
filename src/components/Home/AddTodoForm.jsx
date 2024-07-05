@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { RoutineContext } from "../../contexts/RoutineContext";
+import "../../styles/AddTodoForm.css";
 
-export default function AddTodoForm() {
+export default function AddTodoForm({ closeForm }) {
   const [newTodo, setNewTodo] = useState("");
   const { addCustomTodo } = useContext(RoutineContext);
 
@@ -10,6 +11,7 @@ export default function AddTodoForm() {
     if (newTodo.trim()) {
       addCustomTodo(newTodo);
       setNewTodo("");
+      closeForm();
     }
   };
 
@@ -24,6 +26,9 @@ export default function AddTodoForm() {
       />
       <button type="submit" className="add-todo-button">
         추가
+      </button>
+      <button type="button" className="cancel-todo-button" onClick={closeForm}>
+        취소
       </button>
     </form>
   );
