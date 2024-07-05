@@ -18,7 +18,7 @@
   margin-bottom: 1.25rem;
 }
 
-.cat-profile-container {
+.cat-profile {
   display: flex;
   flex-direction: row;
   padding: 0.625rem;
@@ -32,6 +32,13 @@
   height: 6.25rem;
   margin-right: 0.625rem;
   border-radius: 20px;
+}
+
+.cat-profile p {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
 }
 
 .home-schedule__container {
@@ -49,7 +56,61 @@
   text-decoration: underline;
   text-decoration-color: var(--color-brown);
   text-decoration-thickness: 4px;
+  margin-bottom: 0.938rem;
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.checklist__li {
+  display: flex;
+  align-items: center;
   margin-bottom: 0.625rem;
+}
+
+.checklist__box {
+  display: none;
+}
+
+.checklist__label {
+  position: relative;
+  padding-left: 2rem;
+  cursor: pointer;
+}
+
+/* 커스텀 체크박스의 기본 상태 */
+.checklist__label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border: 2.5px solid var(--color-grey);
+  border-radius: 0.25rem;
+  background: var(color-ivory);
+}
+
+/* 체크박스가 체크된 상태 */
+.checklist__box:checked + .checklist__label:after {
+  content: ""; /* 내용 없음 */
+  position: absolute; /* 절대 위치 지정 */
+  left: 0.5rem; /* 체크 표시 위치 설정 */
+  top: 30%; /* 수직 가운데 정렬 */
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 0.5rem; /* 체크 표시 너비 설정 */
+  height: 0.9rem; /* 체크 표시 높이 설정 */
+  border: solid var(--color-maroon); /* 체크 표시 색상 설정 */
+  border-width: 0 4px 4px 0; /* 테두리 설정 */
+}
+
+.checked {
+  text-decoration: line-through; /* 취소선 적용 */
+  text-decoration-color: var(--color-maroon); /* 취소선 색상 설정 */
+  text-decoration-thickness: 3px; /* 취소선 두께 설정 */
 }
 
 @media (min-width: 768px) {

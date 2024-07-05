@@ -2,7 +2,7 @@ import defaultProfile from "../../assets/cat-image.png";
 
 export default function CatProfile() {
   return (
-    <div className="cat-profile-container">
+    <div className="cat-profile">
       <div className="profile-img-container">
         <img src={defaultProfile} />
       </div>
