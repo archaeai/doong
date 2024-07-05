@@ -51,12 +51,32 @@
   justify-content: flex-start;
 }
 
+.home-schedule__add-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.938rem;
+}
+
 .home-schedule__heading {
   color: var(--color-navy);
   text-decoration: underline;
   text-decoration-color: var(--color-brown);
   text-decoration-thickness: 4px;
   margin-bottom: 0.938rem;
+}
+
+.home-schedule__add-button {
+  background-color: transparent;
+  color: var(--color-navy);
+  border: none;
+  font-family: "Gaegu" sans-serif;
+  font-size: 18px;
+  padding: 0.625rem;
+}
+.home-schedule__add-button:hover {
+  background-color: transparent;
+  color: var(--color-brown);
 }
 
 .checklist {

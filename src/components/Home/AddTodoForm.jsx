@@ -19,7 +19,7 @@ export default function AddTodoForm() {
         type="text"
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
-        placeholder="새 할일 입력"
+        placeholder="오늘 할 일을 추가해주세요."
         className="add-todo-input"
       />
       <button type="submit" className="add-todo-button">
