@@ -74,7 +74,7 @@ body.auth {
     width: calc(100vw - 2.5rem);
     max-height: calc(100vh - 6.25rem);
     flex-direction: row;
-    position: fixed;
+    position: relative;
     top: 3.125rem;
     margin: 2%;
     padding: 1.25rem;
