@@ -16,7 +16,7 @@ export default function DailyRoutine() {
   const allTodos = [...todayTodos, ...addTodos];
 
   return (
-    <div className="home-schedule__container">
+    <div className="home-schedule__container todo-list-container">
       <div className="home-schedule__add-header">
         <h3 className="home-schedule__heading">오늘 할일</h3>
         <button className="home-schedule__add-button" onClick={openForm}>

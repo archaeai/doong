@@ -18,13 +18,17 @@ export default function HomePage() {
   return (
     <div className="page-content home-page-content">
       <div className="header-container">
-        <AddHeader openModal={openModal} />
-        <CatProfile cat={selectedCat} />
+        <div className="header-profile-container">
+          <AddHeader openModal={openModal} />
+          <CatProfile cat={selectedCat} />
+        </div>
+        <RecentSchedule />
       </div>
-      <RecentSchedule />
-      <UpcomingSchedule cat={selectedCat} />
-      <DailyRoutine cat={selectedCat} />
-
+      <div className="divider"></div>
+      <div className="home-content-container">
+        <UpcomingSchedule cat={selectedCat} />
+        <DailyRoutine cat={selectedCat} />
+      </div>
       <AddCatForm isOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
