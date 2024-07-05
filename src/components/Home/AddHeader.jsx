@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CatContext } from "../contexts/CatContext";
+import { CatContext } from "../../contexts/CatContext";
 
 export default function AddHeader({ openModal }) {
   const { cats, selectCat } = useContext(CatContext);
@@ -16,8 +16,8 @@ export default function AddHeader({ openModal }) {
             {cat.name}
           </button>
         ))}
-        <button className="add-cat-button" onClick={openModal}>
-          +
+        <button className="add-cat-nav__button" onClick={openModal}>
+          추가하기
         </button>
       </nav>
     </header>

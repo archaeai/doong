@@ -2,8 +2,8 @@ import React from "react";
 
 export default function DailyRoutine() {
   return (
-    <div className="daily-routine">
-      <h3>오늘 할일</h3>
+    <div className="home-schedule__container">
+      <h3 className="home-schedule__heading">오늘 할일</h3>
       <ul>
         <li>밥</li>
         <li>물</li>
