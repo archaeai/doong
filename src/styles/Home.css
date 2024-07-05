@@ -167,11 +167,18 @@
 
   .todo-list-container {
     overflow-y: auto;
-    max-height: 50vh;
+    max-height: 19rem;
     scrollbar-width: none;
   }
   /* 웹킷 기반 브라우저에서 스크롤바 숨김 */
   .page-content::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .todo-list-container {
+    overflow-y: auto;
+    max-height: 50vh;
   }
 }
