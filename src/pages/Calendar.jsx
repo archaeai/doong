@@ -4,7 +4,7 @@ import useModal from "../hooks/useModal";
 import Modal from "../UI/Modal";
 import AddEventForm from "../components/AddEventForm";
 import EventListModal from "../components/EventListModal";
-import { getLocalISODateString } from "../utils/dateUtil";
+import { getLocalISODateString, getDateRange } from "../utils/dateUtil";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Calendar_ver2.css";
 
@@ -14,6 +14,7 @@ export default function CalendarPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [selectedDate, setSelectedDate] = useState("");
   const [isAddEvent, setIsAddEvent] = useState(false);
+  const { minDate, maxDate } = getDateRange(5);
 
   const handleAddEvent = (formData) => {
     const { selectedDate, eventTitle } = formData;
@@ -58,6 +59,8 @@ export default function CalendarPage() {
         <Calendar
           onChange={setDate}
           value={date}
+          minDate={minDate}
+          maxDate={maxDate}
           next2Label={null}
           prev2Label={null}
           showNeighboringMonth={false}
