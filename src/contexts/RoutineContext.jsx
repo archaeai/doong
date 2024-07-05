@@ -21,7 +21,7 @@ export const RoutineProvider = ({ children }) => {
   const [monthlyRoutines, setMonthlyRoutines] = useState([]);
   const [statistics, setStatistics] = useState({});
 
-  // 데일리 루틴 추가 함수
+  // 데일리 루틴 추가 함수(설정페이지에서 추가)
   const addDailyRoutine = (newRoutine) => {
     const newId = dailyRoutines.length
       ? dailyRoutines[dailyRoutines.length - 1].id + 1
@@ -32,7 +32,7 @@ export const RoutineProvider = ({ children }) => {
     ]);
   };
 
-  // 데일리 루틴 텍스트 수정 함수
+  // 데일리 루틴 텍스트 수정 함수(설정페이지에서 수정)
   const updateDailyRoutine = (id, newText) => {
     const updatedRoutines = dailyRoutines.map((routine) =>
       routine.id === id ? { ...routine, task: newText } : routine
@@ -63,7 +63,7 @@ export const RoutineProvider = ({ children }) => {
 
   // 사용자 추가 할 일 추가 함수
   const addCustomTodo = (newTodo) => {
-    const newId = addTodos.length ? addTodos[addTodos.length - 1].id + 1 : 1;
+    const newId = addTodos.length ? addTodos[addTodos.length - 1].id + 1 : 1000;
     setAddTodos([...addTodos, { id: newId, task: newTodo, done: false }]);
   };
 
