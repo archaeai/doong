@@ -34,11 +34,7 @@ async def read_cat_profile(cat_profile_id: int, db: Session = Depends(get_db),
     return cat_profile
 
 
-UPLOAD_DIR = "app/uploads/"
 
-# Ensure the upload directory exists
-if not os.path.exists(UPLOAD_DIR):
-    os.makedirs(UPLOAD_DIR)
 
 
 @router.post("/", response_model=CatProfileResponse, status_code=status.HTTP_201_CREATED,
@@ -46,13 +42,24 @@ if not os.path.exists(UPLOAD_DIR):
              description="Create a new cat profile with the given information and an optional profile image.")
 async def create_cat_profile(
         name: str,
+        breed: str,
+        gender: str,
         birthday: str,
+        adopted_day: str,
+        vaccine_date: str,
+        heart_warm_date: str,
+        litter_date: str,
+        neutered: bool,
         weight: float,
-        user_id: str,
         photo: UploadFile = File(None),
         db: Session = Depends(get_db),
         current_user: str = Depends(get_current_user)
 ):
+    UPLOAD_DIR = f"uploads/{current_user}/"
+
+    # Ensure the upload directory exists
+    if not os.path.exists(UPLOAD_DIR):
+        os.makedirs(UPLOAD_DIR)
     # Save the uploaded file if it exists
     photo_url = None
     if photo:
@@ -64,9 +71,16 @@ async def create_cat_profile(
 
     cat_profile = CatProfileCreate(
         name=name,
+        breed=breed,
+        gender=gender,
         birthday=birthday,
+        adopted_day=adopted_day,
+        vaccine_date=vaccine_date,
+        heart_warm_date=heart_warm_date,
+        litter_date=litter_date,
+        neutered=neutered,
         weight=weight,
-        user_id=user_id,
+        user_id=current_user,
         photo_url=photo_url
     )
     return crud_cat_profile.create_cat_profile(db=db, cat_profile=cat_profile)

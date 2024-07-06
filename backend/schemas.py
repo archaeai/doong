@@ -24,7 +24,14 @@ class Token(BaseModel):
 
 class CatProfileBase(BaseModel):
     name: str
+    breed: str
+    gender: str
     birthday: Optional[date]
+    adopted_day: Optional[date]
+    vaccine_date: Optional[date]
+    heart_warm_date: Optional[date]
+    litter_date: Optional[date]
+    neutered: Optional[bool]
     weight: Optional[float]
     photo_url: Optional[str]
     user_id: str
