@@ -27,7 +27,7 @@ export default function SettingsPage() {
     <>
       <h1>{currentDate}</h1>
 
-      <div className="page-content">
+      <div className="page-content settings-page-content">
         <aside className="sidebar">
           <nav>
             <ul>

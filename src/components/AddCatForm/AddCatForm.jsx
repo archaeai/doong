@@ -44,23 +44,28 @@ export default function AddCatForm({ isOpen, closeModal }) {
   }, [isOpen]);
 
   const handleAddCat = async (data) => {
+    const params = new URLSearchParams({
+      name: data.name,
+      birthday: data.birthDate,
+      weight: data.weight,
+      user_id: data.user_id, // 현재 사용자 ID 추가
+    });
     const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("birthday", data.birthDate);
-    formData.append("weight", data.weight);
-    formData.append("user_id", data.user_id); // 현재 사용자 ID 추가
     if (data.photo) {
       formData.append("photo", data.photo);
     }
 
     try {
-      const response = await fetch("http://127.0.0.1/api/cat_profiles", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // 필요한 경우 토큰 추가
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `http://127.0.0.1/api/cat_profiles/?${params.toString()}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // 필요한 경우 토큰 추가
+          },
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Network response was not ok");

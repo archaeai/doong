@@ -1,3 +1,7 @@
+.settings-page-content {
+  padding: 0;
+}
+
 .sidebar {
   background-color: var(--color-yellow2);
   padding: 10px;
@@ -44,6 +48,17 @@
   color: var(--color-navy);
   font-family: "Gaegu", cursive;
   font-size: 16px;
+}
+
+.user-settings__ul {
+  list-style: none;
+  padding: 0;
+}
+
+.user-settings__id-label {
+  margin-right: 20px;
+  font-size: 18px;
+  color: var(--color-navy);
 }
 
 @media (min-width: 768px) {

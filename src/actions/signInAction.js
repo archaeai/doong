@@ -31,8 +31,7 @@ export async function signInAction({ request }) {
 
     console.log("로그인 성공:", resData);
 
-    const token = resData.token;
-
+    const token = resData.access_token;
     localStorage.setItem("token", token);
 
     return redirect("/");
