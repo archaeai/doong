@@ -39,7 +39,7 @@ export async function signInAction({ request }) {
   } catch (error) {
     console.error("로그인 중 에러 발생:", error);
     return json(
-      { errors: { general: "서버 오류 발생. 잠시 후 다시 시도해 주세요." } },
+      { error: { general: "서버 오류 발생. 잠시 후 다시 시도해 주세요." } },
       { status: 500 }
     );
   }

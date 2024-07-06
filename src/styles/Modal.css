@@ -61,7 +61,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: var(--color-grey);
   font-family: "Gaegu", cursive;
-  margin-bottom: 1.25rem;
 }
 
 .react-select__value-container {
@@ -105,7 +104,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: var(--color-grey);
   font-family: "Gaegu", cursive;
-  margin-bottom: 1.25rem;
 }
 
 .modal button,
@@ -153,6 +151,16 @@
   .modal-content {
     height: 560px;
     padding: 1.875rem;
+  }
+
+  .add-cat-form-button-container {
+    position: relative;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    padding: 0.625rem 0 0.625rem 0;
+    margin-top: 1.25rem;
+    box-sizing: border-box;
   }
 }
 

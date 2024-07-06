@@ -82,8 +82,3 @@ textarea {
 .button:hover {
   background-color: #0056b3;
 }
-
-.control-error {
-  color: red;
-  font-size: 0.875rem;
-}

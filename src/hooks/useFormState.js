@@ -37,7 +37,7 @@ export default function useFormState(initialState, validateStep, formType) {
   };
 
   const validateForm = () => {
-    const validationErrors = validateStep(formData, formType);
+    const validationErrors = validateStep(formData, step);
     setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
   };

@@ -25,7 +25,7 @@ export default function CatAdditionalInfo({
           onChange={handleChange}
           selectedValue={catData.gender}
         />
-        {errors.gender && <p>{errors.gender}</p>}
+        {errors.gender && <p className="control-error">{errors.gender}</p>}
       </div>
       <div>
         <RadioButton
@@ -35,7 +35,7 @@ export default function CatAdditionalInfo({
           onChange={handleChange}
           selectedValue={catData.neutered}
         />
-        {errors.neutered && <p>{errors.neutered}</p>}
+        {errors.neutered && <p className="control-error">{errors.neutered}</p>}
       </div>
       <div>
         <label htmlFor="weight">체중 (kg)</label>
@@ -48,7 +48,7 @@ export default function CatAdditionalInfo({
           step="0.1"
           required
         />
-        {errors.weight && <p>{errors.weight}</p>}
+        {errors.weight && <p className="control-error">{errors.weight}</p>}
       </div>
       <div>
         <label htmlFor="weight">사진을 선택해주세요</label>
@@ -67,7 +67,7 @@ export default function CatAdditionalInfo({
             style={{ width: "100px", height: "100px", marginTop: "8px" }}
           />
         )}
-        {errors.photo && <p>{errors.photo}</p>}
+        {errors.photo && <p className="control-error">{errors.photo}</p>}
       </div>
       <div className="add-cat-form-button-container">
         <button type="button" onClick={handlePrevStep}>
