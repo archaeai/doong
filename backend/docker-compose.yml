@@ -8,24 +8,26 @@ services:
     environment:
       - PYTHONPATH=/app
     volumes:
-      - ./uploads:/app/uploads
+      - ./uploads:/backend/uploads
     expose:
       - 8000
     networks:
       - app-network
+    user: root
 
   nginx:
     image: nginx:alpine
     container_name: nginx
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./uploads:/app/uploads
+      - ./uploads:/backend/uploads
     ports:
       - "80:80"
     depends_on:
       - backend
     networks:
       - app-network
+    user: root
 
 networks:
   app-network:
