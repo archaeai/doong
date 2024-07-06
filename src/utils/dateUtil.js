@@ -1,10 +1,44 @@
-/**
- * 주어진 날짜 객체를 로컬 타임존의 ISO 형식 날짜 문자열로 변환합니다.
- * @param {Date} date - 변환할 날짜 객체
- * @returns {string} 로컬 타임존의 ISO 형식 날짜 문자열 (YYYY-MM-DD)
- */
+// 날짜 객체를 로컬타임존의 ISO 날짜 문자열로 변환
 export const getLocalISODateString = (date) => {
-  const tzOffset = date.getTimezoneOffset() * 60000; // 타임존 오프셋을 밀리초 단위로 변환
-  const localISOTime = new Date(date - tzOffset).toISOString().slice(0, 10); // 오프셋을 적용하고 날짜 부분만 추출
+  const tzOffset = date.getTimezoneOffset() * 60000;
+  const localISOTime = new Date(date - tzOffset).toISOString().slice(0, 10);
   return localISOTime;
+};
+
+const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+
+// 날짜 포맷 함수
+export const formatDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const dayOfWeek = daysOfWeek[date.getDay()];
+
+  return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
+};
+
+// 현재 날짜 가져오기
+export const getCurrentLocalISODateString = () => {
+  return getLocalISODateString(new Date());
+};
+
+// 현재 날짜 포맷된 문자열 가져오기
+export const getFormattedCurrentDate = () => {
+  return formatDate(new Date());
+};
+
+// midDate, maxDate 설정(캘린더에서 사용)
+export const getDateRange = (years) => {
+  const today = new Date();
+  const minDate = new Date(
+    today.getFullYear() - years,
+    today.getMonth(),
+    today.getDate()
+  );
+  const maxDate = new Date(
+    today.getFullYear() + years,
+    today.getMonth(),
+    today.getDate()
+  );
+  return { minDate, maxDate };
 };

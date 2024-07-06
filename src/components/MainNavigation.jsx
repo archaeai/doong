@@ -1,5 +1,5 @@
-import { Form, NavLink, useRouteLoaderData } from "react-router-dom";
-import "./MainNavigation.css";
+import { NavLink, useRouteLoaderData } from "react-router-dom";
+import "../styles/MainNavigation.css";
 
 export default function MainNavigation() {
   const token = useRouteLoaderData("root");
@@ -13,7 +13,7 @@ export default function MainNavigation() {
         <li>
           <NavLink
             to="/"
-            className={({ isActive }) => (isActive ? ".active" : undefined)}
+            className={({ isActive }) => (isActive ? "active" : undefined)}
           >
             홈
           </NavLink>
@@ -21,15 +21,15 @@ export default function MainNavigation() {
         <li>
           <NavLink
             to="/calendar"
-            className={({ isActive }) => (isActive ? ".active" : undefined)}
+            className={({ isActive }) => (isActive ? "active" : undefined)}
           >
-            캘린더
+            달력
           </NavLink>
         </li>
         <li>
           <NavLink
             to="/diary"
-            className={({ isActive }) => (isActive ? ".active" : undefined)}
+            className={({ isActive }) => (isActive ? "active" : undefined)}
           >
             일기
           </NavLink>
@@ -37,7 +37,7 @@ export default function MainNavigation() {
         <li>
           <NavLink
             to="/report"
-            className={({ isActive }) => (isActive ? ".active" : undefined)}
+            className={({ isActive }) => (isActive ? "active" : undefined)}
           >
             통계
           </NavLink>
@@ -45,15 +45,10 @@ export default function MainNavigation() {
         <li>
           <NavLink
             to="/settings"
-            className={({ isActive }) => (isActive ? ".active" : undefined)}
+            className={({ isActive }) => (isActive ? "active" : undefined)}
           >
             설정
           </NavLink>
-        </li>
-        <li>
-          <Form action="/logout" method="post">
-            <button>로그아웃</button>
-          </Form>
         </li>
       </ul>
     </nav>

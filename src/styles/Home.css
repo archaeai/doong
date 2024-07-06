@@ -1,0 +1,176 @@
+.home-page-content {
+  padding: 0.938rem;
+}
+
+.add-cat-nav__button {
+  background-color: var(--color-blue);
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px 20px 0 0;
+  border: none;
+  padding: 4px 8px 0 8px;
+  font-family: "Gaegu";
+  font-size: 18px;
+  color: var(--color-navy);
+  margin: 3px 0 0 20px;
+}
+
+.header-profile-container {
+  margin-bottom: 1.25rem;
+}
+
+.cat-profile {
+  display: flex;
+  flex-direction: row;
+  padding: 0.625rem;
+  border: 10px solid var(--color-blue);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-img-container img {
+  width: 6.25rem;
+  height: 6.25rem;
+  margin-right: 0.625rem;
+  border-radius: 20px;
+}
+
+.cat-profile p {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+
+.home-schedule__container {
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.938rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.home-schedule__add-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-schedule__heading {
+  color: var(--color-navy);
+  text-decoration: underline;
+  text-decoration-color: var(--color-brown);
+  text-decoration-thickness: 4px;
+  margin-bottom: 0.938rem;
+}
+
+.home-schedule__add-button {
+  background-color: transparent;
+  color: var(--color-navy);
+  border: none;
+  font-family: "Gaegu" sans-serif;
+  font-size: 18px;
+  padding: 0.625rem;
+}
+.home-schedule__add-button:hover {
+  background-color: transparent;
+  color: var(--color-brown);
+  cursor: pointer;
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.checklist__li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+
+/* 기본 체크박스 스타일 숨김 */
+.checklist__box {
+  display: none;
+}
+
+/* 커스텀 체크박스 스타일 제거 */
+.checklist__label {
+  position: relative;
+  padding-left: 2rem;
+  cursor: pointer;
+}
+
+.checklist__label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border: 2.5px solid var(--color-grey);
+  border-radius: 0.25rem;
+  background: var(--color-ivory);
+}
+
+/* 체크박스가 체크된 상태 */
+.checklist__box:checked + .checklist__label:after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  top: 30%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 0.5rem;
+  height: 0.9rem;
+  border: solid var(--color-maroon);
+  border-width: 0 4px 4px 0;
+}
+
+.checked {
+  text-decoration: line-through;
+  text-decoration-color: var(--color-maroon);
+  text-decoration-thickness: 3px;
+}
+
+@media (min-width: 768px) {
+  .home-page-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .header-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .header-profile-container {
+    margin-bottom: 1.25rem;
+  }
+  .home-content-container {
+    width: 50%;
+  }
+
+  .todo-list-container {
+    max-height: 19rem;
+  }
+
+  .checklist {
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  /* 웹킷 기반 브라우저에서 스크롤바 숨김 */
+  .page-content::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .todo-list-container {
+    overflow-y: auto;
+    max-height: 50vh;
+  }
+}

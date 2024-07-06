@@ -54,7 +54,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1/api/cat_profile", {
+      const response = await fetch("http://127.0.0.1/api/cat_profiles", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`, // 필요한 경우 토큰 추가

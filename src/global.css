@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400;700&display=swap");
 
+/* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+
 * {
   margin: 0;
   padding: 0;
@@ -9,40 +11,54 @@
 html,
 body {
   height: 100%;
+  overflow: hidden;
 }
 
 :root {
-  --color-background: #dff0e6; /* 기본 배경색 (로그인 폼, 로그인 후 배경색 동일) */
-  --color-alternate-background: #fffae2; /* 로그인 후 다른 페이지 배경색 */
-  --color-primary: #add8e6; /* 주요 색상 */
-  --color-secondary: #ffc0cb; /* 보조 색상 */
-  --color-text: #2c3e50; /* 본문 텍스트 색상 */
-  --color-muted-text: #808080; /* 비활성화된 텍스트 색상 */
-
-  /* 특정 요소 색상 */
-  --color-card-background: #fffffa; /* 카드 배경색 */
-  --color-card-background-alt: #fffae2; /* 카드 대체 배경색 */
-  --color-border: #d7b977; /* 테두리 색상 */
-  --color-card-border: #feebb5; /* 카드 테두리 */
-
-  /* 색상 이름 변경 */
   --color-grey: #808080;
   --color-navy: #2c3e50;
   --color-blue: #add8e6;
   --color-mint: #dff0e6;
   --color-pink: #ffc0cb;
+  --color-maroon: #b03060;
   --color-yellow1: #fffae2;
-  --color-yellow2: #feebb5;
+  --color-yellow2: #fffacd;
+  --color-yellow3: #feebb5;
   --color-brown: #d7b977;
   --color-ivory: #fffffa;
 }
 
 body {
   font-family: "Gaegu", cursive;
-  background-color: var(--color-background);
-  color: var(--color-muted-text);
+  background-color: var(--color-yellow1);
+  color: var(--color-grey);
   margin: 0;
   padding: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+body.auth {
+  background-color: var(--color-mint);
+}
+
+h1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1.25rem;
+}
+
+.divider {
+  width: 4px;
+  background-image: linear-gradient(
+    var(--color-brown) 50%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: right;
+  background-size: 4px 16px; /* 점선의 간격 조절 */
+  background-repeat: repeat-y;
 }
 
 .hidden {
@@ -52,3 +68,71 @@ body {
 .text-center {
   text-align: center;
 }
+/* 제목 추가 안했을 때
+.page-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 80vh;
+  margin: 2.5rem 3%;
+  background-color: var(--color-ivory);
+  border: solid 4px var(--color-brown);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  max-height: calc(100vh - 9rem);
+} */
+.page-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 75vh;
+  margin: 0 3% 1rem 3%;
+  background-color: var(--color-ivory);
+  border: solid 4px var(--color-brown);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  max-height: calc(100vh - 9rem);
+}
+/* 웹킷 기반 브라우저에서 스크롤바 숨김 */
+.page-content::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    justify-content: flex-start;
+    text-align: start;
+    margin: 1.25rem 2% 0 2%;
+  }
+  .page-content {
+    height: 85vh;
+    width: calc(100vw - 2.5rem);
+    max-height: calc(100vh - 6.25rem);
+    flex-direction: row;
+    position: relative;
+    margin: 0 2% 2% 2%;
+    padding: 1.25rem;
+  }
+  /* 제목 추가 안했을 때
+  .page-content {
+    height: 90vh;
+    width: calc(100vw - 2.5rem);
+    max-height: calc(100vh - 6.25rem);
+    flex-direction: row;
+    position: relative;
+    top: 3.125rem;
+    margin: 2%;
+    padding: 1.25rem;
+  } */
+}
+/* @media (min-width: 1024px) {
+  .page-content {
+    height: calc(100vh - 6.25px);
+  }
+} */
