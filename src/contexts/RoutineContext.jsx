@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 // Context 생성
 export const RoutineContext = createContext();
@@ -44,6 +45,12 @@ export const RoutineProvider = ({ children }) => {
     setDailyRoutines(updatedRoutines);
   };
 
+  // 월간 루틴 추가 함수(설정페이지에서 추가)
+  const addMonthlyRoutine = (newRoutine) => {
+    const newId = uuidv4();
+    setMonthlyRoutines([...monthlyRoutines, { id: newId, newRoutine }]);
+  };
+
   // 할 일 완료 상태 업데이트 함수
   const toggleTodoCompletion = (todoType, id) => {
     let updatedTodos;
@@ -67,18 +74,14 @@ export const RoutineProvider = ({ children }) => {
 
   // 사용자 추가 할 일 추가 함수
   const addCustomTodo = (newTodo) => {
-    const newId = addTodos.length ? addTodos[addTodos.length - 1].id + 1 : 1000;
+    const newId = uuidv4();
     setAddTodos([...addTodos, { id: newId, task: newTodo, done: false }]);
   };
 
   // 다가오는 일정 업데이트 함수
   const addUpcomingTodo = (newTodo) => {
-    setUpcomingTodos([...upcomingTodos, newTodo]);
-  };
-
-  // 월간 루틴 추가 함수
-  const addMonthlyRoutine = (newRoutine) => {
-    setMonthlyRoutines([...monthlyRoutines, newRoutine]);
+    const newId = uuidv4();
+    setUpcomingTodos([...upcomingTodos, { id: newId, ...newTodo }]);
   };
 
   // 통계 업데이트 함수

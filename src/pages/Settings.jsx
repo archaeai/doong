@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Form } from "react-router-dom";
+import useCurrentDate from "../hooks/useCurrentDate";
 import UserSettings from "../components/Settings/UserSettings";
 import ProfileSettings from "../components/Settings/ProfileSettings";
 import RoutineSettings from "../components/Settings/RoutineSettings";
@@ -7,6 +8,7 @@ import "../styles/Settings.css";
 
 export default function SettingsPage() {
   const [selectedMenu, setSelectedMenu] = useState("userSettings");
+  const currentDate = useCurrentDate();
 
   const renderContent = () => {
     switch (selectedMenu) {
@@ -22,37 +24,41 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="page-content">
-      <aside className="sidebar">
-        <nav>
-          <ul>
-            <li
-              className={selectedMenu === "userSettings" ? "active" : ""}
-              onClick={() => setSelectedMenu("userSettings")}
-            >
-              회원 정보
-            </li>
-            <li
-              className={selectedMenu === "profileSettings" ? "active" : ""}
-              onClick={() => setSelectedMenu("profileSettings")}
-            >
-              프로필 수정
-            </li>
-            <li
-              className={selectedMenu === "RoutineSettings" ? "active" : ""}
-              onClick={() => setSelectedMenu("RoutineSettings")}
-            >
-              루틴 수정
-            </li>
-            <li>
-              <Form action="/logout" method="post">
-                <button className="logout-button">로그아웃</button>
-              </Form>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-      <main className="content">{renderContent()}</main>
-    </div>
+    <>
+      <h1>{currentDate}</h1>
+
+      <div className="page-content">
+        <aside className="sidebar">
+          <nav>
+            <ul>
+              <li
+                className={selectedMenu === "userSettings" ? "active" : ""}
+                onClick={() => setSelectedMenu("userSettings")}
+              >
+                회원 정보
+              </li>
+              <li
+                className={selectedMenu === "profileSettings" ? "active" : ""}
+                onClick={() => setSelectedMenu("profileSettings")}
+              >
+                프로필 수정
+              </li>
+              <li
+                className={selectedMenu === "RoutineSettings" ? "active" : ""}
+                onClick={() => setSelectedMenu("RoutineSettings")}
+              >
+                루틴 수정
+              </li>
+              <li>
+                <Form action="/logout" method="post">
+                  <button className="logout-button">로그아웃</button>
+                </Form>
+              </li>
+            </ul>
+          </nav>
+        </aside>
+        <main className="content">{renderContent()}</main>
+      </div>
+    </>
   );
 }

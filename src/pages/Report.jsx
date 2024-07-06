@@ -1,7 +1,14 @@
+import useCurrentDate from "../hooks/useCurrentDate";
+
 export default function ReportPage() {
+  const currentDate = useCurrentDate();
+
   return (
-    <div className="page-content">
-      <h1>통계</h1>
-    </div>
+    <>
+      <h1>{currentDate}</h1>
+      <div className="page-content">
+        <h1>통계</h1>
+      </div>
+    </>
   );
 }

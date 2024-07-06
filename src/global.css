@@ -42,6 +42,14 @@ body.auth {
   background-color: var(--color-mint);
 }
 
+h1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1.25rem;
+}
+
 .hidden {
   display: none;
 }
@@ -49,7 +57,7 @@ body.auth {
 .text-center {
   text-align: center;
 }
-
+/* 제목 추가 안했을 때
 .page-content {
   display: flex;
   flex-direction: column;
@@ -64,14 +72,43 @@ body.auth {
   -ms-overflow-style: none;
   scrollbar-width: none;
   max-height: calc(100vh - 9rem);
+} */
+.page-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 75vh;
+  margin: 0 3% 1rem 3%;
+  background-color: var(--color-ivory);
+  border: solid 4px var(--color-brown);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  max-height: calc(100vh - 9rem);
 }
-
 /* 웹킷 기반 브라우저에서 스크롤바 숨김 */
 .page-content::-webkit-scrollbar {
   display: none;
 }
 
 @media (min-width: 768px) {
+  h1 {
+    justify-content: flex-start;
+    text-align: start;
+    margin: 1.25rem 2% 0 2%;
+  }
+  .page-content {
+    height: 85vh;
+    width: calc(100vw - 2.5rem);
+    max-height: calc(100vh - 6.25rem);
+    flex-direction: row;
+    position: relative;
+    margin: 0 2% 2% 2%;
+    padding: 1.25rem;
+  }
+  /* 제목 추가 안했을 때
   .page-content {
     height: 90vh;
     width: calc(100vw - 2.5rem);
@@ -81,7 +118,7 @@ body.auth {
     top: 3.125rem;
     margin: 2%;
     padding: 1.25rem;
-  }
+  } */
 }
 /* @media (min-width: 1024px) {
   .page-content {

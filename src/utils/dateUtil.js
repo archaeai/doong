@@ -5,7 +5,29 @@ export const getLocalISODateString = (date) => {
   return localISOTime;
 };
 
-// midDate, maxDate 설정
+const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+
+// 날짜 포맷 함수
+export const formatDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const dayOfWeek = daysOfWeek[date.getDay()];
+
+  return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
+};
+
+// 현재 날짜 가져오기
+export const getCurrentLocalISODateString = () => {
+  return getLocalISODateString(new Date());
+};
+
+// 현재 날짜 포맷된 문자열 가져오기
+export const getFormattedCurrentDate = () => {
+  return formatDate(new Date());
+};
+
+// midDate, maxDate 설정(캘린더에서 사용)
 export const getDateRange = (years) => {
   const today = new Date();
   const minDate = new Date(
