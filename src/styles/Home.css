@@ -7,11 +7,11 @@
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 20px 20px 0 0;
   border: none;
-  padding: 6px 10px;
-  font-family: "Gaegu" sans-serif;
-  font-size: 14px;
+  padding: 4px 8px 0 8px;
+  font-family: "Gaegu";
+  font-size: 18px;
   color: var(--color-navy);
-  margin-left: 20px;
+  margin: 3px 0 0 20px;
 }
 
 .header-profile-container {
@@ -152,17 +152,6 @@
   }
   .home-content-container {
     width: 50%;
-  }
-
-  .divider {
-    width: 4px;
-    background-image: linear-gradient(
-      var(--color-brown) 50%,
-      rgba(255, 255, 255, 0) 0%
-    );
-    background-position: right;
-    background-size: 4px 16px; /* 점선의 간격 조절 */
-    background-repeat: repeat-y;
   }
 
   .todo-list-container {

@@ -50,6 +50,17 @@ h1 {
   margin-top: 1.25rem;
 }
 
+.divider {
+  width: 4px;
+  background-image: linear-gradient(
+    var(--color-brown) 50%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: right;
+  background-size: 4px 16px; /* 점선의 간격 조절 */
+  background-repeat: repeat-y;
+}
+
 .hidden {
   display: none;
 }
