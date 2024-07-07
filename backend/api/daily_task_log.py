@@ -8,24 +8,6 @@ from backend.api.deps import get_db, get_current_user
 
 router = APIRouter()
 
-
-@router.get("/", response_model=List[DailyTaskLogResponse], summary="Get all daily task logs",
-            description="Retrieve a list of all daily task logs.")
-async def read_daily_task_logs(skip: int = 0, limit: int = 10, db: Session = Depends(get_db),
-                               current_user: str = Depends(get_current_user)):
-    return crud_daily_task_log.get_daily_task_logs(db, skip=skip, limit=limit)
-
-
-@router.get("/{daily_task_log_id}", response_model=DailyTaskLogResponse, summary="Get a daily task log by ID",
-            description="Retrieve a single daily task log by its ID.")
-async def read_daily_task_log(daily_task_log_id: int, db: Session = Depends(get_db),
-                              current_user: str = Depends(get_current_user)):
-    daily_task_log = crud_daily_task_log.get_daily_task_log(db, daily_task_log_id=daily_task_log_id)
-    if not daily_task_log:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Daily task log not found")
-    return daily_task_log
-
-
 @router.get("/cat/{cat_id}", response_model=List[DailyTaskLogResponse], summary="Get daily task logs by cat ID",
             description="Retrieve a list of daily task logs for a specific cat.")
 async def read_daily_task_logs_by_cat(cat_id: int, skip: int = 0, limit: int = 10, db: Session = Depends(get_db),

@@ -12,13 +12,6 @@ from backend.api.deps import get_db, get_current_user
 
 router = APIRouter()
 
-
-@router.get("/", response_model=List[CatProfileResponse])
-async def read_cat_profiles(db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
-    cat_profiles = crud_cat_profile.get_cat_profiles(db)
-    return cat_profiles
-
-
 @router.get("/user", response_model=List[CatProfileResponse])
 async def read_cat_profiles_by_user(db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     cat_profiles = crud_cat_profile.get_cat_profiles_by_user(db, user_id=current_user)
@@ -32,9 +25,6 @@ async def read_cat_profiles_by_user(db: Session = Depends(get_db), current_user:
 #     if not cat_profile:
 #         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cat profile not found")
 #     return cat_profile
-
-
-
 
 
 @router.post("/", response_model=CatProfileResponse, status_code=status.HTTP_201_CREATED,
@@ -53,9 +43,10 @@ async def create_cat_profile(
         weight: float,
         photo: UploadFile = File(None),
         db: Session = Depends(get_db),
-        current_user: str = Depends(get_current_user)
+        #current_user: str = Depends(get_current_user)
 ):
-    UPLOAD_DIR = f"uploads/{current_user}/"
+    #UPLOAD_DIR = f"uploads/{current_user}/"
+    UPLOAD_DIR = f"uploads/"
 
     # Ensure the upload directory exists
     if not os.path.exists(UPLOAD_DIR):
@@ -68,6 +59,8 @@ async def create_cat_profile(
         with open(file_path, "wb") as buffer:
             copyfileobj(photo.file, buffer)
         photo_url = file_path
+    print('*******')
+    print(f"{birthday}, {neutered}, {type(neutered)}")
 
     cat_profile = CatProfileCreate(
         name=name,
@@ -80,7 +73,8 @@ async def create_cat_profile(
         litter_date=litter_date,
         neutered=neutered,
         weight=weight,
-        user_id=current_user,
+        #user_id=current_user,
+        user_id='string',
         photo_url=photo_url
     )
     return crud_cat_profile.create_cat_profile(db=db, cat_profile=cat_profile)
