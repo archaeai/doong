@@ -37,19 +37,19 @@
   border: 10px solid var(--color-blue);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 .profile-img-container img {
   width: 6.25rem;
   height: 6.25rem;
-  margin-right: 0.625rem;
+  margin-right: 1.25rem;
   border-radius: 20px;
 }
 
-.cat-profile p {
+.profile-info-container {
   display: flex;
   flex-direction: column;
-  text-align: center;
   justify-content: center;
 }
 

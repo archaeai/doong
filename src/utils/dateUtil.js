@@ -42,3 +42,12 @@ export const getDateRange = (years) => {
   );
   return { minDate, maxDate };
 };
+
+// 입양일로부터 현재까지 며칠이 지났는지 계산하는 함수(홈화면에서 사용)
+export const getDaysSince = (adoptedDay) => {
+  const today = new Date();
+  const adoptedDate = new Date(adoptedDay);
+  const oneDay = 24 * 60 * 60 * 1000; // 하루를 밀리초로 변환
+  const diffDays = Math.round((today - adoptedDate) / oneDay);
+  return diffDays;
+};
