@@ -8,24 +8,6 @@ from backend.api.deps import get_db, get_current_user
 
 router = APIRouter()
 
-@router.get("/", response_model=List[DiaryResponse])
-async def read_diaries(skip: int = 0, limit: int = 10, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
-    diaries = crud_diary.get_diaries(db, skip=skip, limit=limit)
-    return diaries
-
-@router.get("/{diary_id}", response_model=DiaryResponse, summary="Get a diary by ID", description="Retrieve a single diary by its ID along with its associated cat statuses.")
-async def read_diary(diary_id: int, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
-    """
-    Get a single diary by ID and its associated cat statuses.
-
-    - **diary_id**: The ID of the diary to retrieve.
-    """
-    diary = crud_diary.get_diary(db, diary_id=diary_id)
-    if not diary:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Diary not found")
-    return diary
-
-
 @router.get("/user/{user_id}", response_model=List[DiaryResponse], summary="Get diaries by user ID", description="Retrieve a list of diaries for a specific user along with their associated cat statuses.")
 async def read_diaries_by_user(user_id: str, skip: int = 0, limit: int = 10, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     """
