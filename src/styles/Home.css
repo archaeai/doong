@@ -2,6 +2,18 @@
   padding: 0.938rem;
 }
 
+.added-cat-button {
+  background-color: var(--color-blue);
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px 20px 0 0;
+  border: none;
+  padding: 4px 8px 0 8px;
+  font-family: "Gaegu";
+  font-size: 18px;
+  color: var(--color-navy);
+  margin: 3px 0 0 20px;
+}
+
 .add-cat-nav__button {
   background-color: var(--color-blue);
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);

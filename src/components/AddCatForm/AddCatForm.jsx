@@ -14,7 +14,7 @@ const initialState = {
   birthDate: "",
   adoptDate: "",
   gender: "",
-  neutered: "",
+  neutered: true,
   weight: "",
   photo: null,
   vaccinationDate: "",
@@ -46,9 +46,15 @@ export default function AddCatForm({ isOpen, closeModal }) {
   const handleAddCat = async (data) => {
     const params = new URLSearchParams({
       name: data.name,
+      breed: data.breed,
+      gender: data.gender,
       birthday: data.birthDate,
+      adopted_day: data.adoptDate,
+      vaccine_date: data.vaccinationDate,
+      heart_warm_date: data.heartwormDate,
+      litter_date: data.litterDate,
+      neutered: data.neutered,
       weight: data.weight,
-      user_id: data.user_id, // 현재 사용자 ID 추가
     });
     const formData = new FormData();
     if (data.photo) {
@@ -61,20 +67,22 @@ export default function AddCatForm({ isOpen, closeModal }) {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // 필요한 경우 토큰 추가
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: formData,
         }
       );
 
       if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error response:", errorData);
         throw new Error("Network response was not ok");
       }
 
       const newCat = await response.json();
-      addCat(newCat); // 고양이 추가 컨텍스트 업데이트
-      resetForm(); // 폼 리셋
-      closeModal(); // 모달 닫기
+      addCat(newCat);
+      resetForm();
+      closeModal();
       console.log("Submitted Data:", data);
     } catch (error) {
       console.error("Error adding cat:", error);

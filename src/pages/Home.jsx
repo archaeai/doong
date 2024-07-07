@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CatContext } from "../contexts/CatContext";
 import useModal from "../hooks/useModal";
 import useCurrentDate from "../hooks/useCurrentDate";
@@ -13,9 +13,38 @@ import AddCatForm from "../components/AddCatForm/AddCatForm";
 import "../styles/Home.css";
 
 export default function HomePage() {
-  const { selectedCat, cats } = useContext(CatContext);
+  const { cats, selectedCat, addCat, selectCat } = useContext(CatContext);
   const { isModalOpen, openModal, closeModal } = useModal();
   const currentDate = useCurrentDate();
+
+  useEffect(() => {
+    const fetchCatData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No token found");
+        }
+        const response = await fetch("http://127.0.0.1/api/cat_profiles", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch cat data");
+        }
+
+        const data = await response.json();
+        data.forEach((cat) => addCat(cat)); // 가져온 데이터를 CatContext에 추가
+      } catch (error) {
+        console.error("Error fetching cat data:", error);
+      }
+    };
+
+    fetchCatData();
+  }, [addCat]);
 
   return (
     <>

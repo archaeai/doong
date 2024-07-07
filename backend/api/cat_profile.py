@@ -25,13 +25,13 @@ async def read_cat_profiles_by_user(db: Session = Depends(get_db), current_user:
     return cat_profiles
 
 
-@router.get("/{cat_profile_id}", response_model=CatProfileResponse)
-async def read_cat_profile(cat_profile_id: int, db: Session = Depends(get_db),
-                           current_user: str = Depends(get_current_user)):
-    cat_profile = crud_cat_profile.get_cat_profile(db, cat_profile_id=cat_profile_id)
-    if not cat_profile:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cat profile not found")
-    return cat_profile
+# @router.get("/{cat_profile_id}", response_model=CatProfileResponse)
+# async def read_cat_profile(cat_profile_id: int, db: Session = Depends(get_db),
+#                            current_user: str = Depends(get_current_user)):
+#     cat_profile = crud_cat_profile.get_cat_profile(db, cat_profile_id=cat_profile_id)
+#     if not cat_profile:
+#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cat profile not found")
+#     return cat_profile
 
 
 

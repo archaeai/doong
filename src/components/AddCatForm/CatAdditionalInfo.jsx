@@ -33,7 +33,7 @@ export default function CatAdditionalInfo({
           name="neutered"
           options={neuteredOptions}
           onChange={handleChange}
-          selectedValue={catData.neutered}
+          selectedValue={catData.neutered ? "수술함" : "수술안함"}
         />
         {errors.neutered && <p className="control-error">{errors.neutered}</p>}
       </div>
