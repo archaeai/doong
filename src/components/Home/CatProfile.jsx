@@ -6,7 +6,7 @@ export default function CatProfile({ cat }) {
       {cat ? (
         <>
           <div className="profile-img-container">
-            <img src={cat.profile_image || defaultProfile} />
+            <img src={`backend/${cat.photo_url}` || defaultProfile} />
           </div>
           <p>{cat.name}</p>
         </>

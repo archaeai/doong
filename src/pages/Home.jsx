@@ -24,7 +24,7 @@ export default function HomePage() {
         if (!token) {
           throw new Error("No token found");
         }
-        const response = await fetch("http://127.0.0.1/api/cat_profiles", {
+        const response = await fetch("http://127.0.0.1/api/cat_profiles/user", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +52,11 @@ export default function HomePage() {
       <div className="page-content home-page-content">
         <div className="header-container">
           <div className="header-profile-container">
-            <AddHeader openModal={openModal} />
+            <AddHeader
+              openModal={openModal}
+              cats={cats}
+              selectCat={selectCat}
+            />
             <CatProfile cat={selectedCat} />
           </div>
           <RecentSchedule />
