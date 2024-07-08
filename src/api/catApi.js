@@ -52,3 +52,34 @@ export const addCatProfile = async (data) => {
 
   return response.data;
 };
+
+export const updateCatProfile = async (catId, catData) => {
+  const token = getToken();
+  const response = await axios.put(`${API_URL}${catId}`, catData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status !== 200) {
+    throw new Error("Failed to update cat profile");
+  }
+
+  return response.data;
+};
+
+export const deleteCatProfile = async (catId) => {
+  const token = getToken();
+  const response = await axios.delete(`${API_URL}${catId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.status !== 200) {
+    throw new Error("Failed to delete cat profile");
+  }
+
+  return response.data;
+};
