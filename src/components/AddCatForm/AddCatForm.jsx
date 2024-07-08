@@ -6,6 +6,7 @@ import Modal from "../../UI/Modal";
 import CatBasicInfo from "./CatBasicInfo";
 import CatAdditionalInfo from "./CatAdditionalInfo";
 import CatRoutainInfo from "./CatRoutineInfo";
+import { addCatProfile } from "../../api/catApi";
 import "../../styles/Modal.css";
 
 const initialState = {
@@ -44,42 +45,8 @@ export default function AddCatForm({ isOpen, closeModal }) {
   }, [isOpen]);
 
   const handleAddCat = async (data) => {
-    const params = new URLSearchParams({
-      name: data.name,
-      breed: data.breed,
-      gender: data.gender,
-      birthday: data.birthDate,
-      adopted_day: data.adoptDate,
-      vaccine_date: data.vaccinationDate,
-      heart_warm_date: data.heartwormDate,
-      litter_date: data.litterDate,
-      neutered: data.neutered,
-      weight: data.weight,
-    });
-    const formData = new FormData();
-    if (data.photo) {
-      formData.append("photo", data.photo);
-    }
-
     try {
-      const response = await fetch(
-        `http://127.0.0.1/api/cat_profiles/?${params.toString()}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: formData,
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error response:", errorData);
-        throw new Error("Network response was not ok");
-      }
-
-      const newCat = await response.json();
+      const newCat = await addCatProfile(data);
       addCat(newCat);
       resetForm();
       closeModal();
