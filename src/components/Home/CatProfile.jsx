@@ -1,5 +1,5 @@
 import defaultProfile from "../../assets/cat-image.png";
-import { getDaysSince, getFormattedCurrentDate } from "../../utils/dateUtil";
+import { getDaysSince, formatServerDate } from "../../utils/dateUtil";
 
 export default function CatProfile({ cat }) {
   return (
@@ -10,14 +10,17 @@ export default function CatProfile({ cat }) {
             <img src={`backend/${cat.photo_url}` || defaultProfile} />
           </div>
           <div className="profile-info-container">
-            <p>
-              {cat.breed} ({cat.weight} kg)
+            <p className="profile-info-line1">
+              {cat.name}랑 ❤︎ {getDaysSince(cat.adopted_day)}일째
             </p>
-            <p>{cat.gender === "male" ? "남" : "여"}</p>
-            <p>생일: {getFormattedCurrentDate(cat.birthday)}</p>
-            <p>
-              {cat.name}랑 {getDaysSince(cat.adopted_day)}일째❤︎
-            </p>
+            <div className="profile-info-line2">
+              <p className="gender-icon">{cat.gender === "male" ? "♂" : "♀"}</p>
+              <p>{cat.breed}</p>
+            </div>
+            <p>몸무게: {cat.weight} kg</p>
+            <p>생일: {formatServerDate(cat.birthday)}</p>
+
+            {!cat.neutered && <p className="no-neutered">중성화가 필요해요!</p>}
           </div>
         </>
       ) : (
