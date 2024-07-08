@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { CatContext } from "../contexts/CatContext";
 import useModal from "../hooks/useModal";
 import useCurrentDate from "../hooks/useCurrentDate";
+import { fetchCatProfiles } from "../api/catApi";
 
 import AddHeader from "../components/Home/AddHeader";
 import CatProfile from "../components/Home/CatProfile";
@@ -20,29 +21,12 @@ export default function HomePage() {
   useEffect(() => {
     const fetchCatData = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          throw new Error("No token found");
-        }
-        const response = await fetch("http://127.0.0.1/api/cat_profiles/user", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch cat data");
-        }
-
-        const data = await response.json();
-        data.forEach((cat) => addCat(cat)); // 가져온 데이터를 CatContext에 추가
+        const data = await fetchCatProfiles();
+        data.forEach((cat) => addCat(cat));
       } catch (error) {
         console.error("Error fetching cat data:", error);
       }
     };
-
     fetchCatData();
   }, [addCat]);
 
