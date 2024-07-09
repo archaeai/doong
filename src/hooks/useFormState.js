@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function useFormState(initialState, validateStep, formType) {
+export default function useFormState(initialState, validateStep) {
   const [formData, setFormData] = useState(initialState);
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
@@ -18,8 +18,7 @@ export default function useFormState(initialState, validateStep, formType) {
     } else {
       setFormData((prevData) => ({
         ...prevData,
-        [name]:
-          name === "neutered" ? (value === "수술함" ? true : false) : value,
+        [name]: name === "neutered" ? value === "수술함" : value,
       }));
     }
   };
@@ -45,11 +44,11 @@ export default function useFormState(initialState, validateStep, formType) {
 
   const handleNextStep = () => {
     if (validateForm()) {
-      setStep(step + 1);
+      setStep((prevStep) => prevStep + 1);
     }
   };
 
-  const handlePrevStep = () => setStep(step - 1);
+  const handlePrevStep = () => setStep((prevStep) => prevStep - 1);
 
   const handleSubmit = (event, submitCallback) => {
     event.preventDefault();
@@ -63,9 +62,7 @@ export default function useFormState(initialState, validateStep, formType) {
     formData,
     handleChange,
     handleSelectChange,
-    setFormData,
     step,
-    setStep,
     resetForm,
     errors,
     handleNextStep,

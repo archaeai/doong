@@ -1,52 +1,74 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  fetchCatProfiles,
-  updateCatProfile,
-  deleteCatProfile,
-} from "../../api/catApi";
+import { useContext, useEffect } from "react";
 import { CatContext } from "../../contexts/CatContext";
 import catImg from "../../assets/cat-image.png";
 
 export default function ProfileSettings() {
-  const { cats, selectCat, selectedCat, addCat } = useContext(CatContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const {
+    cats,
+    selectedCat,
+    isLoading,
+    isError,
+    errorMessage,
+    selectCat,
+    loadCats,
+    updateCat,
+    deleteCat,
+  } = useContext(CatContext);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchCatProfiles();
-        data.forEach((cat) => addCat(cat));
-      } catch (error) {
-        console.error("Error fetching cat profiles:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (cats.length === 0) {
+      loadCats();
+    }
+  }, [loadCats, cats.length]);
 
-    fetchData();
-  }, [addCat]);
+  useEffect(() => {
+    console.log("Cats:", cats); // cats 배열이 제대로 로드되는지 확인
+    console.log("Selected Cat:", selectedCat); // 선택된 고양이 확인
+  }, [cats, selectedCat]);
 
-  const handleDelete = async (catId) => {
-    try {
-      await deleteCatProfile(catId);
-      selectCat(null); // 선택된 고양이를 초기화
-      window.location.reload(); // 페이지를 새로 고침
-    } catch (error) {
-      console.error("Error deleting cat profile:", error);
+  const handleSelectChange = (e) => {
+    const selectedCatId = Number(e.target.value);
+    console.log("Selected Cat ID:", selectedCatId);
+    const selectedCat = cats.find((cat) => cat.id === selectedCatId);
+    if (selectedCat) {
+      selectCat(selectedCat);
+    } else {
+      console.error(`Cat with id ${selectedCatId} not found`);
     }
   };
 
-  const handleUpdate = async (updatedCat) => {
-    try {
-      await updateCatProfile(updatedCat.id, updatedCat);
-      window.location.reload(); // 페이지를 새로 고침
-    } catch (error) {
-      console.error("Error updating cat profile:", error);
-    }
+  const handleUpdateCat = (cat) => {
+    // Update 로직을 여기에 추가
+    updateCat(cat.id, { ...cat, name: "updated Cat" })
+      .then(() => {
+        console.log("Cat updated successfully");
+      })
+      .catch((error) => {
+        console.error("Error updating cat:", error);
+      });
+  };
+
+  const handleDeleteCat = (catId) => {
+    // Delete 로직을 여기에 추가
+    deleteCat(catId)
+      .then(() => {
+        console.log("Cat deleted successfully");
+      })
+      .catch((error) => {
+        console.error("Error deleting cat:", error);
+      });
   };
 
   if (isLoading) {
-    return <p>로딩 중...</p>;
+    return <div>Loading cat profiles...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {errorMessage}</div>;
+  }
+
+  if (!isLoading && cats.length === 0) {
+    return <div>No cat profiles available.</div>;
   }
 
   return (
@@ -54,9 +76,7 @@ export default function ProfileSettings() {
       <div className="profile-settings-header">
         <select
           className="profile-settings-header__select"
-          onChange={(e) =>
-            selectCat(cats.find((cat) => cat.id === e.target.value))
-          }
+          onChange={handleSelectChange}
           value={selectedCat ? selectedCat.id : ""}
         >
           <option value="" disabled>
@@ -71,13 +91,15 @@ export default function ProfileSettings() {
         <div>
           <button
             className="profile-settings-header__edit"
-            onClick={() => handleUpdate(selectedCat)}
+            onClick={() => handleUpdateCat(selectedCat)}
+            disabled={!selectedCat}
           >
             수정
           </button>
           <button
             className="profile-settings-header__delete"
-            onClick={() => handleDelete(selectedCat.id)}
+            onClick={() => handleDeleteCat(selectedCat.id)}
+            disabled={!selectedCat}
           >
             삭제
           </button>

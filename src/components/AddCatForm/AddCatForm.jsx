@@ -6,7 +6,6 @@ import Modal from "../../UI/Modal";
 import CatBasicInfo from "./CatBasicInfo";
 import CatAdditionalInfo from "./CatAdditionalInfo";
 import CatRoutainInfo from "./CatRoutineInfo";
-import { addCatProfile } from "../../api/catApi";
 import "../../styles/Modal.css";
 
 const initialState = {
@@ -44,10 +43,9 @@ export default function AddCatForm({ isOpen, closeModal }) {
     }
   }, [isOpen]);
 
-  const handleAddCat = async (data) => {
+  const handleAddCat = (data) => {
     try {
-      const newCat = await addCatProfile(data);
-      addCat(newCat);
+      const newCat = addCat(data);
       resetForm();
       closeModal();
       console.log("Submitted Data:", data);

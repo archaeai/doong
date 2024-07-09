@@ -7,7 +7,10 @@ export default function CatProfile({ cat }) {
       {cat ? (
         <>
           <div className="profile-img-container">
-            <img src={`backend/${cat.photo_url}` || defaultProfile} />
+            <img
+              src={cat.photo_url ? `backend/${cat.photo_url}` : defaultProfile}
+              alt={cat.name}
+            />
           </div>
           <div className="profile-info-container">
             <p className="profile-info-line1">

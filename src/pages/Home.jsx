@@ -2,8 +2,6 @@ import { useContext, useEffect } from "react";
 import { CatContext } from "../contexts/CatContext";
 import useModal from "../hooks/useModal";
 import useCurrentDate from "../hooks/useCurrentDate";
-import { fetchCatProfiles } from "../api/catApi";
-
 import AddHeader from "../components/Home/AddHeader";
 import CatProfile from "../components/Home/CatProfile";
 import RecentSchedule from "../components/Home/RecentSchedule";
@@ -14,21 +12,15 @@ import AddCatForm from "../components/AddCatForm/AddCatForm";
 import "../styles/Home.css";
 
 export default function HomePage() {
-  const { cats, selectedCat, addCat, selectCat } = useContext(CatContext);
+  const { cats, selectedCat, loadCats, selectCat } = useContext(CatContext);
   const { isModalOpen, openModal, closeModal } = useModal();
   const currentDate = useCurrentDate();
 
   useEffect(() => {
-    const fetchCatData = async () => {
-      try {
-        const data = await fetchCatProfiles();
-        data.forEach((cat) => addCat(cat));
-      } catch (error) {
-        console.error("Error fetching cat data:", error);
-      }
-    };
-    fetchCatData();
-  }, [addCat]);
+    if (cats.length === 0) {
+      loadCats();
+    }
+  }, [loadCats, cats.length]);
 
   return (
     <>
