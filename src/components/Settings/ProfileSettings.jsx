@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { CatContext } from "../../contexts/CatContext";
 import catImg from "../../assets/cat-image.png";
+import ProfileEditForm from "./ProfileEditForm";
 
 export default function ProfileSettings() {
   const {
@@ -16,7 +17,7 @@ export default function ProfileSettings() {
   } = useContext(CatContext);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editCat, setEditCat] = useState(selectCat || {});
+  const [editCat, setEditCat] = useState({});
 
   useEffect(() => {
     if (cats.length === 0) {
@@ -38,11 +39,6 @@ export default function ProfileSettings() {
     } else {
       console.error(`Cat with id ${selectedCatId} not found`);
     }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditCat((prevCat) => ({ ...prevCat, [name]: value }));
   };
 
   const handleUpdateCat = () => {
@@ -98,7 +94,7 @@ export default function ProfileSettings() {
         <div>
           {isEditing ? (
             <button
-              className="profile-settings-header__save"
+              className="profile-settings-header__edit"
               onClick={handleUpdateCat}
             >
               저장
@@ -131,105 +127,11 @@ export default function ProfileSettings() {
             />
             <h3>{selectedCat.name}</h3>
           </div>
-          {!selectedCat.neutered && <p>중성화가 필요해요!</p>}
-          <ul className="profile-settings-content__ul">
-            <li className="profile-settings-content__li">
-              <label className="profile-settings-content__label">이름:</label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="name"
-                  value={editCat.name}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <span>{selectedCat.name}</span>
-              )}
-            </li>
-            <li className="profile-settings-content__li">
-              <label className="profile-settings-content__label">품종:</label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="breed"
-                  value={editCat.breed}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <span>{selectedCat.breed}</span>
-              )}
-            </li>
-            <li className="profile-settings-content__li">
-              <label className="profile-settings-content__label">체중:</label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="weight"
-                  value={editCat.weight}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <span>{selectedCat.weight}</span>
-              )}
-            </li>
-            <li className="profile-settings-content__li">
-              <label className="profile-settings-content__label">성별:</label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="gender"
-                  value={editCat.gender}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <span>{selectedCat.gender}</span>
-              )}
-            </li>
-            <li className="profile-settings-content__li">
-              <label className="profile-settings-content__label">생일:</label>
-              {isEditing ? (
-                <input
-                  type="date"
-                  name="birthday"
-                  value={editCat.birthday}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <span>{selectedCat.birthday}</span>
-              )}
-            </li>
-            <li className="profile-settings-content__li">
-              <label className="profile-settings-content__label">입양일:</label>
-              {isEditing ? (
-                <input
-                  type="date"
-                  name="adopted_day"
-                  value={editCat.adopted_day}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <span>{selectedCat.adopted_day}</span>
-              )}
-            </li>
-            <li className="profile-settings-content__li">
-              <label className="profile-settings-content__label">중성화:</label>
-              {isEditing ? (
-                <input
-                  type="checkbox"
-                  name="neutered"
-                  checked={editCat.neutered}
-                  onChange={(e) =>
-                    setEditCat((prevCat) => ({
-                      ...prevCat,
-                      neutered: e.target.checked,
-                    }))
-                  }
-                />
-              ) : (
-                <span>{selectedCat.neutered ? "수술함" : "수술안함"}</span>
-              )}
-            </li>
-          </ul>
+          <ProfileEditForm
+            cat={editCat}
+            isEditing={isEditing}
+            onChange={setEditCat}
+          />
         </section>
       ) : (
         <section>
