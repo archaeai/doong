@@ -19,8 +19,10 @@ export default function HomePage() {
   useEffect(() => {
     if (cats.length === 0) {
       loadCats();
+    } else if (!selectedCat && cats.length > 0) {
+      selectCat(cats[0]);
     }
-  }, [loadCats, cats.length]);
+  }, [loadCats, cats.length, selectedCat, selectCat, cats]);
 
   return (
     <>
@@ -32,6 +34,7 @@ export default function HomePage() {
               openModal={openModal}
               cats={cats}
               selectCat={selectCat}
+              selectedCat={selectedCat}
             />
             <CatProfile cat={selectedCat} />
           </div>

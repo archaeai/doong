@@ -2,7 +2,21 @@
   padding: 0.938rem;
 }
 
-.added-cat-button {
+.added-cat-button,
+.add-cat-nav__button.subsequent-add {
+  background-color: var(--color-mint);
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px 20px 0 0;
+  border: none;
+  padding: 4px 8px 0 8px;
+  font-family: "Gaegu";
+  font-size: 18px;
+  color: var(--color-navy);
+  margin: 3px 0 0 20px;
+}
+
+.added-cat-button.selected,
+.add-cat-nav__buttonfirst-add {
   background-color: var(--color-blue);
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 20px 20px 0 0;
@@ -14,16 +28,13 @@
   margin: 3px 0 0 20px;
 }
 
-.add-cat-nav__button {
+.added-cat-button:hover,
+.add-cat-nav__button.subsequent-add:hover,
+.added-cat-button.selected:hover,
+.add-cat-nav__buttonfirst-add:hover {
+  cursor: pointer;
   background-color: var(--color-blue);
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 20px 20px 0 0;
-  border: none;
-  padding: 4px 8px 0 8px;
-  font-family: "Gaegu";
-  font-size: 18px;
-  color: var(--color-navy);
-  margin: 3px 0 0 20px;
+  color: var(--color-ivory);
 }
 
 .header-profile-container {

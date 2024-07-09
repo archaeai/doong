@@ -22,8 +22,10 @@ export default function ProfileSettings() {
   useEffect(() => {
     if (cats.length === 0) {
       loadCats();
+    } else if (!selectedCat && cats.length > 0) {
+      selectCat(cats[0]);
     }
-  }, [loadCats, cats.length]);
+  }, [loadCats, cats.length, selectedCat, selectCat, cats]);
 
   useEffect(() => {
     if (selectedCat) {
@@ -122,7 +124,11 @@ export default function ProfileSettings() {
           <div className="profile-settings-content__heading">
             <img
               className="profile-settings-content__heading-img"
-              src={selectedCat.photo || catImg}
+              src={
+                selectedCat.photo_url
+                  ? `backend/${selectedCat.photo_url}`
+                  : catImg
+              }
               alt={selectedCat.name}
             />
             <h3>{selectedCat.name}</h3>
