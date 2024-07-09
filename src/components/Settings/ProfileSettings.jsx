@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CatContext } from "../../contexts/CatContext";
 import catImg from "../../assets/cat-image.png";
 
@@ -15,6 +15,9 @@ export default function ProfileSettings() {
     deleteCat,
   } = useContext(CatContext);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editCat, setEditCat] = useState(selectCat || {});
+
   useEffect(() => {
     if (cats.length === 0) {
       loadCats();
@@ -22,13 +25,13 @@ export default function ProfileSettings() {
   }, [loadCats, cats.length]);
 
   useEffect(() => {
-    console.log("Cats:", cats); // cats 배열이 제대로 로드되는지 확인
-    console.log("Selected Cat:", selectedCat); // 선택된 고양이 확인
-  }, [cats, selectedCat]);
+    if (selectedCat) {
+      setEditCat(selectedCat);
+    }
+  }, [selectedCat]);
 
   const handleSelectChange = (e) => {
     const selectedCatId = Number(e.target.value);
-    console.log("Selected Cat ID:", selectedCatId);
     const selectedCat = cats.find((cat) => cat.id === selectedCatId);
     if (selectedCat) {
       selectCat(selectedCat);
@@ -37,11 +40,16 @@ export default function ProfileSettings() {
     }
   };
 
-  const handleUpdateCat = (cat) => {
-    // Update 로직을 여기에 추가
-    updateCat(cat.id, { ...cat, name: "updated Cat" })
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditCat((prevCat) => ({ ...prevCat, [name]: value }));
+  };
+
+  const handleUpdateCat = () => {
+    updateCat(editCat.id, editCat)
       .then(() => {
         console.log("Cat updated successfully");
+        setIsEditing(false);
       })
       .catch((error) => {
         console.error("Error updating cat:", error);
@@ -49,7 +57,6 @@ export default function ProfileSettings() {
   };
 
   const handleDeleteCat = (catId) => {
-    // Delete 로직을 여기에 추가
     deleteCat(catId)
       .then(() => {
         console.log("Cat deleted successfully");
@@ -89,13 +96,22 @@ export default function ProfileSettings() {
           ))}
         </select>
         <div>
-          <button
-            className="profile-settings-header__edit"
-            onClick={() => handleUpdateCat(selectedCat)}
-            disabled={!selectedCat}
-          >
-            수정
-          </button>
+          {isEditing ? (
+            <button
+              className="profile-settings-header__save"
+              onClick={handleUpdateCat}
+            >
+              저장
+            </button>
+          ) : (
+            <button
+              className="profile-settings-header__edit"
+              onClick={() => setIsEditing(true)}
+              disabled={!selectedCat}
+            >
+              수정
+            </button>
+          )}
           <button
             className="profile-settings-header__delete"
             onClick={() => handleDeleteCat(selectedCat.id)}
@@ -119,31 +135,99 @@ export default function ProfileSettings() {
           <ul className="profile-settings-content__ul">
             <li className="profile-settings-content__li">
               <label className="profile-settings-content__label">이름:</label>
-              <span>{selectedCat.name}</span>
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="name"
+                  value={editCat.name}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <span>{selectedCat.name}</span>
+              )}
             </li>
             <li className="profile-settings-content__li">
               <label className="profile-settings-content__label">품종:</label>
-              <span>{selectedCat.breed}</span>
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="breed"
+                  value={editCat.breed}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <span>{selectedCat.breed}</span>
+              )}
             </li>
             <li className="profile-settings-content__li">
               <label className="profile-settings-content__label">체중:</label>
-              <span>{selectedCat.weight}</span>
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="weight"
+                  value={editCat.weight}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <span>{selectedCat.weight}</span>
+              )}
             </li>
             <li className="profile-settings-content__li">
               <label className="profile-settings-content__label">성별:</label>
-              <span>{selectedCat.gender}</span>
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="gender"
+                  value={editCat.gender}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <span>{selectedCat.gender}</span>
+              )}
             </li>
             <li className="profile-settings-content__li">
               <label className="profile-settings-content__label">생일:</label>
-              <span>{selectedCat.birthday}</span>
+              {isEditing ? (
+                <input
+                  type="date"
+                  name="birthday"
+                  value={editCat.birthday}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <span>{selectedCat.birthday}</span>
+              )}
             </li>
             <li className="profile-settings-content__li">
               <label className="profile-settings-content__label">입양일:</label>
-              <span>{selectedCat.adopted_day}</span>
+              {isEditing ? (
+                <input
+                  type="date"
+                  name="adopted_day"
+                  value={editCat.adopted_day}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <span>{selectedCat.adopted_day}</span>
+              )}
             </li>
             <li className="profile-settings-content__li">
               <label className="profile-settings-content__label">중성화:</label>
-              <span>{selectedCat.neutered ? "수술함" : "수술안함"}</span>
+              {isEditing ? (
+                <input
+                  type="checkbox"
+                  name="neutered"
+                  checked={editCat.neutered}
+                  onChange={(e) =>
+                    setEditCat((prevCat) => ({
+                      ...prevCat,
+                      neutered: e.target.checked,
+                    }))
+                  }
+                />
+              ) : (
+                <span>{selectedCat.neutered ? "수술함" : "수술안함"}</span>
+              )}
             </li>
           </ul>
         </section>
