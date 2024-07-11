@@ -43,10 +43,10 @@ async def create_cat_profile(
         weight: float,
         photo: UploadFile = File(None),
         db: Session = Depends(get_db),
-        #current_user: str = Depends(get_current_user)
+        current_user: str = Depends(get_current_user)
 ):
-    #UPLOAD_DIR = f"uploads/{current_user}/"
-    UPLOAD_DIR = f"uploads/"
+    UPLOAD_DIR = f"uploads/{current_user}/"
+    # UPLOAD_DIR = f"uploads/"
 
     # Ensure the upload directory exists
     if not os.path.exists(UPLOAD_DIR):
@@ -73,8 +73,8 @@ async def create_cat_profile(
         litter_date=litter_date,
         neutered=neutered,
         weight=weight,
-        #user_id=current_user,
-        user_id='string',
+        user_id=current_user,
+        # user_id='string',
         photo_url=photo_url
     )
     return crud_cat_profile.create_cat_profile(db=db, cat_profile=cat_profile)
