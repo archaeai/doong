@@ -49,7 +49,7 @@ export default function todayTasks() {
               htmlFor={`todo-${todo.id}`}
               className={`checklist__label ${todo.done ? "checked" : ""}`}
             >
-              {todo.task}
+              {todo.note}
             </label>
           </li>
         ))}

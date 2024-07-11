@@ -14,7 +14,7 @@ export default function AddTodayTaskForm({ closeForm }) {
         note: newTodo,
         done: false,
         task_id: 0, // 예시 값, 실제로 필요한 값으로 교체 필요
-        cat_id: 0, // 예시 값, 실제로 필요한 값으로 교체 필요
+        cat_id: 1, // 예시 값, 실제로 필요한 값으로 교체 필요
       };
       try {
         await addTodayTask(taskLogData);
