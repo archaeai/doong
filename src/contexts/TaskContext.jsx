@@ -8,32 +8,29 @@ export const useTask = () => {
 };
 
 export const TaskProvider = ({ children }) => {
-  // 상태 관리 변수들
   const [defaultTasks, setDefaultTasks] = useState([]);
-  const [todayTasks, setTodayTasks] = useState([]);
-  const [addTasks, setAddTasks] = useState([]);
+  const [addTasks, setAddTasks] = useState([]); //추가할일
+  const [todayTasks, setTodayTasks] = useState([]); //오늘할일
   const [calendarTasks, setCalendarTasks] = useState([]);
   const [upcomingTasks, setUpcomingTasks] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [statistics, setStatistics] = useState({});
 
-  // 폼을 여는 함수
-  const openForm = () => setIsFormVisible(true);
+  // 루틴 추가 폼 상태
+  const [note, setNote] = useState("");
+  const [repeatInterval, setRepeatInterval] = useState("");
+  const [periodType, setPeriodType] = useState("days"); // 기본값을 "days"로 설정
+  // 상태 업데이트 함수
+  const updateNote = (value) => setNote(value);
+  const updateRepeatInterval = (value) => setRepeatInterval(value);
+  const updatePeriodType = (value) => setPeriodType(value);
 
-  // 폼을 닫는 함수
+  // 할일추가 폼 열기/닫기 함수(나중에 컴포넌트로 분리 예정)
+  const openForm = () => setIsFormVisible(true);
   const closeForm = () => setIsFormVisible(false);
 
-  // 기본 루틴을 API에서 불러오는 함수
-  const fetchDefaultTasks = async () => {
-    try {
-      const tasks = await taskApi.getDefaultTasks();
-      setDefaultTasks(tasks);
-    } catch (error) {
-      console.error("Failed to fetch default tasks", error);
-    }
-  };
-
+  //홈페이지 오늘할일 API 함수
   // 오늘의 할 일을 API에서 불러오는 함수
   const fetchTodayTasks = async (catId, date) => {
     try {
@@ -132,29 +129,38 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  // 기본 루틴을 추가하는 함수
-  const addDefaultTask = async (task) => {
+  //루틴설정페이지 API 함수
+  // 기본 루틴을 API에서 불러오는 함수
+  const fetchDefaultTasks = async () => {
+    try {
+      const tasks = await taskApi.getDefaultTasks();
+      setDefaultTasks(tasks);
+    } catch (error) {
+      console.error("Failed to fetch default tasks", error);
+    }
+  };
+
+  // 루틴을 추가하는 함수
+  const addDefaultTask = async () => {
+    const task = {
+      period_type: periodType,
+      period_int: parseInt(repeatInterval, 10),
+      note: note,
+    };
+
     try {
       const createdTask = await taskApi.createDefaultTask(task);
       setDefaultTasks([...defaultTasks, createdTask]);
+      console.log("Task successfully added:", createdTask); // 콘솔 로그 추가
+      setNote("");
+      setRepeatInterval("");
+      setPeriodType("days");
     } catch (error) {
       console.error("Failed to add default task", error);
     }
   };
 
-  // 기본 루틴을 업데이트하는 함수
-  const updateDefaultTask = async (taskId, task) => {
-    try {
-      const updatedTask = await taskApi.updateDefaultTask(taskId, task);
-      setDefaultTasks(
-        defaultTasks.map((t) => (t.id === taskId ? updatedTask : t))
-      );
-    } catch (error) {
-      console.error("Failed to update default task", error);
-    }
-  };
-
-  // 기본 루틴을 삭제하는 함수
+  // 루틴을 삭제하는 함수
   const deleteDefaultTask = async (taskId) => {
     try {
       await taskApi.deleteDefaultTask(taskId);
@@ -176,13 +182,23 @@ export const TaskProvider = ({ children }) => {
         isEditing,
         openForm,
         closeForm,
+        fetchTodayTasks,
         addTodayTask,
         updateTodayTask,
         deleteTodayTask,
         toggleTaskCompletion,
-        fetchTodayTasks,
         fetchCalendarTasks,
         fetchUpcomingTasks,
+        fetchDefaultTasks,
+        addDefaultTask,
+        // updateDefaultTask,
+        deleteDefaultTask,
+        note,
+        repeatInterval,
+        periodType,
+        updateNote,
+        updateRepeatInterval,
+        updatePeriodType,
       }}
     >
       {children}

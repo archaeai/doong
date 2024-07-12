@@ -35,10 +35,10 @@ export default function AddTodayTaskForm({ closeForm }) {
         placeholder="오늘 할 일을 추가해주세요."
         className="add-todo-input"
       />
-      <button type="submit" className="add-todo-button">
+      <button type="submit" className="task-add-button">
         추가
       </button>
-      <button type="button" className="cancel-todo-button" onClick={closeForm}>
+      <button type="button" className="task-cancel-button" onClick={closeForm}>
         취소
       </button>
     </form>

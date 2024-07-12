@@ -80,7 +80,7 @@ export default function ProfileSettings() {
     <div>
       <div className="profile-settings-header">
         <select
-          className="profile-settings-header__select"
+          className="settings-select"
           onChange={handleSelectChange}
           value={selectedCat ? selectedCat.id : ""}
         >

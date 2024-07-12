@@ -26,7 +26,7 @@ apiClient.interceptors.request.use(
   }
 );
 
-// default_task 관련 API(루틴)
+// default_task 관련 API(루틴 설정)
 export const getDefaultTasks = async (skip = 0, limit = 10) => {
   const response = await apiClient.get(`/default_task`, {
     params: { skip, limit },
@@ -40,7 +40,7 @@ export const getDefaultTask = async (id) => {
 };
 
 export const createDefaultTask = async (taskData) => {
-  const response = await apiClient.post(`/default_task`, taskData);
+  const response = await apiClient.post(`/default_task/`, taskData);
   return response.data;
 };
 

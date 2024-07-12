@@ -68,6 +68,30 @@ h1 {
   background-repeat: repeat-y;
 }
 
+.task-add-button {
+  background-color: var(--color-blue);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: var(--color-navy);
+  font-family: "Gaegu", sans-serif;
+  font-size: 14px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 3.75rem;
+  margin-right: 0.625rem;
+}
+.task-cancel-button {
+  background-color: var(--color-grey);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: var(--color-ivory);
+  font-family: "Gaegu", sans-serif;
+  font-size: 14px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 3.75rem;
+}
+
 .gender-icon {
   color: var(--color-green);
   font-weight: 700;
