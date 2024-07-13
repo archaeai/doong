@@ -4,8 +4,13 @@ import { TaskContext } from "../../contexts/TaskContext";
 import AddTodayTaskForm from "./AddTodayTaskForm";
 
 export default function todayTasks({ cat }) {
-  const { todayTasks, addTasks, toggleTaskCompletion, fetchTodayTasks } =
-    useContext(TaskContext);
+  const {
+    todayTasks,
+    addTasks,
+    toggleTaskCompletion,
+    fetchTodayTasks,
+    deleteTodayTask,
+  } = useContext(TaskContext);
 
   const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -21,6 +26,15 @@ export default function todayTasks({ cat }) {
   }, []);
 
   const allTodos = [...todayTasks, ...addTasks];
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteTodayTask(id);
+      console.log(`Task with id ${id} has been deleted`);
+    } catch (error) {
+      console.error(`Failed to delete task with id ${id}: `, error);
+    }
+  };
 
   return (
     <div className="home-schedule__container todo-list-container">
@@ -50,6 +64,12 @@ export default function todayTasks({ cat }) {
             >
               {todo.note}
             </label>
+            <button
+              className="checklist__delete"
+              onClick={() => handleDelete(todo.id)}
+            >
+              삭제
+            </button>
           </li>
         ))}
       </ul>
