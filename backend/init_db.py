@@ -51,13 +51,47 @@ def create_test_data(db: Session):
         cat_profile=cat1,
         diary=diary1
     )
-
     # 기본 작업 생성
     task1 = DefaultTask(
-        period_type="일간",
+        period_type="day",
         period_int=1,
-        note="Check water bowl"
+        note="물"
     )
+    task2 = DefaultTask(
+        period_type="day",
+        period_int=1,
+        note="밥"
+    )
+    task3 = DefaultTask(
+        period_type="day",
+        period_int=1,
+        note="화장실 청소"
+    )
+    task4 = DefaultTask(
+        period_type="day",
+        period_int=1,
+        note="바닥청소"
+    )
+    task5 = DefaultTask(
+        period_type="day",
+        period_int=1,
+        note="사냥놀이 15분"
+    )
+    task6 = DefaultTask(
+        period_type="day",
+        period_int=1,
+        note="빗질"
+    )
+    task7 = DefaultTask(
+        period_type="day",
+        period_int=1,
+        note="양치"
+    )
+    task8 = DefaultTask(
+        period_type="day",
+        period_int=1,
+        note="사냥놀이 15분"
+    )    
 
     # 일일 작업 로그 생성
     daily_task_log1 = DailyTaskLog(
@@ -81,7 +115,7 @@ def create_test_data(db: Session):
     )
 
     # 데이터베이스에 추가
-    db.add_all([user1, cat1, diary1, cat_status1, task1, daily_task_log1, non_daily_task_log1])
+    db.add_all([user1, cat1, diary1, cat_status1, task1, task2, task3,task4,task5,task6,task7,task8,daily_task_log1, non_daily_task_log1])
     db.commit()
 
 # 세션 생성 및 테스트 데이터 생성 함수 호출

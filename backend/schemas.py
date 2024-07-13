@@ -1,6 +1,5 @@
 from datetime import date
-
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 
 
@@ -93,6 +92,7 @@ class DiaryResponse(DiaryBase):
     id: int
     user_id: str
     cat_statuses: List[CatStatusResponse] = []
+
     class Config:
         from_attributes = True
 
@@ -136,7 +136,7 @@ class DailyTaskLogUpdate(DailyTaskLogBase):
 
 class DailyTaskLogResponse(DailyTaskLogBase):
     id: int
-
+    task: Optional[DefaultTaskResponse] = Field(default=None)  # 여기 타입 어노테이션 추가
     class Config:
         from_attributes = True
 

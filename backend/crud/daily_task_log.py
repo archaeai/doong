@@ -2,7 +2,7 @@
 from datetime import datetime
 
 from sqlalchemy import and_
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from typing import List, Optional
 from backend.models import DailyTaskLog
 from backend.schemas import DailyTaskLogCreate, DailyTaskLogUpdate
@@ -17,11 +17,12 @@ def get_daily_task_logs(db: Session, skip: int = 0, limit: int = 10) -> List[Dai
 
 
 def get_daily_task_logs_by_cat(db: Session, cat_id: int, skip: int = 0, limit: int = 10) -> List[DailyTaskLog]:
-    return db.query(DailyTaskLog).filter(DailyTaskLog.cat_id == cat_id).offset(skip).limit(limit).all()
+    return db.query(DailyTaskLog).options(joinedload(DailyTaskLog.default_task)).filter(DailyTaskLog.cat_id == cat_id).offset(skip).limit(limit).all()
+
 
 def get_daily_task_logs_by_cat_and_date(db: Session, cat_id: int, date: str) -> List[DailyTaskLog]:
     target_date = datetime.strptime(date, "%Y-%m-%d").date()
-    return db.query(DailyTaskLog).filter(
+    return db.query(DailyTaskLog).options(joinedload(DailyTaskLog.default_task)).filter(
         and_(DailyTaskLog.cat_id == cat_id, DailyTaskLog.date == target_date)
     ).all()
 
