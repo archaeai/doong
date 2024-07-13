@@ -10,9 +10,8 @@ export const useTask = () => {
 export const TaskProvider = ({ children }) => {
   const [defaultTaskId, setDefaultTaskId] = useState(null);
   const [defaultTasks, setDefaultTasks] = useState([]);
-  const [addTasks, setAddTasks] = useState([]); //추가할일
-  const [todayTasks, setTodayTasks] = useState([]); //오늘할일
-  const [calendarTasks, setCalendarTasks] = useState([]);
+  const [addTasks, setAddTasks] = useState([]);
+  const [todayTasks, setTodayTasks] = useState([]);
   const [upcomingTasks, setUpcomingTasks] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [statistics, setStatistics] = useState({});
@@ -20,6 +19,8 @@ export const TaskProvider = ({ children }) => {
   const [note, setNote] = useState("");
   const [repeatInterval, setRepeatInterval] = useState("");
   const [periodType, setPeriodType] = useState("days"); // 기본값을 "days"로 설정
+  const [calendarTasks, setCalendarTasks] = useState([]);
+
   // 상태 업데이트 함수
   const updateNote = (value) => setNote(value);
   const updateRepeatInterval = (value) => setRepeatInterval(value);
@@ -72,39 +73,39 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  // 비규칙적인 이벤트를 API에서 불러오는 함수
+  // 다가오는 일정을 API에서 불러오는 함수
+  // useEffect(() => {
+  //   const fetchUpcomingTasks = async () => {
+  //     try {
+  //       const tasks = await taskApi.getNonDailyTaskLogsByCat(1); // catId는 예시
+  //       setUpcomingTasks(tasks);
+  //     } catch (error) {
+  //       console.error("Failed to fetch upcoming tasks", error);
+  //     }
+  //   };
+  //   fetchUpcomingTasks();
+  // }, []);
+
+  // const fetchUpcomingTasks = async (catId) => {
+  //   try {
+  //     const tasks = await taskApi.getNonDailyTaskLogsByCat(catId);
+  //     setUpcomingTasks(tasks);
+  //   } catch (error) {
+  //     console.error("Failed to fetch upcoming tasks", error);
+  //   }
+  // };
+
+  // 캘린더 페이지 api 함수
   const fetchCalendarTasks = async (catId) => {
     try {
-      const tasks = await taskApi.getNonDailyTaskLogsByCat(catId);
+      const tasks = await taskApi.getNonDailyTaskLogs(catId);
       setCalendarTasks(tasks);
+      console.log("Fetched non-daily tasks:", tasks);
     } catch (error) {
       console.error("Failed to fetch calendar tasks", error);
     }
   };
 
-  // 다가오는 일정을 API에서 불러오는 함수
-  useEffect(() => {
-    const fetchUpcomingTasks = async () => {
-      try {
-        const tasks = await taskApi.getNonDailyTaskLogsByCat(1); // catId는 예시
-        setUpcomingTasks(tasks);
-      } catch (error) {
-        console.error("Failed to fetch upcoming tasks", error);
-      }
-    };
-    fetchUpcomingTasks();
-  }, []);
-
-  const fetchUpcomingTasks = async (catId) => {
-    try {
-      const tasks = await taskApi.getNonDailyTaskLogsByCat(catId);
-      setUpcomingTasks(tasks);
-    } catch (error) {
-      console.error("Failed to fetch upcoming tasks", error);
-    }
-  };
-
-  // 새로운 비규칙적인 이벤트를 추가하는 함수
   const addCalendarTask = async (task) => {
     try {
       const createdTask = await taskApi.createNonDailyTaskLog(task);
@@ -114,35 +115,41 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  //루틴설정페이지 API 함수
-  //{default_task_id} 가져오기
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const tasks = await taskApi.getAllDefaultTasks();
-        setDefaultTasks(tasks);
-        if (tasks.length > 0) {
-          setDefaultTaskId(tasks[0].id); // 첫 번째 기본 작업의 ID를 추출하여 상태에 저장
-          fetchDefaultTasks(tasks[0].id); // 첫 번째 기본 작업의 ID로 기본 작업을 가져옴
-        }
-      } catch (error) {
-        console.error("Failed to fetch default tasks", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // 루틴을 API에서 불러오는 함수
-  const fetchDefaultTasks = async (id) => {
+  const deleteCalendarTask = async (id) => {
     try {
-      const task = await taskApi.getDefaultTasks(id);
-      setDefaultTasks((prevTasks) => [...prevTasks, task]);
-      console.log("Fetched default task:", task); // 콘솔 로그 추가
+      await taskApi.deleteNonDailyTaskLog(id);
+      setCalendarTasks((prevTasks) =>
+        prevTasks.filter((task) => task.id !== id)
+      );
+      console.log(`Non-daily task with id ${id} has been deleted`);
     } catch (error) {
-      console.error("Failed to fetch default task", error);
+      console.error(`Failed to delete non-daily task with id ${id}: `, error);
     }
   };
+
+  //루틴설정페이지 API 함수
+  const fetchDefaultTasks = async () => {
+    try {
+      const tasks = await taskApi.getAllDefaultTasks();
+      setDefaultTasks(tasks);
+      if (tasks.length > 0) {
+        setDefaultTaskId(tasks[0].id); // 첫 번째 기본 작업의 ID를 추출하여 상태에 저장
+      }
+    } catch (error) {
+      console.error("Failed to fetch default tasks", error);
+    }
+  };
+
+  // 루틴을 API에서 불러오는 함수
+  // const fetchDefaultTask = async (id) => {
+  //   try {
+  //     const task = await taskApi.getDefaultTask(id);
+  //     setDefaultTasks((prevTasks) => [...prevTasks, task]);
+  //     console.log("Fetched default task:", task);
+  //   } catch (error) {
+  //     console.error("Failed to fetch default task", error);
+  //   }
+  // };
 
   // 루틴을 추가하는 함수
   const addDefaultTask = async () => {
@@ -192,15 +199,13 @@ export const TaskProvider = ({ children }) => {
         defaultTasks,
         todayTasks,
         addTasks,
-        calendarTasks,
         upcomingTasks,
         isEditing,
         fetchTodayTasks,
         addTodayTask,
         deleteTodayTask,
         toggleTaskCompletion,
-        fetchCalendarTasks,
-        fetchUpcomingTasks,
+        // fetchUpcomingTasks,
         fetchDefaultTasks,
         addDefaultTask,
         updateDefaultTask,
@@ -213,6 +218,10 @@ export const TaskProvider = ({ children }) => {
         updatePeriodType,
         defaultTaskId,
         setDefaultTaskId,
+        calendarTasks,
+        fetchCalendarTasks,
+        addCalendarTask,
+        deleteCalendarTask,
       }}
     >
       {children}

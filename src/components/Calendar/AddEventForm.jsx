@@ -1,10 +1,12 @@
-import useFormState from "../hooks/useFormState";
-import { validateEventForm } from "../utils/validation";
+import useFormState from "../../hooks/useFormState";
+import { validateEventForm } from "../../utils/validation";
 
 const AddEventForm = ({ onSubmit, closeModal, initialDate }) => {
   const initialState = {
     eventTitle: "",
     selectedDate: initialDate,
+    lastDone: "",
+    nextDone: "",
   };
 
   const { formData, handleChange, handleSubmit, errors } = useFormState(
@@ -19,7 +21,10 @@ const AddEventForm = ({ onSubmit, closeModal, initialDate }) => {
         onSubmit={(e) => {
           handleSubmit(e, (data) => {
             console.log("추가된 일정 데이터:", data); // 콘솔 로그
-            onSubmit(data); // 데이터 제출
+            onSubmit({
+              date: data.selectedDate,
+              title: data.eventTitle,
+            }); // 데이터 제출 형식 맞추기
             closeModal(); // 모달 창 닫기
           });
         }}
