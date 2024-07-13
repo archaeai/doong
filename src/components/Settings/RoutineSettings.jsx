@@ -7,6 +7,7 @@ import RoutineEditForm from "./RoutineEditForm";
 export default function RoutineSettings() {
   const {
     defaultTasks,
+    defaultTaskId,
     fetchDefaultTasks,
     addDefaultTask,
     updateDefaultTask,
@@ -18,7 +19,7 @@ export default function RoutineSettings() {
 
   useEffect(() => {
     fetchDefaultTasks();
-  }, [fetchDefaultTasks]);
+  }, []);
 
   const openAddForm = () => {
     setCuttentRoutine(null);

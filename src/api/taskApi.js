@@ -27,31 +27,51 @@ apiClient.interceptors.request.use(
 );
 
 // default_task 관련 API(루틴 설정)
-export const getDefaultTasks = async (skip = 0, limit = 10) => {
-  const response = await apiClient.get(`/default_task`, {
-    params: { skip, limit },
-  });
-  return response.data;
+export const getAllDefaultTasks = async (skip = 0, limit = 10) => {
+  try {
+    const response = await apiClient.get(`/default_task/`, {
+      params: { skip, limit },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch default tasks");
+  }
 };
 
-export const getDefaultTask = async (id) => {
-  const response = await apiClient.get(`/default_task/${id}`);
-  return response.data;
+export const getDefaultTasks = async (id) => {
+  try {
+    const response = await apiClient.get(`/default_task/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch default task");
+  }
 };
 
 export const createDefaultTask = async (taskData) => {
-  const response = await apiClient.post(`/default_task/`, taskData);
-  return response.data;
+  try {
+    const response = await apiClient.post(`/default_task/`, taskData);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to add default task");
+  }
 };
 
 export const updateDefaultTask = async (id, taskData) => {
-  const response = await apiClient.put(`/default_task/${id}`, taskData);
-  return response.data;
+  try {
+    const response = await apiClient.put(`/default_task/${id}`, taskData);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to update default task");
+  }
 };
 
 export const deleteDefaultTask = async (id) => {
-  const response = await apiClient.delete(`/default_task/${id}`);
-  return response.data;
+  try {
+    const response = await apiClient.delete(`/default_task/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to delete default task");
+  }
 };
 
 // daily_task_log 관련 API(오늘할일)

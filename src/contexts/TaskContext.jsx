@@ -8,6 +8,7 @@ export const useTask = () => {
 };
 
 export const TaskProvider = ({ children }) => {
+  const [defaultTaskId, setDefaultTaskId] = useState(null);
   const [defaultTasks, setDefaultTasks] = useState([]);
   const [addTasks, setAddTasks] = useState([]); //추가할일
   const [todayTasks, setTodayTasks] = useState([]); //오늘할일
@@ -16,7 +17,6 @@ export const TaskProvider = ({ children }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [statistics, setStatistics] = useState({});
-
   // 루틴 추가 폼 상태
   const [note, setNote] = useState("");
   const [repeatInterval, setRepeatInterval] = useState("");
@@ -130,13 +130,31 @@ export const TaskProvider = ({ children }) => {
   };
 
   //루틴설정페이지 API 함수
-  // 기본 루틴을 API에서 불러오는 함수
-  const fetchDefaultTasks = async () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tasks = await taskApi.getAllDefaultTasks();
+        setDefaultTasks(tasks);
+        if (tasks.length > 0) {
+          setDefaultTaskId(tasks[0].id); // 첫 번째 기본 작업의 ID를 추출하여 상태에 저장
+          fetchDefaultTasks(tasks[0].id); // 첫 번째 기본 작업의 ID로 기본 작업을 가져옴
+        }
+      } catch (error) {
+        console.error("Failed to fetch default tasks", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // 루틴을 API에서 불러오는 함수
+  const fetchDefaultTasks = async (id) => {
     try {
-      const tasks = await taskApi.getDefaultTasks();
-      setDefaultTasks(tasks);
+      const task = await taskApi.getDefaultTasks(id);
+      setDefaultTasks((prevTasks) => [...prevTasks, task]);
+      console.log("Fetched default task:", task); // 콘솔 로그 추가
     } catch (error) {
-      console.error("Failed to fetch default tasks", error);
+      console.error("Failed to fetch default task", error);
     }
   };
 
@@ -199,6 +217,8 @@ export const TaskProvider = ({ children }) => {
         updateNote,
         updateRepeatInterval,
         updatePeriodType,
+        defaultTaskId,
+        setDefaultTaskId,
       }}
     >
       {children}

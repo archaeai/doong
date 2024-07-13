@@ -11,14 +11,14 @@ export default function RoutineAddForm({ closeForm, addDefaultTask }) {
     updatePeriodType,
   } = useContext(TaskContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted with values:", {
       note,
       repeatInterval,
       periodType,
     }); // 폼 제출 값 로그 추가
-    addDefaultTask(); // API로 데이터 전송
+    await addDefaultTask(); // API로 데이터 전송
     closeForm(); // 폼 닫기
   };
 
