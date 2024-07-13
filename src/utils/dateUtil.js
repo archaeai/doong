@@ -7,7 +7,7 @@ export const getLocalISODateString = (date) => {
 
 const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
-// 날짜 포맷 함수
+// 요일 포함 날짜 포맷 함수
 export const formatDate = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -15,6 +15,21 @@ export const formatDate = (date) => {
   const dayOfWeek = daysOfWeek[date.getDay()];
 
   return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
+};
+
+// 요일을 포함하지 않은 날짜 포맷 함수
+export const formatDateWithoutDay = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}년 ${month}월 ${day}일`;
+};
+
+// 서버에서 받은 날짜 데이터를 포맷하는 함수
+export const formatServerDate = (serverDate) => {
+  const date = new Date(serverDate);
+  return formatDateWithoutDay(date);
 };
 
 // 현재 날짜 가져오기
@@ -41,4 +56,13 @@ export const getDateRange = (years) => {
     today.getDate()
   );
   return { minDate, maxDate };
+};
+
+// 입양일로부터 현재까지 며칠이 지났는지 계산하는 함수(홈화면에서 사용)
+export const getDaysSince = (adoptedDay) => {
+  const today = new Date();
+  const adoptedDate = new Date(adoptedDay);
+  const oneDay = 24 * 60 * 60 * 1000; // 하루를 밀리초로 변환
+  const diffDays = Math.round((today - adoptedDate) / oneDay);
+  return diffDays;
 };

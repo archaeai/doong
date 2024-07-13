@@ -1,3 +1,7 @@
+.settings-page-content {
+  padding: 0;
+}
+
 .sidebar {
   background-color: var(--color-yellow2);
   padding: 10px;
@@ -44,6 +48,94 @@
   color: var(--color-navy);
   font-family: "Gaegu", cursive;
   font-size: 16px;
+}
+
+.user-settings__ul {
+  list-style: none;
+  padding: 0;
+}
+
+.user-settings__id-label {
+  margin-right: 20px;
+  font-size: 18px;
+  color: var(--color-navy);
+}
+
+.profile-settings-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.profile-settings-header__select {
+  width: 7.1rem;
+  padding: 0.313rem 0.625rem;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-yellow1);
+  font-family: "Gaegu";
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.profile-settings-header__edit {
+  font-family: "Gaegu";
+  font-size: 16px;
+  color: var(--color-navy);
+  cursor: pointer;
+  padding: 0.313rem 0.625rem;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-yellow2);
+  margin-right: 0.938rem;
+}
+.profile-settings-header__delete {
+  font-family: "Gaegu";
+  font-size: 16px;
+  color: var(--color-navy);
+  cursor: pointer;
+  padding: 0.313rem 0.625rem;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-yellow3);
+}
+
+.profile-settings-content__heading {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 0.938rem;
+}
+
+.profile-settings-content__heading-img {
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 3.123rem;
+  margin-right: 1.25rem;
+}
+
+.profile-settings-content__ul {
+  list-style: none;
+  padding: 0;
+}
+
+.profile-settings-content__li {
+  margin-bottom: 0.938rem;
+}
+
+.profile-settings-content__label {
+  color: var(--color-navy);
+  margin-right: 0.938rem;
+}
+
+.profile-settings-content__li span {
+  padding: 0.313rem 0.625rem;
+  background-color: var(--color-ivory);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 768px) {

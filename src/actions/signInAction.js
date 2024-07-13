@@ -31,15 +31,14 @@ export async function signInAction({ request }) {
 
     console.log("로그인 성공:", resData);
 
-    const token = resData.token;
-
+    const token = resData.access_token;
     localStorage.setItem("token", token);
 
     return redirect("/");
   } catch (error) {
     console.error("로그인 중 에러 발생:", error);
     return json(
-      { errors: { general: "서버 오류 발생. 잠시 후 다시 시도해 주세요." } },
+      { error: { general: "서버 오류 발생. 잠시 후 다시 시도해 주세요." } },
       { status: 500 }
     );
   }

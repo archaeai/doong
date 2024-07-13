@@ -2,7 +2,21 @@
   padding: 0.938rem;
 }
 
-.add-cat-nav__button {
+.added-cat-button,
+.add-cat-nav__button.subsequent-add {
+  background-color: var(--color-mint);
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px 20px 0 0;
+  border: none;
+  padding: 4px 8px 0 8px;
+  font-family: "Gaegu";
+  font-size: 18px;
+  color: var(--color-navy);
+  margin: 3px 0 0 20px;
+}
+
+.added-cat-button.selected,
+.add-cat-nav__buttonfirst-add {
   background-color: var(--color-blue);
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 20px 20px 0 0;
@@ -12,6 +26,15 @@
   font-size: 18px;
   color: var(--color-navy);
   margin: 3px 0 0 20px;
+}
+
+.added-cat-button:hover,
+.add-cat-nav__button.subsequent-add:hover,
+.added-cat-button.selected:hover,
+.add-cat-nav__buttonfirst-add:hover {
+  cursor: pointer;
+  background-color: var(--color-blue);
+  color: var(--color-ivory);
 }
 
 .header-profile-container {
@@ -25,20 +48,42 @@
   border: 10px solid var(--color-blue);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.profile-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .profile-img-container img {
   width: 6.25rem;
-  height: 6.25rem;
-  margin-right: 0.625rem;
+  height: 100%;
+  margin-right: 1.25rem;
   border-radius: 20px;
 }
 
-.cat-profile p {
+.profile-info-container {
   display: flex;
   flex-direction: column;
-  text-align: center;
   justify-content: center;
+}
+
+.profile-info-line1 {
+  color: var(--color-navy);
+}
+
+.profile-info-line2 {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.no-neutered {
+  color: var(--color-maroon);
+  font-size: 15px;
+  padding-top: 1px;
 }
 
 .home-schedule__container {
@@ -132,6 +177,12 @@
   text-decoration: line-through;
   text-decoration-color: var(--color-maroon);
   text-decoration-thickness: 3px;
+}
+
+@media (max-width: 375px) {
+  .cat-profile p {
+    font-size: 15px;
+  }
 }
 
 @media (min-width: 768px) {

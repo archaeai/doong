@@ -1,8 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CatContext } from "../contexts/CatContext";
 import useModal from "../hooks/useModal";
 import useCurrentDate from "../hooks/useCurrentDate";
-
 import AddHeader from "../components/Home/AddHeader";
 import CatProfile from "../components/Home/CatProfile";
 import RecentSchedule from "../components/Home/RecentSchedule";
@@ -13,9 +12,17 @@ import AddCatForm from "../components/AddCatForm/AddCatForm";
 import "../styles/Home.css";
 
 export default function HomePage() {
-  const { selectedCat, cats } = useContext(CatContext);
+  const { cats, selectedCat, loadCats, selectCat } = useContext(CatContext);
   const { isModalOpen, openModal, closeModal } = useModal();
   const currentDate = useCurrentDate();
+
+  useEffect(() => {
+    if (cats.length === 0) {
+      loadCats();
+    } else if (!selectedCat && cats.length > 0) {
+      selectCat(cats[0]);
+    }
+  }, [loadCats, cats.length, selectedCat, selectCat, cats]);
 
   return (
     <>
@@ -23,7 +30,12 @@ export default function HomePage() {
       <div className="page-content home-page-content">
         <div className="header-container">
           <div className="header-profile-container">
-            <AddHeader openModal={openModal} />
+            <AddHeader
+              openModal={openModal}
+              cats={cats}
+              selectCat={selectCat}
+              selectedCat={selectedCat}
+            />
             <CatProfile cat={selectedCat} />
           </div>
           <RecentSchedule />
