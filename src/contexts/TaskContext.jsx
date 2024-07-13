@@ -130,6 +130,7 @@ export const TaskProvider = ({ children }) => {
   };
 
   //루틴설정페이지 API 함수
+  //{default_task_id} 가져오기
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -178,6 +179,18 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
+  // 루틴을 수정하는 함수
+  const updateDefaultTask = async (id, taskData) => {
+    try {
+      const updatedTask = await taskApi.updateDefaultTask(id, taskData);
+      setDefaultTasks((prevTasks) =>
+        prevTasks.map((task) => (task.id === id ? updatedTask : task))
+      );
+    } catch (error) {
+      console.error("Failed to update default task", error);
+    }
+  };
+
   // 루틴을 삭제하는 함수
   const deleteDefaultTask = async (taskId) => {
     try {
@@ -209,7 +222,7 @@ export const TaskProvider = ({ children }) => {
         fetchUpcomingTasks,
         fetchDefaultTasks,
         addDefaultTask,
-        // updateDefaultTask,
+        updateDefaultTask,
         deleteDefaultTask,
         note,
         repeatInterval,

@@ -24,6 +24,14 @@ export default function RoutineAddForm({ closeForm, addDefaultTask }) {
 
   return (
     <form onSubmit={handleSubmit} className="routine-add-form">
+      <input
+        type="number"
+        value={repeatInterval}
+        onChange={(e) => updateRepeatInterval(e.target.value)}
+        placeholder="1"
+        className="routine-add-form__interval"
+        required
+      />
       <select
         className="settings-select"
         value={periodType}
@@ -31,28 +39,18 @@ export default function RoutineAddForm({ closeForm, addDefaultTask }) {
         required
       >
         <option value="" disabled>
-          반복
+          간격
         </option>
-        <option value="1">매일</option>
-        <option value="7">매주</option>
-        <option value="14">2주</option>
-        <option value="21">3주</option>
-        <option value="30">매달</option>
+        <option value="D">일</option>
+        <option value="W">주</option>
+        <option value="M">달</option>
       </select>
-      <input
-        type="number"
-        value={repeatInterval}
-        onChange={(e) => updateRepeatInterval(e.target.value)}
-        placeholder="반복 주기 간격을 입력하세요."
-        className="routine-add-form__input"
-        required
-      />
       <input
         type="text"
         value={note}
         onChange={(e) => updateNote(e.target.value)}
         placeholder="루틴을 입력하세요."
-        className="routine-add-form__input"
+        className="routine-add-form__note"
         required
       />
       <button type="submit" className="task-add-button">

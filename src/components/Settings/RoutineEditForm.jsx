@@ -1,12 +1,11 @@
-import { useState, useContext } from "react";
-import { TaskContext } from "../../contexts/TaskContext";
+import { useState, useEffect } from "react";
 
 export default function RoutineEditForm({
   task,
   closeForm,
   updateDefaultTask,
+  deleteDefaultTask,
 }) {
-  const { deleteDefaultTask } = useContext(TaskContext);
   const [note, setNote] = useState(task.note);
   const [repeatInterval, setRepeatInterval] = useState(task.repeatInterval);
 
@@ -16,9 +15,13 @@ export default function RoutineEditForm({
     closeForm();
   };
 
-  const handleDelete = () => {
-    deleteDefaultTask(task.id);
-    closeForm();
+  const handleDelete = async () => {
+    try {
+      await deleteDefaultTask(task.id);
+      closeForm();
+    } catch (error) {
+      console.error("Failed to delete default task", error);
+    }
   };
 
   return (
