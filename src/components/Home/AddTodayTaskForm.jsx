@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
 import "../../styles/AddTodayTaskForm.css";
 
-export default function AddTodayTaskForm({ closeForm }) {
+export default function AddTodayTaskForm({ closeForm, cat }) {
   const [newTodo, setNewTodo] = useState("");
   const { addTodayTask } = useContext(TaskContext);
 
@@ -13,8 +13,8 @@ export default function AddTodayTaskForm({ closeForm }) {
         date: new Date().toISOString().split("T")[0], // 오늘 날짜
         note: newTodo,
         done: false,
-        task_id: 0, // 예시 값, 실제로 필요한 값으로 교체 필요
-        cat_id: 1, // 예시 값, 실제로 필요한 값으로 교체 필요
+        task_id: 0,
+        cat_id: cat.id,
       };
       try {
         await addTodayTask(taskLogData);

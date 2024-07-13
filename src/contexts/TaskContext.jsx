@@ -14,7 +14,6 @@ export const TaskProvider = ({ children }) => {
   const [todayTasks, setTodayTasks] = useState([]); //오늘할일
   const [calendarTasks, setCalendarTasks] = useState([]);
   const [upcomingTasks, setUpcomingTasks] = useState([]);
-  const [isFormVisible, setIsFormVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [statistics, setStatistics] = useState({});
   // 루틴 추가 폼 상태
@@ -25,10 +24,6 @@ export const TaskProvider = ({ children }) => {
   const updateNote = (value) => setNote(value);
   const updateRepeatInterval = (value) => setRepeatInterval(value);
   const updatePeriodType = (value) => setPeriodType(value);
-
-  // 할일추가 폼 열기/닫기 함수(나중에 컴포넌트로 분리 예정)
-  const openForm = () => setIsFormVisible(true);
-  const closeForm = () => setIsFormVisible(false);
 
   //홈페이지 오늘할일 API 함수
   // 오늘의 할 일을 API에서 불러오는 함수
@@ -209,10 +204,7 @@ export const TaskProvider = ({ children }) => {
         addTasks,
         calendarTasks,
         upcomingTasks,
-        isFormVisible,
         isEditing,
-        openForm,
-        closeForm,
         fetchTodayTasks,
         addTodayTask,
         updateTodayTask,

@@ -76,7 +76,7 @@ export const deleteDefaultTask = async (id) => {
 
 // daily_task_log 관련 API(오늘할일)
 export const getDailyTaskLogsByCat = async (catId) => {
-  const response = await apiClient.get(`/daily_task_log/cat/`);
+  const response = await apiClient.get(`/daily_task_log/cat/${catId}`);
   return response.data;
 };
 
