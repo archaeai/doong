@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { CatContext } from "../../contexts/CatContext";
 import catImg from "../../assets/cat-image.png";
 import ProfileEditForm from "./ProfileEditForm";
+import CatSelect from "../../UI/CatSelect";
 
 export default function ProfileSettings() {
   const {
@@ -32,16 +33,6 @@ export default function ProfileSettings() {
       setEditCat(selectedCat);
     }
   }, [selectedCat]);
-
-  const handleSelectChange = (e) => {
-    const selectedCatId = Number(e.target.value);
-    const selectedCat = cats.find((cat) => cat.id === selectedCatId);
-    if (selectedCat) {
-      selectCat(selectedCat);
-    } else {
-      console.error(`Cat with id ${selectedCatId} not found`);
-    }
-  };
 
   const handleUpdateCat = () => {
     updateCat(editCat.id, editCat)
@@ -79,20 +70,7 @@ export default function ProfileSettings() {
   return (
     <div>
       <div className="profile-settings-header">
-        <select
-          className="settings-select"
-          onChange={handleSelectChange}
-          value={selectedCat ? selectedCat.id : ""}
-        >
-          <option value="" disabled>
-            고양이 선택
-          </option>
-          {cats.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
+        <CatSelect />
         <div>
           {isEditing ? (
             <button

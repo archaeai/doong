@@ -68,6 +68,19 @@ h1 {
   background-repeat: repeat-y;
 }
 
+.cat-select {
+  width: 6.25rem;
+  padding: 0.313rem 0.625rem;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-yellow1);
+  font-family: "Gaegu";
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 0.625rem;
+}
+
 .task-add-button {
   background-color: var(--color-blue);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
