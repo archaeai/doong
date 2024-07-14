@@ -64,6 +64,7 @@ class DefaultTask(Base):
     period_type = Column(String, nullable=True, comment='주기 단위')
     period_int = Column(Integer, nullable=True)
     note = Column(Text, nullable=False)
+    cat_id = Column(Integer)
     daily_task_logs = relationship('DailyTaskLog', back_populates='default_task')
     non_daily_task_logs = relationship('NonDailyTaskLog', back_populates='default_task')
 
@@ -85,8 +86,7 @@ class NonDailyTaskLog(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     task_id = Column(Integer, ForeignKey('default_task.id'), nullable=True)
     cat_id = Column(Integer, ForeignKey('cat_profile.id'), nullable=False)
-    last_done = Column(Date, nullable=False)
-    next_done = Column(Date, nullable=False)
+    date = Column(Date, nullable=False)
     note = Column(Text, nullable=True)
     default_task = relationship('DefaultTask', back_populates='non_daily_task_logs')
     cat_profile = relationship('CatProfile', back_populates='non_daily_task_logs')

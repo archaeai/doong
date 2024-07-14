@@ -59,8 +59,10 @@ async def create_cat_profile(
         with open(file_path, "wb") as buffer:
             copyfileobj(photo.file, buffer)
         photo_url = file_path
-    print('*******')
-    print(f"{birthday}, {neutered}, {type(neutered)}")
+        
+        # cat pace 추가
+        crud_cat_profile.create_cat_face(UPLOAD_DIR, filename)
+        
 
     cat_profile = CatProfileCreate(
         name=name,
@@ -74,7 +76,6 @@ async def create_cat_profile(
         neutered=neutered,
         weight=weight,
         user_id=current_user,
-        # user_id='string',
         photo_url=photo_url
     )
     return crud_cat_profile.create_cat_profile(db=db, cat_profile=cat_profile)

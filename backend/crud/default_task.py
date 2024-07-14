@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from backend.models import DefaultTask
 from backend.schemas import DefaultTaskCreate, DefaultTaskUpdate
+from fastapi import APIRouter, Depends, HTTPException, status
 
 def get_default_task(db: Session, default_task_id: int) -> Optional[DefaultTask]:
     return db.query(DefaultTask).filter(DefaultTask.id == default_task_id).first()
@@ -28,7 +29,11 @@ def update_default_task(db: Session, default_task_id: int, default_task: Default
 
 def delete_default_task(db: Session, default_task_id: int) -> Optional[DefaultTask]:
     db_default_task = db.query(DefaultTask).filter(DefaultTask.id == default_task_id).first()
+    
+        
     if db_default_task:
+        if db_default_task.cat_id == 0:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="시스템이 등록한 기본 업무는 삭제할 없습니다.")
         db.delete(db_default_task)
         db.commit()
     return db_default_task

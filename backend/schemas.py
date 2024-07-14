@@ -100,6 +100,7 @@ class DiaryResponse(DiaryBase):
 class DefaultTaskBase(BaseModel):
     period_type: Optional[str]
     period_int: Optional[int]
+    cat_id : Optional[int]
     note: str
 
 
@@ -144,8 +145,7 @@ class DailyTaskLogResponse(DailyTaskLogBase):
 class NonDailyTaskLogBase(BaseModel):
     task_id: Optional[int]
     cat_id: int
-    last_done: date
-    next_done: date
+    date: date
     note: Optional[str]
 
 
