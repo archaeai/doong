@@ -4,7 +4,6 @@ export default function RoutineEditForm({
   task,
   closeForm,
   updateDefaultTask,
-  deleteDefaultTask,
 }) {
   const [note, setNote] = useState(task.note);
   const [repeatInterval, setRepeatInterval] = useState(task.repeatInterval);
@@ -13,15 +12,6 @@ export default function RoutineEditForm({
     e.preventDefault();
     updateDefaultTask(task.id, { note, repeatInterval });
     closeForm();
-  };
-
-  const handleDelete = async () => {
-    try {
-      await deleteDefaultTask(task.id);
-      closeForm();
-    } catch (error) {
-      console.error("Failed to delete default task", error);
-    }
   };
 
   return (
@@ -45,9 +35,6 @@ export default function RoutineEditForm({
       <button type="submit">수정</button>
       <button type="button" onClick={closeForm}>
         취소
-      </button>
-      <button type="button" onClick={handleDelete}>
-        삭제
       </button>
     </form>
   );

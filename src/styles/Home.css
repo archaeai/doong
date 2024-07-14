@@ -179,20 +179,6 @@
   text-decoration-thickness: 3px;
 }
 
-.checklist__delete {
-  margin-left: auto;
-  background-color: transparent;
-  border: none;
-  color: var(--color-grey);
-  font-family: "Gaegu";
-}
-
-.checklist__delete:hover {
-  color: var(--color-maroon);
-  cursor: pointer;
-  background-color: transparent;
-}
-
 @media (max-width: 375px) {
   .cat-profile p {
     font-size: 15px;

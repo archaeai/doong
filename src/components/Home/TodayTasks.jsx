@@ -64,7 +64,7 @@ export default function todayTasks({ cat }) {
               {todo.note}
             </label>
             <button
-              className="checklist__delete"
+              className="todo-delete"
               onClick={() => handleDelete(todo.id)}
             >
               삭제
