@@ -12,7 +12,7 @@ import "react-calendar/dist/Calendar.css";
 import "../styles/Calendar_ver2.css";
 
 export default function CalendarPage() {
-  const { selectedCat } = useContext(CatContext);
+  const { cats, selectedCat } = useContext(CatContext);
   const {
     fetchCalendarTasks,
     addCalendarTask,
@@ -27,21 +27,24 @@ export default function CalendarPage() {
   const currentDate = useCurrentDate();
 
   useEffect(() => {
-    if (selectedCat) {
-      fetchCalendarTasks(selectedCat.id);
+    if (cats.length > 0) {
+      const catIds = cats.map((cat) => cat.id);
+      fetchCalendarTasks(catIds);
     }
-  }, []);
+  }, [cats]);
 
   const handleAddEvent = async (formData) => {
-    const { selectedDate, eventTitle } = formData;
     try {
-      await addCalendarTask({
+      const { selectedDate, eventTitle } = formData;
+      const task = {
         task_id: 0,
         cat_id: selectedCat.id,
-        last_done: selectedDate,
-        next_done: selectedDate,
+        date: selectedDate,
         note: eventTitle,
-      });
+        done: false,
+      };
+      console.log("전송할 데이터:", task);
+      await addCalendarTask(task);
       closeModal();
     } catch (error) {
       console.error("Failed to add event:", error);
@@ -73,7 +76,7 @@ export default function CalendarPage() {
   const renderEvents = (date) => {
     const dateString = getLocalISODateString(date);
     return calendarTasks
-      .filter((event) => event.next_done === dateString)
+      .filter((event) => event.date === dateString)
       .map((event, index) => (
         <div key={index} className="event">
           <p>{event.note}</p>
@@ -109,11 +112,12 @@ export default function CalendarPage() {
                 onSubmit={handleAddEvent}
                 closeModal={closeModal}
                 initialDate={selectedDate}
+                selectedCat={selectedCat}
               />
             ) : (
               <EventListModal
                 events={calendarTasks.filter(
-                  (event) => event.next_done === selectedDate
+                  (event) => event.date === selectedDate
                 )}
                 closeModal={closeModal}
                 onDelete={handleDelete}

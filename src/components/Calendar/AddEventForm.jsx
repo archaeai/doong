@@ -1,7 +1,9 @@
+import { useState } from "react";
 import useFormState from "../../hooks/useFormState";
 import { validateEventForm } from "../../utils/validation";
+import CatSelect from "../../UI/CatSelect";
 
-const AddEventForm = ({ onSubmit, closeModal, initialDate }) => {
+const AddEventForm = ({ onSubmit, closeModal, initialDate, selectedCat }) => {
   const initialState = {
     eventTitle: "",
     selectedDate: initialDate,
@@ -19,11 +21,12 @@ const AddEventForm = ({ onSubmit, closeModal, initialDate }) => {
         onSubmit={(e) => {
           handleSubmit(e, (data) => {
             console.log("추가된 일정 데이터:", data);
-            onSubmit(data);
+            onSubmit({ ...data, cat_id: selectedCat.id });
             closeModal();
           });
         }}
       >
+        <CatSelect />
         <input
           type="text"
           name="eventTitle"

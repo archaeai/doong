@@ -96,17 +96,20 @@ export const TaskProvider = ({ children }) => {
   // };
 
   // 캘린더 페이지 api 함수
-  const fetchCalendarTasks = async (catId) => {
+  const fetchCalendarTasks = useCallback(async (catId) => {
     try {
-      const tasks = await taskApi.getNonDailyTaskLogs(catId);
-      setCalendarTasks(tasks);
-      console.log("Fetched non-daily tasks:", tasks);
+      const tasks = await Promise.all(
+        catId.map((catId) => taskApi.getNonDailyTaskLogs(catId))
+      );
+      const mergedTasks = tasks.flat();
+      setCalendarTasks(mergedTasks);
+      console.log("Fetched non-daily tasks:", mergedTasks);
     } catch (error) {
       console.error("Failed to fetch calendar tasks", error);
     }
-  };
+  }, []);
 
-  const addCalendarTask = async (task) => {
+  const addCalendarTask = useCallback(async (task) => {
     console.log("전송할 데이터:", task);
     try {
       const createdTask = await taskApi.createNonDailyTaskLog(task);
@@ -115,9 +118,9 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.error("Failed to add calendar task", error);
     }
-  };
+  }, []);
 
-  const deleteCalendarTask = async (id) => {
+  const deleteCalendarTask = useCallback(async (id) => {
     try {
       await taskApi.deleteNonDailyTaskLog(id);
       setCalendarTasks((prevTasks) =>
@@ -127,7 +130,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.error(`Failed to delete non-daily task with id ${id}: `, error);
     }
-  };
+  }, []);
 
   //루틴설정페이지 API 함수
   const fetchDefaultTasks = async (catId) => {
