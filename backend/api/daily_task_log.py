@@ -46,6 +46,7 @@ async def update_daily_task_log(daily_task_log_id: int, daily_task_log: DailyTas
                description="Delete an existing daily task log by its ID.")
 async def delete_daily_task_log(daily_task_log_id: int, db: Session = Depends(get_db),
                                 current_user: str = Depends(get_current_user)):
+    
     deleted_daily_task_log = crud_daily_task_log.delete_daily_task_log(db=db, daily_task_log_id=daily_task_log_id)
     if not deleted_daily_task_log:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Daily task log not found")

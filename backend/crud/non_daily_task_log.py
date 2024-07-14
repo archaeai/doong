@@ -43,29 +43,29 @@ Optional[NonDailyTaskLog]:
     if db_non_daily_task_log:
         for key, value in non_daily_task_log.dict(exclude_unset=True).items():
             setattr(db_non_daily_task_log, key, value)
-            if non_daily_task_log.task_id != 0:
-                default_task = db.query(DefaultTask).filter(DefaultTask.id == non_daily_task_log.task_id).first()
-                if default_task:
-                    tz = pytz.timezone('Asia/Seoul')
-                    interval_type = default_task.period_type
-                    time_diff = None
-                    if interval_type == 'W':
-                        time_diff = timedelta(weeks=default_task.period_int)
-                    elif interval_type == 'D':
-                        time_diff = timedelta(days=default_task.period_int)
-                    elif interval_type == 'M':
-                        time_diff = relativedelta(months=default_task.period_int)
-                    else :
-                        time_diff = relativedelta(years=default_task.period_int)
-                    new_date = datetime.now(tz) + time_diff
-                    new_log = NonDailyTaskLog(
-                        date=new_date.date(),
-                        note=non_daily_task_log.note,
-                        done=False,
-                        cat_id=default_task.cat_id,
-                        default_task=default_task
-                    )
-                    db.add(new_log)  # 새 로그 추가
+        if non_daily_task_log.done and non_daily_task_log.task_id != 0:
+            default_task = db.query(DefaultTask).filter(DefaultTask.id == non_daily_task_log.task_id).first()
+            if default_task:
+                tz = pytz.timezone('Asia/Seoul')
+                interval_type = default_task.period_type
+                time_diff = None
+                if interval_type == 'W':
+                    time_diff = timedelta(weeks=default_task.period_int)
+                elif interval_type == 'D':
+                    time_diff = timedelta(days=default_task.period_int)
+                elif interval_type == 'M':
+                    time_diff = relativedelta(months=default_task.period_int)
+                else :
+                    time_diff = relativedelta(years=default_task.period_int)
+                new_date = datetime.now(tz) + time_diff
+                new_log = NonDailyTaskLog(
+                    date=new_date.date(),
+                    note=non_daily_task_log.note,
+                    done=False,
+                    cat_id=non_daily_task_log.cat_id,
+                    default_task=default_task
+                )
+                db.add(new_log)  # 새 로그 추가
         db.commit()
         db.refresh(db_non_daily_task_log)
     return db_non_daily_task_log

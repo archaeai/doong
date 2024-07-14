@@ -114,7 +114,7 @@ def create_test_data(db: Session):
     now = datetime.now(tz=tz)
     daily_task_log1 = DailyTaskLog(
         date=date(now.year, now.month, now.day),
-        note="Water bowl filled",
+        note=task1.note,
         cat_id=cat1.id,
         done=True,
         default_task=task1,
@@ -122,64 +122,64 @@ def create_test_data(db: Session):
     )
     daily_task_log2 = DailyTaskLog(
         date=date(now.year, now.month, now.day),
-        note="foor",
+        note=task2.note,
         cat_id=cat1.id,
         done=True,
-        default_task=task1,
+        default_task=task2,
         cat_profile=cat1
     )
 
     daily_task_log3 = DailyTaskLog(
             date=date(now.year, now.month, now.day),
-            note="clean toilet",
+            note=task3.note,
             cat_id=cat1.id,
             done=True,
-            default_task=task1,
+            default_task=task3,
             cat_profile=cat1
         )
 
     daily_task_log4 = DailyTaskLog(
             date=date(now.year, now.month, now.day),
-            note="clean floor",
+            note=task4.note,
             cat_id=cat1.id,
             done=True,
-            default_task=task1,
+            default_task=task4,
             cat_profile=cat1
         )
 
     daily_task_log5 = DailyTaskLog(
             date=date(now.year, now.month, now.day),
-            note="play",
+            note=task5.note,
             cat_id=cat1.id,
-            done=True,
-            default_task=task1,
+            done=False,
+            default_task=task5,
             cat_profile=cat1
         )
 
     daily_task_log6 = DailyTaskLog(
             date=date(now.year, now.month, now.day),
-            note="brushing hair",
+            note=task6.note,
             cat_id=cat1.id,
-            done=True,
-            default_task=task1,
+            done=False,
+            default_task=task6,
             cat_profile=cat1
         )
 
     daily_task_log7 = DailyTaskLog(
             date=date(now.year, now.month, now.day),
-            note="brushing teeth",
+            note=task7.note,
             cat_id=cat1.id,
-            done=True,
-            default_task=task1,
+            done=False,
+            default_task=task7,
             cat_profile=cat1
         )
 
     daily_task_log8 = DailyTaskLog(
             date=date(now.year, now.month, now.day),
-            note="play2",
+            note=task8.note,
             cat_id=cat1.id,
-            done=True,
-            default_task=task1,
+            done=False,
+            default_task=task8,
             cat_profile=cat1
         )
 
@@ -189,7 +189,7 @@ def create_test_data(db: Session):
         cat_id=cat1.id,
         date=date(now_after_2w.year,now_after_2w.month , now_after_2w.day),
         done=False,
-        note="Nail clipping",
+        note=task9.note,
         default_task=task9,
         cat_profile=cat1
     )

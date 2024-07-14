@@ -1,6 +1,7 @@
 # crud/default_task.py
 from sqlalchemy.orm import Session
 from typing import List, Optional
+from sqlalchemy.sql import or_
 from backend.models import DefaultTask
 from backend.schemas import DefaultTaskCreate, DefaultTaskUpdate
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -8,8 +9,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 def get_default_task(db: Session, default_task_id: int) -> Optional[DefaultTask]:
     return db.query(DefaultTask).filter(DefaultTask.id == default_task_id).first()
 
-def get_default_tasks(db: Session, skip: int = 0, limit: int = 10) -> List[DefaultTask]:
-    return db.query(DefaultTask).offset(skip).limit(limit).all()
+def get_default_tasks(db: Session, cat_id: int, skip: int = 0, limit: int = 10) -> List[DefaultTask]:
+    # cat_id가 입력된 cat_id이거나 0인 DefaultTask 항목을 조회합니다.
+    return db.query(DefaultTask)\
+             .filter(or_(DefaultTask.cat_id == cat_id, DefaultTask.cat_id == 0))\
+             .offset(skip)\
+             .limit(limit)\
+             .all()
 
 def create_default_task(db: Session, default_task: DefaultTaskCreate) -> DefaultTask:
     db_default_task = DefaultTask(**default_task.dict())

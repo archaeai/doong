@@ -8,9 +8,9 @@ from backend.api.deps import get_db, get_current_user
 
 router = APIRouter()
 
-@router.get("/", response_model=List[DefaultTaskResponse])
-async def read_default_tasks(skip: int = 0, limit: int = 10, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
-    default_tasks = crud_default_task.get_default_tasks(db, skip=skip, limit=limit)
+@router.get("/{cat_id}", response_model=List[DefaultTaskResponse])
+async def read_default_tasks(cat_id :int, skip: int = 0, limit: int = 10, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    default_tasks = crud_default_task.get_default_tasks(db, skip=skip, limit=limit, cat_id=cat_id)
     return default_tasks
 
 @router.get("/{default_task_id}", response_model=DefaultTaskResponse)
