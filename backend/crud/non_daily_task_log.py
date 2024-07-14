@@ -1,5 +1,5 @@
 # crud/non_daily_task_log.py
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
 
 from sqlalchemy import and_
@@ -10,6 +10,8 @@ from backend.schemas import NonDailyTaskLogCreate, NonDailyTaskLogUpdate
 import pytz
 
 
+
+
 def get_non_daily_task_log(db: Session, non_daily_task_log_id: int) -> Optional[NonDailyTaskLog]:
     return db.query(NonDailyTaskLog).filter(NonDailyTaskLog.id == non_daily_task_log_id).first()
 
@@ -18,8 +20,8 @@ def get_non_daily_task_logs(db: Session, skip: int = 0, limit: int = 10) -> List
     return db.query(NonDailyTaskLog).offset(skip).limit(limit).all()
 
 
-def get_non_daily_task_logs_by_cat(db: Session, cat_id: int, skip: int = 0, limit: int = 10) -> List[NonDailyTaskLog]:
-    return db.query(NonDailyTaskLog).filter(NonDailyTaskLog.cat_id == cat_id).offset(skip).limit(limit).all()
+def get_non_daily_task_logs_by_cat(db: Session, cat_id: int) -> List[NonDailyTaskLog]:
+    return db.query(NonDailyTaskLog).filter(NonDailyTaskLog.cat_id == cat_id).all()
 
 def get_non_daily_task_logs_by_cat_and_date(db: Session, cat_id: int, date: str) -> List[NonDailyTaskLog]:
     target_date = datetime.strptime(date, "%Y-%m-%d").date()
@@ -77,3 +79,20 @@ def delete_non_daily_task_log(db: Session, non_daily_task_log_id: int) -> Option
         db.delete(db_non_daily_task_log)
         db.commit()
     return db_non_daily_task_log
+
+def get_upcoming_non_daily_task_logs(db: Session, cat_id: int) -> List[NonDailyTaskLog]:
+    today = date.today()
+    return db.query(NonDailyTaskLog)\
+             .filter(and_(NonDailyTaskLog.cat_id == cat_id, 
+                          NonDailyTaskLog.date >= today, 
+                          NonDailyTaskLog.done == False))\
+             .order_by(NonDailyTaskLog.date)\
+             .limit(3)\
+             .all()
+
+def get_recent_done_non_daily_task_logs(db: Session, cat_id: int) -> List[NonDailyTaskLog]:
+    return db.query(NonDailyTaskLog)\
+             .filter(NonDailyTaskLog.cat_id == cat_id, NonDailyTaskLog.done == True)\
+             .order_by(NonDailyTaskLog.date.desc())\
+             .limit(3)\
+             .all()
