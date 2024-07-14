@@ -1,5 +1,8 @@
 from db.session import engine
 from models import *
+import pytz
+
+
 
 
 # 모든 테이블 생성
@@ -8,7 +11,7 @@ print("All tables created successfully.")
 
 from sqlalchemy.orm import Session
 from models import User, CatProfile, Diary, CatStatus, DefaultTask, DailyTaskLog, NonDailyTaskLog
-from datetime import date
+from datetime import date, datetime
 from core.security import get_password_hash
 
 def create_test_data(db: Session):
@@ -19,7 +22,7 @@ def create_test_data(db: Session):
     # 고양이 프로필 생성
     cat1 = CatProfile(
         name="둥이",
-        breed="코리안 쇼트헤어",
+        breed="코리안쇼트헤어",
         gender="Male",
         birthday=date(2022, 7, 20),
         adopted_day=date(2021, 6, 15),
@@ -92,16 +95,80 @@ def create_test_data(db: Session):
         period_int=1,
         note="사냥놀이 15분"
     )    
-
+    tz = pytz.timezone('Asia/Seoul')
     # 일일 작업 로그 생성
+    now = datetime.now(tz=tz)
     daily_task_log1 = DailyTaskLog(
-        date=date(2024, 7, 7),
+        date=date(now.year, now.month, now.day),
         note="Water bowl filled",
         cat_id=cat1.id,
         done=True,
         default_task=task1,
         cat_profile=cat1
     )
+    daily_task_log2 = DailyTaskLog(
+        date=date(now.year, now.month, now.day),
+        note="foor",
+        cat_id=cat1.id,
+        done=True,
+        default_task=task1,
+        cat_profile=cat1
+    )
+
+    daily_task_log3 = DailyTaskLog(
+            date=date(now.year, now.month, now.day),
+            note="clean toilet",
+            cat_id=cat1.id,
+            done=True,
+            default_task=task1,
+            cat_profile=cat1
+        )
+
+    daily_task_log4 = DailyTaskLog(
+            date=date(now.year, now.month, now.day),
+            note="clean floor",
+            cat_id=cat1.id,
+            done=True,
+            default_task=task1,
+            cat_profile=cat1
+        )
+
+    daily_task_log5 = DailyTaskLog(
+            date=date(now.year, now.month, now.day),
+            note="play",
+            cat_id=cat1.id,
+            done=True,
+            default_task=task1,
+            cat_profile=cat1
+        )
+
+    daily_task_log6 = DailyTaskLog(
+            date=date(now.year, now.month, now.day),
+            note="brushing hair",
+            cat_id=cat1.id,
+            done=True,
+            default_task=task1,
+            cat_profile=cat1
+        )
+
+    daily_task_log7 = DailyTaskLog(
+            date=date(now.year, now.month, now.day),
+            note="brushing teeth",
+            cat_id=cat1.id,
+            done=True,
+            default_task=task1,
+            cat_profile=cat1
+        )
+
+    daily_task_log8 = DailyTaskLog(
+            date=date(now.year, now.month, now.day),
+            note="play2",
+            cat_id=cat1.id,
+            done=True,
+            default_task=task1,
+            cat_profile=cat1
+        )
+
 
     # 비일상적 작업 로그 생성
     non_daily_task_log1 = NonDailyTaskLog(
@@ -115,7 +182,7 @@ def create_test_data(db: Session):
     )
 
     # 데이터베이스에 추가
-    db.add_all([user1, cat1, diary1, cat_status1, task1, task2, task3,task4,task5,task6,task7,task8,daily_task_log1, non_daily_task_log1])
+    db.add_all([user1, cat1, diary1, cat_status1, task1, task2, task3,task4,task5,task6,task7,task8,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1])
     db.commit()
 
 # 세션 생성 및 테스트 데이터 생성 함수 호출
