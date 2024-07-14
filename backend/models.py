@@ -28,7 +28,8 @@ class CatProfile(Base):
     photo_url = Column(String, nullable=True)
     user_id = Column(String, ForeignKey('user.user_id'), nullable=False)
     user = relationship('User', back_populates='cat_profiles')
-    cat_statuses = relationship('CatStatus', back_populates='cat_profile')
+    
+    diary = relationship('Diary', back_populates='cat_profile')
     daily_task_logs = relationship('DailyTaskLog', back_populates='cat_profile')
     non_daily_task_logs = relationship('NonDailyTaskLog', back_populates='cat_profile')
 
@@ -36,27 +37,26 @@ class CatProfile(Base):
 class Diary(Base):
     __tablename__ = 'diary'
     id = Column(Integer, primary_key=True, nullable=False)
-    note = Column(Text, nullable=True)
-    date = Column(Date, nullable=True)
-    user_id = Column(String, ForeignKey('user.user_id'), nullable=False)
-    cat_statuses = relationship('CatStatus', back_populates='diary')
-    user = relationship('User', back_populates='diaries')
-
-
-class CatStatus(Base):
-    __tablename__ = 'cat_status'
-    id = Column(Integer, primary_key=True, nullable=False)
     cat_id = Column(Integer, ForeignKey('cat_profile.id'), nullable=False)
-    diary_id = Column(Integer, ForeignKey('diary.id'), nullable=False)
     date = Column(Date, nullable=True)
-    sleep_quality = Column(Integer, nullable=True)
-    stool_condition = Column(Integer, nullable=True)
+    mood = Column(String, nullable=True, comment='공격성, 소심함 체크')
+    activity_level = Column(String, nullable=True)
+    portion_status = Column(String, nullable=True, comment='식사량 체크 ')
+    sweet_potato_num = Column(String, nullable=True)
+    sweet_potato_cond =  Column(String, nullable=True)
+    potato_num =  Column(String, nullable=True)
+    potato_cond =  Column(String, nullable=True)
     weight = Column(Float, nullable=True, comment='kg')
-    activity_level = Column(Integer, nullable=True)
-    mood = Column(Integer, nullable=True, comment='공격성, 소심함 체크')
-    cat_profile = relationship('CatProfile', back_populates='cat_statuses')
-    diary = relationship('Diary', back_populates='cat_statuses')
-
+    abnomal_act = Column(String, nullable=True)
+    abnomal_detail =  Column(Text, nullable=True)
+    note = Column(Text, nullable=True)
+    comment = Column(Text, nullable=True)
+    photo_url = Column(String, nullable=True)
+    
+    user_id = Column(String, ForeignKey('user.user_id'), nullable=False)
+    user = relationship('User', back_populates='diaries')
+    cat_profile = relationship('CatProfile', back_populates='diary')
+    
 
 class DefaultTask(Base):
     __tablename__ = 'default_task'

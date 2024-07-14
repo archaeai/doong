@@ -51,51 +51,37 @@ class CatProfileResponse(CatProfileBase):
         from_attributes = True
 
 
-class CatStatusBase(BaseModel):
-    cat_id: int
-    diary_id: int
-    date: Optional[date]
-    sleep_quality: Optional[int]
-    stool_condition: Optional[int]
-    weight: Optional[float]
-    activity_level: Optional[int]
-    mood: Optional[int]
-
-
-class CatStatusCreate(CatStatusBase):
-    pass
-
-
-class CatStatusUpdate(CatStatusBase):
-    pass
-
-
-class CatStatusResponse(CatStatusBase):
-    class Config:
-        from_attributes = True
-
 
 class DiaryBase(BaseModel):
-    note: Optional[str]
-    date: Optional[date]
-
+    date: date
+    mood: Optional[str] = None
+    activity_level: Optional[str] = None
+    portion_status: Optional[str] = None
+    sweet_potato_num: Optional[str] = None
+    sweet_potato_cond: Optional[str] = None
+    potato_num: Optional[str] = None
+    potato_cond: Optional[str] = None
+    weight: Optional[float] = None
+    abnomal_act: Optional[str] = None
+    abnomal_detail: Optional[str] = None
+    note: Optional[str] = None
+    comment: Optional[str] = None
+    photo_url : Optional[str] = None
 
 class DiaryCreate(DiaryBase):
     user_id: str
-
+    cat_id: int
 
 class DiaryUpdate(DiaryBase):
     pass
 
-
 class DiaryResponse(DiaryBase):
     id: int
     user_id: str
-    cat_statuses: List[CatStatusResponse] = []
+    cat_id: int
 
     class Config:
         from_attributes = True
-
 
 class DefaultTaskBase(BaseModel):
     period_type: Optional[str]
