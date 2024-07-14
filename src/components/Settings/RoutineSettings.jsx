@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
+import { CatContext } from "../../contexts/CatContext";
 import { getPeriodTypeLabel } from "../../utils/dateUtil";
 import CatSelect from "../../UI/CatSelect";
 import RoutineAddForm from "./RoutineAddForm";
@@ -13,11 +14,14 @@ export default function RoutineSettings() {
     updateDefaultTask,
     deleteDefaultTask,
   } = useContext(TaskContext);
+  const { selectedCat } = useContext(CatContext);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [currentRoutine, setCurrentRoutine] = useState(null);
 
   useEffect(() => {
-    fetchDefaultTasks();
+    if (selectedCat) {
+      fetchDefaultTasks(selectedCat.id);
+    }
   }, []);
 
   const handleDelete = async (task) => {

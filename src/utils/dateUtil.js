@@ -70,12 +70,14 @@ export const getDaysSince = (adoptedDay) => {
 //루틴설정에서 사용하는 간격포맷 함수
 export const getPeriodTypeLabel = (periodType) => {
   switch (periodType) {
-    case "days":
+    case "D":
       return "일";
     case "W":
       return "주";
     case "M":
       return "달";
+    case "Y":
+      return "년";
     default:
       return periodType;
   }

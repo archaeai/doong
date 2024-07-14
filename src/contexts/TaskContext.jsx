@@ -18,7 +18,7 @@ export const TaskProvider = ({ children }) => {
   // 루틴 추가 폼 상태
   const [note, setNote] = useState("");
   const [repeatInterval, setRepeatInterval] = useState("");
-  const [periodType, setPeriodType] = useState("days"); // 기본값을 "days"로 설정
+  const [periodType, setPeriodType] = useState("D");
   const [calendarTasks, setCalendarTasks] = useState([]);
 
   // 상태 업데이트 함수
@@ -130,9 +130,9 @@ export const TaskProvider = ({ children }) => {
   };
 
   //루틴설정페이지 API 함수
-  const fetchDefaultTasks = async () => {
+  const fetchDefaultTasks = async (catId) => {
     try {
-      const tasks = await taskApi.getAllDefaultTasks();
+      const tasks = await taskApi.getAllDefaultTasks(catId);
       setDefaultTasks(tasks);
       if (tasks.length > 0) {
         setDefaultTaskId(tasks[0].id); // 첫 번째 기본 작업의 ID를 추출하여 상태에 저장
@@ -168,7 +168,7 @@ export const TaskProvider = ({ children }) => {
       console.log("Task successfully added:", createdTask);
       setNote("");
       setRepeatInterval("");
-      setPeriodType("days");
+      setPeriodType("D");
     } catch (error) {
       console.error("Failed to add default task", error);
     }
