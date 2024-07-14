@@ -11,7 +11,7 @@ print("All tables created successfully.")
 
 from sqlalchemy.orm import Session
 from models import User, CatProfile, Diary, CatStatus, DefaultTask, DailyTaskLog, NonDailyTaskLog
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from core.security import get_password_hash
 
 def create_test_data(db: Session):
@@ -102,7 +102,13 @@ def create_test_data(db: Session):
         period_int=1,
         cat_id =0,
         note="사냥놀이 15분"
-    )    
+    )
+    task9 = DefaultTask(
+        period_type="week",
+        period_int=1,
+        cat_id =0,
+        note="nail"
+    ) 
     tz = pytz.timezone('Asia/Seoul')
     # 일일 작업 로그 생성
     now = datetime.now(tz=tz)
@@ -177,20 +183,25 @@ def create_test_data(db: Session):
             cat_profile=cat1
         )
 
-
+    now_after_2w = now + timedelta(weeks=1)
     # 비일상적 작업 로그 생성
     non_daily_task_log1 = NonDailyTaskLog(
-        task_id=task1.id,
         cat_id=cat1.id,
-        last_done=date(2024, 7, 1),
-        next_done=date(2024, 7, 8),
+        date=date(now_after_2w.year,now_after_2w.month , now_after_2w.day),
         note="Nail clipping",
-        default_task=task1,
+        default_task=task9,
+        cat_profile=cat1
+    )
+    non_daily_task_log2 = NonDailyTaskLog(
+        task_id=0,
+        cat_id=cat1.id,
+        date=date(now.year, now.month , 23),
+        note="모래갈아주기",
         cat_profile=cat1
     )
 
     # 데이터베이스에 추가
-    db.add_all([user1, cat1, diary1, cat_status1, task1, task2, task3,task4,task5,task6,task7,task8,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1])
+    db.add_all([user1, cat1, diary1, cat_status1, task1, task2, task3,task4,task5,task6,task7,task8,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1, non_daily_task_log2])
     db.commit()
 
 # 세션 생성 및 테스트 데이터 생성 함수 호출
