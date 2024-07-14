@@ -9,7 +9,7 @@ import { getLocalISODateString, getDateRange } from "../utils/dateUtil";
 import { CatContext } from "../contexts/CatContext";
 import { TaskContext } from "../contexts/TaskContext";
 import "react-calendar/dist/Calendar.css";
-import "../styles/Calendar_ver2.css";
+import "../styles/Calendar.css";
 
 export default function CalendarPage() {
   const { cats, selectedCat } = useContext(CatContext);
@@ -25,6 +25,23 @@ export default function CalendarPage() {
   const [isAddEvent, setIsAddEvent] = useState(false);
   const { minDate, maxDate } = getDateRange(5);
   const currentDate = useCurrentDate();
+
+  const getEventClass = (catId) => {
+    switch (catId) {
+      case 1:
+        return "event-lavender";
+      case 2:
+        return "event-peach-puff";
+      case 3:
+        return "event-light-pink";
+      case 4:
+        return "event-powder-blue";
+      case 5:
+        return "event-pale-green";
+      default:
+        return "event-default";
+    }
+  };
 
   useEffect(() => {
     if (cats.length > 0) {
@@ -78,7 +95,7 @@ export default function CalendarPage() {
     return calendarTasks
       .filter((event) => event.date === dateString)
       .map((event, index) => (
-        <div key={index} className="event">
+        <div key={index} className={`event ${getEventClass(event.cat_id)}`}>
           <p>{event.note}</p>
         </div>
       ));
