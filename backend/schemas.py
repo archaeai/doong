@@ -146,6 +146,7 @@ class NonDailyTaskLogBase(BaseModel):
     task_id: Optional[int]
     cat_id: int
     date: date
+    done: bool
     note: Optional[str]
 
 

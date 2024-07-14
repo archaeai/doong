@@ -87,6 +87,7 @@ class NonDailyTaskLog(Base):
     task_id = Column(Integer, ForeignKey('default_task.id'), nullable=True)
     cat_id = Column(Integer, ForeignKey('cat_profile.id'), nullable=False)
     date = Column(Date, nullable=False)
+    done = Column(Boolean, nullable=False)
     note = Column(Text, nullable=True)
     default_task = relationship('DefaultTask', back_populates='non_daily_task_logs')
     cat_profile = relationship('CatProfile', back_populates='non_daily_task_logs')

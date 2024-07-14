@@ -188,14 +188,16 @@ def create_test_data(db: Session):
     non_daily_task_log1 = NonDailyTaskLog(
         cat_id=cat1.id,
         date=date(now_after_2w.year,now_after_2w.month , now_after_2w.day),
+        done=False,
         note="Nail clipping",
         default_task=task9,
         cat_profile=cat1
     )
     non_daily_task_log2 = NonDailyTaskLog(
         task_id=0,
+        date=date(now_after_2w.year,now_after_2w.month , now_after_2w.day -5),
+        done=False,
         cat_id=cat1.id,
-        date=date(now.year, now.month , 23),
         note="모래갈아주기",
         cat_profile=cat1
     )

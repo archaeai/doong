@@ -15,6 +15,13 @@ async def read_non_daily_task_logs_by_cat(cat_id: int, skip: int = 0, limit: int
                                           current_user: str = Depends(get_current_user)):
     return crud_non_daily_task_log.get_non_daily_task_logs_by_cat(db, cat_id=cat_id, skip=skip, limit=limit)
 
+@router.get("/cat/{cat_id}/date/{date}", response_model=List[NonDailyTaskLogResponse],
+            summary="Get non daily task logs by cat ID and date",
+            description="Retrieve a list of daily task logs for a specific cat on a specific date.")
+async def read_non_daily_task_logs_by_cat_and_date(cat_id: int, date: str, db: Session = Depends(get_db),
+                                               current_user: str = Depends(get_current_user)):
+    return crud_non_daily_task_log.get_daily_task_logs_by_cat_and_date(db, cat_id=cat_id, date=date)
+
 
 @router.post("/", response_model=NonDailyTaskLogResponse, status_code=status.HTTP_201_CREATED,
              summary="Create a new non-daily task log",
