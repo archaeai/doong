@@ -169,6 +169,15 @@
   margin-bottom: 0.625rem;
 }
 
+.routine-settings__table .note {
+  padding-right: 40px;
+}
+
+.routine-settings__table .action {
+  display: flex;
+  justify-content: start;
+}
+
 .routine-add-form {
   display: flex;
   flex-direction: row;

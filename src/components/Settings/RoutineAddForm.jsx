@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
+import { CatContext } from "../../contexts/CatContext";
 
 export default function RoutineAddForm({ closeForm, addDefaultTask }) {
   const {
@@ -10,6 +11,7 @@ export default function RoutineAddForm({ closeForm, addDefaultTask }) {
     updateRepeatInterval,
     updatePeriodType,
   } = useContext(TaskContext);
+  const { selectedCat } = useContext(CatContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,9 +19,9 @@ export default function RoutineAddForm({ closeForm, addDefaultTask }) {
       note,
       repeatInterval,
       periodType,
-    }); // 폼 제출 값 로그 추가
-    await addDefaultTask(); // API로 데이터 전송
-    closeForm(); // 폼 닫기
+    });
+    await addDefaultTask(selectedCat.id);
+    closeForm();
   };
 
   return (

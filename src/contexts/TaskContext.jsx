@@ -154,17 +154,18 @@ export const TaskProvider = ({ children }) => {
   // };
 
   // 루틴을 추가하는 함수
-  const addDefaultTask = async () => {
+  const addDefaultTask = async (catId) => {
     const task = {
       period_type: periodType,
       period_int: parseInt(repeatInterval, 10),
       note: note,
+      cat_id: catId,
     };
 
     try {
       const createdTask = await taskApi.createDefaultTask(task);
       setDefaultTasks([...defaultTasks, createdTask]);
-      console.log("Task successfully added:", createdTask); // 콘솔 로그 추가
+      console.log("Task successfully added:", createdTask);
       setNote("");
       setRepeatInterval("");
       setPeriodType("days");

@@ -86,17 +86,19 @@ export default function RoutineSettings() {
                 {getPeriodTypeLabel(task.period_type)}
               </td>
               <td className="note">{task.note}</td>
-              <td>
+              <td className="action">
                 <button onClick={openEditForm} className="todo-edit">
                   수정
                 </button>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(task)}
-                  className="todo-delete"
-                >
-                  삭제
-                </button>
+                {task.cat_id !== 0 && (
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(task)}
+                    className="todo-delete"
+                  >
+                    삭제
+                  </button>
+                )}
               </td>
             </tr>
           ))}
