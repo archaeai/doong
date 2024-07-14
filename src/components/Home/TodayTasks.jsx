@@ -1,27 +1,40 @@
-import { useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
 
 import AddTodayTaskForm from "./AddTodayTaskForm";
 
-export default function todayTasks() {
+export default function todayTasks({ cat }) {
   const {
     todayTasks,
     addTasks,
     toggleTaskCompletion,
-    isFormVisible,
-    openForm,
-    closeForm,
     fetchTodayTasks,
+    deleteTodayTask,
   } = useContext(TaskContext);
+
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const openForm = () => setIsFormVisible(true);
+  const closeForm = () => setIsFormVisible(false);
 
   // 컴포넌트가 마운트될 때 오늘의 할 일을 불러옴
   useEffect(() => {
-    const today = new Date().toISOString().split("T")[0]; // 오늘 날짜를 yyyy-mm-dd 형식으로 가져옴
-    const catId = 1; // 예시로 사용한 고양이 ID
-    fetchTodayTasks(catId, today);
+    if (cat) {
+      const today = new Date().toISOString().split("T")[0];
+      fetchTodayTasks(cat.id, today);
+    }
   }, []);
 
   const allTodos = [...todayTasks, ...addTasks];
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteTodayTask(id);
+      console.log(`Task with id ${id} has been deleted`);
+    } catch (error) {
+      console.error(`Failed to delete task with id ${id}: `, error);
+    }
+  };
 
   return (
     <div className="home-schedule__container todo-list-container">
@@ -31,7 +44,7 @@ export default function todayTasks() {
           +
         </button>
       </div>
-      {isFormVisible && <AddTodayTaskForm closeForm={closeForm} />}
+      {isFormVisible && <AddTodayTaskForm closeForm={closeForm} cat={cat} />}
       <ul className="checklist">
         {allTodos.map((todo) => (
           <li className="checklist__li" key={todo.id}>
@@ -41,7 +54,6 @@ export default function todayTasks() {
               type="checkbox"
               checked={todo.done}
               onChange={() => {
-                console.log("Checkbox changed:", todo.id);
                 toggleTaskCompletion(todo.id);
               }}
             />
@@ -51,6 +63,12 @@ export default function todayTasks() {
             >
               {todo.note}
             </label>
+            <button
+              className="todo-delete"
+              onClick={() => handleDelete(todo.id)}
+            >
+              삭제
+            </button>
           </li>
         ))}
       </ul>

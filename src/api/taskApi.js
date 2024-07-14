@@ -26,7 +26,7 @@ apiClient.interceptors.request.use(
   }
 );
 
-// default_task 관련 API(루틴 설정)
+// default_task 관련 API(설정페이지의 루틴 설정)
 export const getAllDefaultTasks = async (skip = 0, limit = 10) => {
   try {
     const response = await apiClient.get(`/default_task/`, {
@@ -38,7 +38,7 @@ export const getAllDefaultTasks = async (skip = 0, limit = 10) => {
   }
 };
 
-export const getDefaultTasks = async (id) => {
+export const getDefaultTask = async (id) => {
   try {
     const response = await apiClient.get(`/default_task/${id}`);
     return response.data;
@@ -74,13 +74,12 @@ export const deleteDefaultTask = async (id) => {
   }
 };
 
-// daily_task_log 관련 API(오늘할일)
-export const getDailyTaskLogsByCat = async (catId) => {
-  const response = await apiClient.get(`/daily_task_log/cat/`);
-  return response.data;
-};
+// daily_task_log 관련 API(홈페이지의 오늘할일)
+// export const getDailyTaskLogsByCat = async (catId) => {
+//   const response = await apiClient.get(`/daily_task_log/cat/`);
+//   return response.data;
+// };
 
-//홈페이지에서 오늘 할 일을 페치
 export const getTodayTasks = async (catId, date) => {
   const response = await apiClient.get(
     `/daily_task_log/cat/${catId}/date/${date}`
@@ -88,33 +87,42 @@ export const getTodayTasks = async (catId, date) => {
   return response.data;
 };
 
-//홈페이지에서 오늘 할 일을 추가
 export const addTodayTask = async (taskLogData) => {
   const response = await apiClient.post(`/daily_task_log/`, taskLogData);
   return response.data;
 };
 
-//홈페이지에서 오늘 할 일 완료 여부를 업데이트
 export const updateTodayTask = async (id, taskLogData) => {
   const response = await apiClient.put(`/daily_task_log/${id}`, taskLogData);
   return response.data;
 };
 
-//홈페이지에서 오늘 할 일을 삭제
 export const deleteTodayTask = async (id) => {
   const response = await apiClient.delete(`/daily_task_log/${id}`);
   return response.data;
 };
 
-// non_daily_task_log 관련 API(캘린더)
-export const getNonDailyTaskLogsByCat = async (catId) => {
-  const response = await apiClient.get(`/non_daily_task_log/cat/${catId}`);
-  return response.data;
+// non_daily_task_log 관련 API(캘린더 페이지)
+export const getNonDailyTaskLogs = async (catId) => {
+  try {
+    const response = await apiClient.get(`/non_daily_task_log/cat/${catId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch non-daily task logs");
+  }
 };
 
 export const createNonDailyTaskLog = async (taskLogData) => {
-  const response = await apiClient.post(`/non_daily_task_log`, taskLogData);
-  return response.data;
+  try {
+    const response = await apiClient.post(`/non_daily_task_log/`, taskLogData);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Failed to create non-daily task log:",
+      error.response?.data || error.message
+    );
+    throw new Error("Failed to add non-daily task log");
+  }
 };
 
 export const updateNonDailyTaskLog = async (id, taskLogData) => {
@@ -126,6 +134,10 @@ export const updateNonDailyTaskLog = async (id, taskLogData) => {
 };
 
 export const deleteNonDailyTaskLog = async (id) => {
-  const response = await apiClient.delete(`/non_daily_task_log/${id}`);
-  return response.data;
+  try {
+    const response = await apiClient.delete(`/non_daily_task_log/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to delete non-daily task log");
+  }
 };

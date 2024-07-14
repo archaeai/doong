@@ -143,16 +143,31 @@
   width: 100%;
 }
 
-.routine-settings__header {
-  align-items: center;
-  margin-bottom: 0.625rem;
+.routine-settings-header__add {
+  font-family: "Gaegu";
+  font-size: 16px;
+  color: var(--color-navy);
+  cursor: pointer;
+  padding: 0.313rem 0.625rem;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-yellow1);
+  margin: 0 0 0.938rem 0.625rem;
 }
 
 .routine-settings__table {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
 }
 
+.routine-settings__table tr {
+  line-height: 1.875rem;
+}
+
+.routine-settings__table td {
+  text-align: center;
+}
 .routine-settings__thead th {
   color: var(--color-navy);
   text-align: center;
@@ -162,18 +177,14 @@
   margin-bottom: 0.625rem;
 }
 
-.routine-settings__table td {
-  text-align: center;
-}
-
 .routine-settings__table .number {
   width: 20%;
 }
 .routine-settings__table .interval {
   width: 20%;
 }
-.routine-settings__table {
-  width: 70%;
+.routine-settings__table .note {
+  margin-right: 20px;
 }
 
 .routine-add-form {

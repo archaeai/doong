@@ -1,33 +1,60 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import Calendar from "react-calendar";
 import useModal from "../hooks/useModal";
 import useCurrentDate from "../hooks/useCurrentDate";
 import Modal from "../UI/Modal";
-import AddEventForm from "../components/AddEventForm";
-import EventListModal from "../components/EventListModal";
+import AddEventForm from "../components/Calendar/AddEventForm";
+import EventListModal from "../components/Calendar/EventListModal";
 import { getLocalISODateString, getDateRange } from "../utils/dateUtil";
+import { CatContext } from "../contexts/CatContext";
+import { TaskContext } from "../contexts/TaskContext";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Calendar_ver2.css";
 
 export default function CalendarPage() {
+  const { selectedCat } = useContext(CatContext);
+  const {
+    fetchCalendarTasks,
+    addCalendarTask,
+    calendarTasks,
+    deleteCalendarTask,
+  } = useContext(TaskContext);
   const [date, setDate] = useState(new Date());
-  const [events, setEvents] = useState({});
   const { isModalOpen, openModal, closeModal } = useModal();
   const [selectedDate, setSelectedDate] = useState("");
   const [isAddEvent, setIsAddEvent] = useState(false);
   const { minDate, maxDate } = getDateRange(5);
   const currentDate = useCurrentDate();
 
-  const handleAddEvent = (formData) => {
+  useEffect(() => {
+    if (selectedCat) {
+      fetchCalendarTasks(selectedCat.id);
+    }
+  }, []);
+
+  const handleAddEvent = async (formData) => {
     const { selectedDate, eventTitle } = formData;
-    setEvents((prevEvents) => {
-      const newEvents = { ...prevEvents };
-      if (!newEvents[selectedDate]) {
-        newEvents[selectedDate] = [];
-      }
-      newEvents[selectedDate].push(eventTitle);
-      return newEvents;
-    });
+    try {
+      await addCalendarTask({
+        task_id: 0,
+        cat_id: selectedCat.id,
+        last_done: selectedDate,
+        next_done: selectedDate,
+        note: eventTitle,
+      });
+      closeModal();
+    } catch (error) {
+      console.error("Failed to add event:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteCalendarTask(id);
+      console.log(`Non-daily task with id ${id} has been deleted`);
+    } catch (error) {
+      console.error(`Failed to delete non-daily task with id ${id}: `, error);
+    }
   };
 
   const handleDateClick = (date) => {
@@ -45,11 +72,13 @@ export default function CalendarPage() {
 
   const renderEvents = (date) => {
     const dateString = getLocalISODateString(date);
-    return events[dateString]?.map((event, index) => (
-      <div key={index} className="event">
-        {event}
-      </div>
-    ));
+    return calendarTasks
+      .filter((event) => event.next_done === dateString)
+      .map((event, index) => (
+        <div key={index} className="event">
+          <p>{event.note}</p>
+        </div>
+      ));
   };
 
   return (
@@ -83,8 +112,11 @@ export default function CalendarPage() {
               />
             ) : (
               <EventListModal
-                events={events[selectedDate]}
+                events={calendarTasks.filter(
+                  (event) => event.next_done === selectedDate
+                )}
                 closeModal={closeModal}
+                onDelete={handleDelete}
               />
             )}
           </Modal>

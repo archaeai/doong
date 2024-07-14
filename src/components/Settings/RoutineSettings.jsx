@@ -20,6 +20,16 @@ export default function RoutineSettings() {
     fetchDefaultTasks();
   }, []);
 
+  const handleDelete = async (task) => {
+    try {
+      await deleteDefaultTask(task.id);
+      console.log("Deleted default task", task);
+      closeForm();
+    } catch (error) {
+      console.error("Failed to delete default task", error);
+    }
+  };
+
   const openAddForm = () => {
     setCurrentRoutine(null);
     setIsFormVisible(true);
@@ -40,8 +50,9 @@ export default function RoutineSettings() {
   return (
     <div className="routine-settings">
       <div className="routine-settings__header">
-        <button onClick={openAddForm}>루틴 추가</button>
-        <button onClick={openEditForm}>수정</button>
+        <button className="routine-settings-header__add" onClick={openAddForm}>
+          루틴 추가
+        </button>
       </div>
       {isFormVisible &&
         (currentRoutine ? (
@@ -74,6 +85,18 @@ export default function RoutineSettings() {
                 {getPeriodTypeLabel(task.period_type)}
               </td>
               <td className="note">{task.note}</td>
+              <td>
+                <button onClick={openEditForm} className="todo-edit">
+                  수정
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDelete(task)}
+                  className="todo-delete"
+                >
+                  삭제
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
