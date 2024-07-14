@@ -23,7 +23,7 @@ export default function todayTasks({ cat }) {
       const today = new Date().toISOString().split("T")[0];
       fetchTodayTasks(cat.id, today);
     }
-  }, []);
+  }, [cat, fetchTodayTasks]);
 
   const allTodos = [...todayTasks, ...addTasks];
 
@@ -63,6 +63,7 @@ export default function todayTasks({ cat }) {
             >
               {todo.note}
             </label>
+            {}
             <button
               className="todo-delete"
               onClick={() => handleDelete(todo.id)}

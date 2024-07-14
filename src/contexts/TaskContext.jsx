@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
 import * as taskApi from "../api/taskApi";
 
 export const TaskContext = createContext();
@@ -28,7 +28,7 @@ export const TaskProvider = ({ children }) => {
 
   //홈페이지 오늘할일 API 함수
   // 오늘의 할 일 페치
-  const fetchTodayTasks = async (catId, date) => {
+  const fetchTodayTasks = useCallback(async (catId, date) => {
     try {
       const tasks = await taskApi.getTodayTasks(catId, date);
       setTodayTasks(tasks);
@@ -36,10 +36,10 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.error("Failed to fetch today tasks", error);
     }
-  };
+  }, []);
 
   // 오늘 할 일 추가
-  const addTodayTask = async (task) => {
+  const addTodayTask = useCallback(async (task) => {
     try {
       const createdTask = await taskApi.addTodayTask(task);
       setTodayTasks([...todayTasks, createdTask]);
@@ -47,9 +47,9 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.error("Failed to add task", error);
     }
-  };
+  }, []);
   //오늘 할일 삭제
-  const deleteTodayTask = async (id) => {
+  const deleteTodayTask = useCallback(async (id) => {
     try {
       await taskApi.deleteTodayTask(id);
       setTodayTasks(todayTasks.filter((task) => task.id !== id));
@@ -57,10 +57,10 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.error("Failed to delete task", error);
     }
-  };
+  }, []);
 
   // 할 일 완료 여부를 토글하는 함수
-  const toggleTaskCompletion = async (id) => {
+  const toggleTaskCompletion = useCallback(async (id) => {
     try {
       const task = todayTasks.find((t) => t.id === id);
       if (task) {
@@ -71,7 +71,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.error("Failed to toggle task completion", error);
     }
-  };
+  }, []);
 
   // 다가오는 일정을 API에서 불러오는 함수
   // useEffect(() => {
