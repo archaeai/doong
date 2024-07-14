@@ -58,41 +58,49 @@ def create_test_data(db: Session):
     task1 = DefaultTask(
         period_type="day",
         period_int=1,
+        cat_id =0,
         note="물"
     )
     task2 = DefaultTask(
         period_type="day",
         period_int=1,
+        cat_id =0,
         note="밥"
     )
     task3 = DefaultTask(
         period_type="day",
         period_int=1,
+        cat_id =0,
         note="화장실 청소"
     )
     task4 = DefaultTask(
         period_type="day",
         period_int=1,
+        cat_id =0,
         note="바닥청소"
     )
     task5 = DefaultTask(
         period_type="day",
         period_int=1,
+        cat_id =0,
         note="사냥놀이 15분"
     )
     task6 = DefaultTask(
         period_type="day",
         period_int=1,
+        cat_id =0,
         note="빗질"
     )
     task7 = DefaultTask(
         period_type="day",
         period_int=1,
+        cat_id =0,
         note="양치"
     )
     task8 = DefaultTask(
         period_type="day",
         period_int=1,
+        cat_id =0,
         note="사냥놀이 15분"
     )    
     tz = pytz.timezone('Asia/Seoul')

@@ -64,6 +64,7 @@ class DefaultTask(Base):
     period_type = Column(String, nullable=True, comment='주기 단위')
     period_int = Column(Integer, nullable=True)
     note = Column(Text, nullable=False)
+    cat_id = Column(Integer)
     daily_task_logs = relationship('DailyTaskLog', back_populates='default_task')
     non_daily_task_logs = relationship('NonDailyTaskLog', back_populates='default_task')
 

@@ -100,6 +100,7 @@ class DiaryResponse(DiaryBase):
 class DefaultTaskBase(BaseModel):
     period_type: Optional[str]
     period_int: Optional[int]
+    cat_id : Optional[int]
     note: str
 
 

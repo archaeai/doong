@@ -34,8 +34,6 @@ async def update_default_task(default_task_id: int, default_task: DefaultTaskUpd
 @router.delete("/{default_task_id}", response_model=DefaultTaskResponse)
 async def delete_default_task(default_task_id: int, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     deleted_default_task = crud_default_task.delete_default_task(db=db, default_task_id=default_task_id)
-    if default_task_id <=8:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="시스템이 등록한 기본 업무는 삭제할 없습니다.")
     if not deleted_default_task:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Default task not found")
     return deleted_default_task
