@@ -54,7 +54,6 @@ export default function todayTasks({ cat }) {
               type="checkbox"
               checked={todo.done}
               onChange={() => {
-                console.log("Checkbox changed:", todo.id);
                 toggleTaskCompletion(todo.id);
               }}
             />

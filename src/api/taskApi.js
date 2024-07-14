@@ -92,10 +92,10 @@ export const addTodayTask = async (taskLogData) => {
   return response.data;
 };
 
-// export const updateTodayTask = async (id, taskLogData) => {
-//   const response = await apiClient.put(`/daily_task_log/${id}`, taskLogData);
-//   return response.data;
-// };
+export const updateTodayTask = async (id, taskLogData) => {
+  const response = await apiClient.put(`/daily_task_log/${id}`, taskLogData);
+  return response.data;
+};
 
 export const deleteTodayTask = async (id) => {
   const response = await apiClient.delete(`/daily_task_log/${id}`);
