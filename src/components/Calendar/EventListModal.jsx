@@ -1,5 +1,3 @@
-import React from "react";
-
 const EventListModal = ({ events, closeModal, onDelete }) => {
   return (
     <div>
@@ -8,8 +6,19 @@ const EventListModal = ({ events, closeModal, onDelete }) => {
         <ul>
           {events.map((event, index) => (
             <li key={index}>
-              {event.note} - {event.next_done}
-              <button onClick={() => onDelete(event.id)}>삭제</button>
+              {event.note}
+              <button
+                onClick={() => onDelete(event.id)}
+                style={{
+                  marginLeft: "auto",
+                  backgroundColor: "transparent",
+                  border: "none",
+                  color: "var(--color-maroon)",
+                  fontFamily: "Gaegu",
+                }}
+              >
+                삭제
+              </button>
             </li>
           ))}
         </ul>
