@@ -8,20 +8,12 @@ from backend.models import Diary
 from backend.schemas import DiaryCreate, DiaryUpdate
 
 
-def get_diary(db: Session, diary_id: int) -> Optional[Diary]:
-    return  db.query(Diary).options(joinedload(Diary.cat_statuses)).filter(Diary.id == diary_id).first()
+def get_diaries_by_user(db: Session, cat_id: int, skip: int = 0, limit: int = 10) -> List[Diary]:
+    return db.query(Diary).filter(Diary.cat_id == cat_id).offset(skip).limit(limit).all()
 
 
-def get_diaries(db: Session, skip: int = 0, limit: int = 10) -> List[Diary]:
-    return db.query(Diary).offset(skip).limit(limit).all()
-
-
-def get_diaries_by_user(db: Session, user_id: str, skip: int = 0, limit: int = 10) -> List[Diary]:
-    return db.query(Diary).options(joinedload(Diary.cat_statuses)).filter(Diary.user_id == user_id).offset(skip).limit(limit).all()
-
-
-def get_diaries_by_user_and_date(db: Session, user_id: str, date: str) -> List[Diary]:
-    return db.query(Diary).options(joinedload(Diary.cat_statuses)).filter(and_(Diary.user_id == user_id,Diary.date == date)).all()
+def get_diaries_by_user_and_date(db: Session, cat_id: int, date: str) -> List[Diary]:
+    return db.query(Diary).filter(and_(Diary.cat_id == cat_id,Diary.date == date)).all()
 
 
 def create_diary(db: Session, diary: DiaryCreate) -> Diary:

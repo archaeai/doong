@@ -11,9 +11,9 @@ router = APIRouter()
 
 @router.get("/cat/{cat_id}", response_model=List[NonDailyTaskLogResponse], summary="Get non-daily task logs by cat ID",
             description="Retrieve a list of non-daily task logs for a specific cat.")
-async def read_non_daily_task_logs_by_cat(cat_id: int, skip: int = 0, limit: int = 10, db: Session = Depends(get_db),
+async def read_non_daily_task_logs_by_cat(cat_id: int, db: Session = Depends(get_db),
                                           current_user: str = Depends(get_current_user)):
-    return crud_non_daily_task_log.get_non_daily_task_logs_by_cat(db, cat_id=cat_id, skip=skip, limit=limit)
+    return crud_non_daily_task_log.get_non_daily_task_logs_by_cat(db, cat_id=cat_id)
 
 @router.get("/cat/{cat_id}/date/{date}", response_model=List[NonDailyTaskLogResponse],
             summary="Get non daily task logs by cat ID and date",
@@ -21,6 +21,22 @@ async def read_non_daily_task_logs_by_cat(cat_id: int, skip: int = 0, limit: int
 async def read_non_daily_task_logs_by_cat_and_date(cat_id: int, date: str, db: Session = Depends(get_db),
                                                current_user: str = Depends(get_current_user)):
     return crud_non_daily_task_log.get_daily_task_logs_by_cat_and_date(db, cat_id=cat_id, date=date)
+
+@router.get("/upcoming/{cat_id}", response_model=List[NonDailyTaskLogResponse],
+            summary="Get upcoming non-daily task logs",
+            description="Retrieve a list of the closest upcoming non-daily task logs for a specific cat.")
+async def read_upcoming_non_daily_task_logs(cat_id: int, db: Session = Depends(get_db),
+                                            current_user: str = Depends(get_current_user)):
+    non_daily_task_logs = crud_non_daily_task_log.get_upcoming_non_daily_task_logs(db, cat_id)
+    return non_daily_task_logs
+
+
+@router.get("/recent_done/{cat_id}", response_model=List[NonDailyTaskLogResponse],
+            summary="Get the most recent done non-daily task logs",
+            description="Retrieve a list of the most recent non-daily task logs marked as done for a specific cat.")
+async def read_recent_done_non_daily_task_logs(cat_id: int, db: Session = Depends(get_db)):
+    recent_done_logs = crud_non_daily_task_log.get_recent_done_non_daily_task_logs(db, cat_id=cat_id)
+    return recent_done_logs
 
 
 @router.post("/", response_model=NonDailyTaskLogResponse, status_code=status.HTTP_201_CREATED,

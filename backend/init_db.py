@@ -10,7 +10,7 @@ Base.metadata.create_all(bind=engine)
 print("All tables created successfully.")
 
 from sqlalchemy.orm import Session
-from models import User, CatProfile, Diary, CatStatus, DefaultTask, DailyTaskLog, NonDailyTaskLog
+from models import User, CatProfile, Diary, DefaultTask, DailyTaskLog, NonDailyTaskLog
 from datetime import date, datetime, timedelta
 from core.security import get_password_hash
 
@@ -36,24 +36,38 @@ def create_test_data(db: Session):
 
     # 다이어리 생성
     diary1 = Diary(
-        note="Mittens had a great day today!",
         date=date(2024, 7, 7),
-        user=user1
+        mood = "행복",
+        activity_level = "높음",
+        portion_status = "부족",
+        sweet_potato_num = "2",
+        sweet_potato_cond =  "정상",
+        potato_num =  "2",
+        potato_cond =  "정상",
+        weight = 6.5,
+        abnomal_act = "없음",
+        note = "강씨 방문",
+        comment = "까칠",
+        user=user1,
+        cat_profile = cat1,
+        photo_url = ''
     )
+    
+    vaccine_task = DefaultTask(
+    period_type="Y",  # 연간
+    period_int=1,  # 1년 주기
+    cat_id=0,  # 고양이 ID, 이 값은 실제 고양이 ID로 대체되어야 합니다.
+    note="연간 백신 접종"
+)
 
-    # 고양이 상태 생성
-    cat_status1 = CatStatus(
-        cat_id=cat1.id,
-        diary_id=diary1.id,
-        date=date(2024, 7, 7),
-        sleep_quality=4,
-        stool_condition=3,
-        weight=4.6,
-        activity_level=5,
-        mood=2,
-        cat_profile=cat1,
-        diary=diary1
-    )
+    # 심장사상충 예방 task
+    heartworm_task = DefaultTask(
+        period_type="M",  # 월간
+        period_int=1,  # 매월
+        cat_id=0,  # 고양이 ID, 이 값은 실제 고양이 ID로 대체되어야 합니다.
+        note="심장사상충 예방약 투여"
+)
+
     # 기본 작업 생성
     task1 = DefaultTask(
         period_type="D",
@@ -107,7 +121,13 @@ def create_test_data(db: Session):
         period_type="W",
         period_int=1,
         cat_id =0,
-        note="nail"
+        note="손톱"
+    )
+    task10 = DefaultTask(
+        period_type="W",
+        period_int=1,
+        cat_id =0,
+        note="모래"
     ) 
     tz = pytz.timezone('Asia/Seoul')
     # 일일 작업 로그 생성
@@ -195,15 +215,23 @@ def create_test_data(db: Session):
     )
     non_daily_task_log2 = NonDailyTaskLog(
         task_id=0,
-        date=date(now_after_2w.year,now_after_2w.month , now_after_2w.day -5),
+        date=date(now_after_2w.year,now_after_2w.month , now_after_2w.day -10),
         done=False,
         cat_id=cat1.id,
-        note="모래갈아주기",
+        note=task10.note,
+        cat_profile=cat1
+    )
+    non_daily_task_log2 = NonDailyTaskLog(
+        task_id=0,
+        date=date(now_after_2w.year,now_after_2w.month , now_after_2w.day -17),
+        done=True,
+        cat_id=cat1.id,
+        note=task10.note,
         cat_profile=cat1
     )
 
     # 데이터베이스에 추가
-    db.add_all([user1, cat1, diary1, cat_status1, task1, task2, task3,task4,task5,task6,task7,task8,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1, non_daily_task_log2])
+    db.add_all([user1, cat1, diary1, vaccine_task, heartworm_task, task1, task2, task3,task4,task5,task6,task7,task8,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1, non_daily_task_log2])
     db.commit()
 
 # 세션 생성 및 테스트 데이터 생성 함수 호출
