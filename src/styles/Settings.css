@@ -170,7 +170,8 @@
 }
 
 .routine-settings__table .note {
-  padding-right: 40px;
+  padding-right: 45px;
+  max-width: 15rem;
 }
 
 .routine-settings__table .action {

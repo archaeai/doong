@@ -22,7 +22,7 @@ export default function RoutineSettings() {
     if (selectedCat) {
       fetchDefaultTasks(selectedCat.id);
     }
-  }, []);
+  }, [selectedCat]);
 
   const handleDelete = async (task) => {
     try {

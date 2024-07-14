@@ -19,6 +19,7 @@ export default function RoutineAddForm({ closeForm, addDefaultTask }) {
       note,
       repeatInterval,
       periodType,
+      catId,
     });
     await addDefaultTask(selectedCat.id);
     closeForm();
