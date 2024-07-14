@@ -113,9 +113,10 @@ export default function CalendarPage() {
             ) : (
               <EventListModal
                 events={calendarTasks.filter(
-                  (event) => event.date === selectedDate
+                  (event) => event.next_done === selectedDate
                 )}
                 closeModal={closeModal}
+                onDelete={handleDelete}
               />
             )}
           </Modal>
