@@ -38,7 +38,7 @@ export default function HomePage() {
             />
             <CatProfile cat={selectedCat} />
           </div>
-          <RecentSchedule />
+          <RecentSchedule cat={selectedCat} />
         </div>
         <div className="divider"></div>
         <div className="home-content-container">

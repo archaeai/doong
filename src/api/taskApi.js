@@ -112,6 +112,28 @@ export const getNonDailyTaskLogs = async (catId) => {
   }
 };
 
+export const getNonDailyTaskLogsUpcoming = async (catId) => {
+  try {
+    const response = await apiClient.get(
+      `/non_daily_task_log/upcoming/${catId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch non-daily task logs");
+  }
+};
+
+export const getNonDailyTaskLogsRecentDone = async (catId) => {
+  try {
+    const response = await apiClient.get(
+      `/non_daily_task_log/recent_done/${catId}`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch non-daily task logs");
+  }
+};
+
 export const createNonDailyTaskLog = async (taskLogData) => {
   try {
     const response = await apiClient.post(`/non_daily_task_log/`, taskLogData);

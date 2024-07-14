@@ -26,7 +26,7 @@ export const TaskProvider = ({ children }) => {
   const updateRepeatInterval = (value) => setRepeatInterval(value);
   const updatePeriodType = (value) => setPeriodType(value);
 
-  //홈페이지 오늘할일 API 함수
+  //홈페이지 API 함수
   // 오늘의 할 일 페치
   const fetchTodayTasks = useCallback(async (catId, date) => {
     try {
@@ -35,6 +35,28 @@ export const TaskProvider = ({ children }) => {
       console.log("Fetched today tasks:", tasks); // 로그 추가
     } catch (error) {
       console.error("Failed to fetch today tasks", error);
+    }
+  }, []);
+
+  //다가오는 일정
+  const fetchUpcomingTasks = useCallback(async (catId) => {
+    try {
+      const tasks = await taskApi.getNonDailyTaskLogsUpcoming(catId);
+      return tasks;
+    } catch (error) {
+      console.error("Failed to fetch upcoming tasks", error);
+      return [];
+    }
+  }, []);
+
+  //최근일정
+  const fetchRecentDoneTasks = useCallback(async (catId) => {
+    try {
+      const tasks = await taskApi.getNonDailyTaskLogsRecentDone(catId);
+      return tasks;
+    } catch (error) {
+      console.error("Failed to fetch recent done tasks", error);
+      return [];
     }
   }, []);
 
@@ -48,6 +70,7 @@ export const TaskProvider = ({ children }) => {
       console.error("Failed to add task", error);
     }
   }, []);
+
   //오늘 할일 삭제
   const deleteTodayTask = useCallback(async (id) => {
     try {
@@ -72,28 +95,6 @@ export const TaskProvider = ({ children }) => {
       console.error("Failed to toggle task completion", error);
     }
   }, []);
-
-  // 다가오는 일정을 API에서 불러오는 함수
-  // useEffect(() => {
-  //   const fetchUpcomingTasks = async () => {
-  //     try {
-  //       const tasks = await taskApi.getNonDailyTaskLogsByCat(1); // catId는 예시
-  //       setUpcomingTasks(tasks);
-  //     } catch (error) {
-  //       console.error("Failed to fetch upcoming tasks", error);
-  //     }
-  //   };
-  //   fetchUpcomingTasks();
-  // }, []);
-
-  // const fetchUpcomingTasks = async (catId) => {
-  //   try {
-  //     const tasks = await taskApi.getNonDailyTaskLogsByCat(catId);
-  //     setUpcomingTasks(tasks);
-  //   } catch (error) {
-  //     console.error("Failed to fetch upcoming tasks", error);
-  //   }
-  // };
 
   // 캘린더 페이지 api 함수
   const fetchCalendarTasks = useCallback(async (catId) => {
@@ -211,7 +212,8 @@ export const TaskProvider = ({ children }) => {
         addTodayTask,
         deleteTodayTask,
         toggleTaskCompletion,
-        // fetchUpcomingTasks,
+        fetchUpcomingTasks,
+        fetchRecentDoneTasks,
         fetchDefaultTasks,
         addDefaultTask,
         updateDefaultTask,
