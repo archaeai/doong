@@ -1,0 +1,18 @@
+.add-todo-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.add-todo-input {
+  width: 100%;
+  padding: 0.625rem;
+  margin-right: 1.563rem;
+}
+
+.add-todo-input:focus {
+  outline: none;
+  border: solid 2px var(--color-brown);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

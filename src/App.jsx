@@ -15,7 +15,7 @@ import { action as logoutAction } from "./pages/Logout";
 import { checkAuthLoader, tokenLoader } from "./utils/auth";
 
 import { CatProvider } from "./contexts/CatContext";
-import { RoutineProvider } from "./contexts/RoutineContext";
+import { TaskProvider } from "./contexts/TaskContext";
 import { DiaryProvider } from "./contexts/DiaryContext";
 
 const router = createBrowserRouter([
@@ -65,11 +65,11 @@ function App() {
   return (
     <>
       <CatProvider>
-        <RoutineProvider>
+        <TaskProvider>
           <DiaryProvider>
             <RouterProvider router={router} />
           </DiaryProvider>
-        </RoutineProvider>
+        </TaskProvider>
       </CatProvider>
     </>
   );

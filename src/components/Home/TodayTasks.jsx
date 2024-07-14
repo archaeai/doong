@@ -1,19 +1,27 @@
-import { useContext } from "react";
-import { RoutineContext } from "../../contexts/RoutineContext";
+import { useContext, useEffect } from "react";
+import { TaskContext } from "../../contexts/TaskContext";
 
-import AddTodoForm from "./AddTodoForm";
+import AddTodayTaskForm from "./AddTodayTaskForm";
 
-export default function DailyRoutine() {
+export default function todayTasks() {
   const {
-    todayTodos,
-    addTodos,
-    toggleTodoCompletion,
+    todayTasks,
+    addTasks,
+    toggleTaskCompletion,
     isFormVisible,
     openForm,
     closeForm,
-  } = useContext(RoutineContext);
+    fetchTodayTasks,
+  } = useContext(TaskContext);
 
-  const allTodos = [...todayTodos, ...addTodos];
+  // 컴포넌트가 마운트될 때 오늘의 할 일을 불러옴
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0]; // 오늘 날짜를 yyyy-mm-dd 형식으로 가져옴
+    const catId = 1; // 예시로 사용한 고양이 ID
+    fetchTodayTasks(catId, today);
+  }, []);
+
+  const allTodos = [...todayTasks, ...addTasks];
 
   return (
     <div className="home-schedule__container todo-list-container">
@@ -23,7 +31,7 @@ export default function DailyRoutine() {
           +
         </button>
       </div>
-      {isFormVisible && <AddTodoForm closeForm={closeForm} />}
+      {isFormVisible && <AddTodayTaskForm closeForm={closeForm} />}
       <ul className="checklist">
         {allTodos.map((todo) => (
           <li className="checklist__li" key={todo.id}>
@@ -34,14 +42,14 @@ export default function DailyRoutine() {
               checked={todo.done}
               onChange={() => {
                 console.log("Checkbox changed:", todo.id);
-                toggleTodoCompletion("today", todo.id);
+                toggleTaskCompletion(todo.id);
               }}
             />
             <label
               htmlFor={`todo-${todo.id}`}
               className={`checklist__label ${todo.done ? "checked" : ""}`}
             >
-              {todo.task}
+              {todo.note}
             </label>
           </li>
         ))}

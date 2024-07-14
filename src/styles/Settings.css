@@ -2,6 +2,19 @@
   padding: 0;
 }
 
+.settings-select {
+  width: 6.25rem;
+  padding: 0.313rem 0.625rem;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-yellow1);
+  font-family: "Gaegu";
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 0.625rem;
+}
+
 .sidebar {
   background-color: var(--color-yellow2);
   padding: 10px;
@@ -67,18 +80,6 @@
   margin-bottom: 1.25rem;
 }
 
-.profile-settings-header__select {
-  width: 7.1rem;
-  padding: 0.313rem 0.625rem;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: var(--color-yellow1);
-  font-family: "Gaegu";
-  font-size: 16px;
-  cursor: pointer;
-}
-
 .profile-settings-header__edit {
   font-family: "Gaegu";
   font-size: 16px;
@@ -136,6 +137,65 @@
   background-color: var(--color-ivory);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.routine-settings {
+  width: 100%;
+}
+
+.routine-settings__header {
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+
+.routine-settings__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.routine-settings__thead th {
+  color: var(--color-navy);
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: var(--color-brown);
+  text-decoration-thickness: 4px;
+  margin-bottom: 0.625rem;
+}
+
+.routine-settings__table td {
+  text-align: center;
+}
+
+.routine-settings__table .number {
+  width: 20%;
+}
+.routine-settings__table .interval {
+  width: 20%;
+}
+.routine-settings__table {
+  width: 70%;
+}
+
+.routine-add-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.routine-add-form__interval {
+  width: 2.188rem;
+  text-align: center;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  margin-right: 0.625rem;
+  color: var(--color-navys);
+}
+
+.routine-add-form__note {
+  width: 15rem;
+  margin-right: 0.625rem;
 }
 
 @media (min-width: 768px) {

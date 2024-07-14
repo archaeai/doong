@@ -66,3 +66,17 @@ export const getDaysSince = (adoptedDay) => {
   const diffDays = Math.round((today - adoptedDate) / oneDay);
   return diffDays;
 };
+
+//루틴설정에서 사용하는 간격포맷 함수
+export const getPeriodTypeLabel = (periodType) => {
+  switch (periodType) {
+    case "days":
+      return "일";
+    case "W":
+      return "주";
+    case "M":
+      return "달";
+    default:
+      return periodType;
+  }
+};

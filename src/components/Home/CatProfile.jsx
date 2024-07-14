@@ -17,7 +17,9 @@ export default function CatProfile({ cat }) {
               {cat.name}랑 ❤︎ {getDaysSince(cat.adopted_day)}일째
             </p>
             <div className="profile-info-line2">
-              <p className="gender-icon">{cat.gender === "male" ? "♂" : "♀"}</p>
+              <p className="gender-icon">
+                {cat.gender === "female" ? "♀" : "♂"}
+              </p>
               <p>{cat.breed}</p>
             </div>
             <p>몸무게: {cat.weight} kg</p>

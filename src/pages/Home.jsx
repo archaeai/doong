@@ -6,7 +6,7 @@ import AddHeader from "../components/Home/AddHeader";
 import CatProfile from "../components/Home/CatProfile";
 import RecentSchedule from "../components/Home/RecentSchedule";
 import UpcomingSchedule from "../components/Home/UpcomingSchedule";
-import DailyRoutine from "../components/Home/DailyRoutine";
+import TodayTasks from "../components/Home/TodayTasks";
 import AddCatForm from "../components/AddCatForm/AddCatForm";
 
 import "../styles/Home.css";
@@ -43,7 +43,7 @@ export default function HomePage() {
         <div className="divider"></div>
         <div className="home-content-container">
           <UpcomingSchedule cat={selectedCat} />
-          <DailyRoutine cat={selectedCat} />
+          <TodayTasks cat={selectedCat} />
         </div>
         <AddCatForm isOpen={isModalOpen} closeModal={closeModal} />
       </div>
