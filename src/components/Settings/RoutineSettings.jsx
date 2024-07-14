@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
 import { getPeriodTypeLabel } from "../../utils/dateUtil";
-
+import CatSelect from "../../UI/CatSelect";
 import RoutineAddForm from "./RoutineAddForm";
 import RoutineEditForm from "./RoutineEditForm";
 
@@ -50,7 +50,8 @@ export default function RoutineSettings() {
   return (
     <div className="routine-settings">
       <div className="routine-settings__header">
-        <button className="routine-settings-header__add" onClick={openAddForm}>
+        <CatSelect />
+        <button className="routine-settings__header-add" onClick={openAddForm}>
           루틴 추가
         </button>
       </div>

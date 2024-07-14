@@ -130,7 +130,13 @@
   width: 100%;
 }
 
-.routine-settings-header__add {
+.routine-settings__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.routine-settings__header-add {
   font-family: "Gaegu";
   font-size: 16px;
   color: var(--color-navy);
@@ -139,12 +145,11 @@
   border: none;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: var(--color-yellow1);
-  margin: 0 0 0.938rem 0.625rem;
+  background-color: var(--color-yellow3);
 }
 
 .routine-settings__table {
-  width: 90%;
+  width: 100%;
   border-collapse: collapse;
 }
 
@@ -162,16 +167,6 @@
   text-decoration-color: var(--color-brown);
   text-decoration-thickness: 4px;
   margin-bottom: 0.625rem;
-}
-
-.routine-settings__table .number {
-  width: 20%;
-}
-.routine-settings__table .interval {
-  width: 20%;
-}
-.routine-settings__table .note {
-  margin-right: 20px;
 }
 
 .routine-add-form {
