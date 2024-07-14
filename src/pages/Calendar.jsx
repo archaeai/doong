@@ -33,13 +33,13 @@ export default function CalendarPage() {
   }, []);
 
   const handleAddEvent = async (formData) => {
-    const { selectedDate, eventTitle, lastDone, nextDone } = formData;
+    const { selectedDate, eventTitle } = formData;
     try {
       await addCalendarTask({
         task_id: 0,
         cat_id: selectedCat.id,
-        last_done: lastDone,
-        next_done: nextDone,
+        last_done: selectedDate,
+        next_done: selectedDate,
         note: eventTitle,
       });
       closeModal();

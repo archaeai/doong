@@ -107,9 +107,11 @@ export const TaskProvider = ({ children }) => {
   };
 
   const addCalendarTask = async (task) => {
+    console.log("전송할 데이터:", task);
     try {
       const createdTask = await taskApi.createNonDailyTaskLog(task);
-      setCalendarTasks([...calendarTasks, createdTask]);
+      setCalendarTasks((prevTasks) => [...prevTasks, createdTask]);
+      console.log("Non-daily task successfully added:", createdTask);
     } catch (error) {
       console.error("Failed to add calendar task", error);
     }

@@ -114,9 +114,13 @@ export const getNonDailyTaskLogs = async (catId) => {
 
 export const createNonDailyTaskLog = async (taskLogData) => {
   try {
-    const response = await apiClient.post(`/non_daily_task_log`, taskLogData);
+    const response = await apiClient.post(`/non_daily_task_log/`, taskLogData);
     return response.data;
   } catch (error) {
+    console.error(
+      "Failed to create non-daily task log:",
+      error.response?.data || error.message
+    );
     throw new Error("Failed to add non-daily task log");
   }
 };

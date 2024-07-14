@@ -5,8 +5,6 @@ const AddEventForm = ({ onSubmit, closeModal, initialDate }) => {
   const initialState = {
     eventTitle: "",
     selectedDate: initialDate,
-    lastDone: "",
-    nextDone: "",
   };
 
   const { formData, handleChange, handleSubmit, errors } = useFormState(
@@ -20,12 +18,9 @@ const AddEventForm = ({ onSubmit, closeModal, initialDate }) => {
       <form
         onSubmit={(e) => {
           handleSubmit(e, (data) => {
-            console.log("추가된 일정 데이터:", data); // 콘솔 로그
-            onSubmit({
-              date: data.selectedDate,
-              title: data.eventTitle,
-            }); // 데이터 제출 형식 맞추기
-            closeModal(); // 모달 창 닫기
+            console.log("추가된 일정 데이터:", data);
+            onSubmit(data);
+            closeModal();
           });
         }}
       >
