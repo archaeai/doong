@@ -176,7 +176,32 @@
 
 .routine-settings__table .action {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+
+.routine-edit-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.routine-edit-form input[type="text"] {
+  width: 40%;
+  padding: 8px;
+  margin-right: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.routine-edit-form .settings-select {
+  width: 20%;
+  padding: 8px;
+  margin-right: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .routine-add-form {

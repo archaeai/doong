@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
 import { CatContext } from "../../contexts/CatContext";
 import { getPeriodTypeLabel } from "../../utils/dateUtil";
@@ -15,6 +15,7 @@ export default function RoutineSettings() {
     deleteDefaultTask,
   } = useContext(TaskContext);
   const { selectedCat } = useContext(CatContext);
+  const [editTaskId, setEditTaskId] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [currentRoutine, setCurrentRoutine] = useState(null);
 
@@ -40,13 +41,13 @@ export default function RoutineSettings() {
   };
 
   const openEditForm = (task) => {
-    if (defaultTasks.length > 0) {
-      setCurrentRoutine(defaultTasks[0]); // 첫 번째 루틴을 기본으로 선택
-      setIsFormVisible(true);
-    }
+    setEditTaskId(task.id);
+    setCurrentRoutine(task);
+    setIsFormVisible(true);
   };
 
   const closeForm = () => {
+    setEditTaskId(null);
     setIsFormVisible(false);
     setCurrentRoutine(null);
   };
@@ -59,20 +60,9 @@ export default function RoutineSettings() {
           루틴 추가
         </button>
       </div>
-      {isFormVisible &&
-        (currentRoutine ? (
-          <RoutineEditForm
-            task={currentRoutine}
-            closeForm={closeForm}
-            updateDefaultTask={updateDefaultTask}
-            deleteDefaultTask={deleteDefaultTask}
-          />
-        ) : (
-          <RoutineAddForm
-            closeForm={closeForm}
-            addDefaultTask={addDefaultTask}
-          />
-        ))}
+      {isFormVisible && editTaskId === null && (
+        <RoutineAddForm closeForm={closeForm} addDefaultTask={addDefaultTask} />
+      )}
       <table className="routine-settings__table">
         <thead className="routine-settings__thead">
           <tr>
@@ -83,28 +73,45 @@ export default function RoutineSettings() {
         </thead>
         <tbody>
           {defaultTasks.map((task, index) => (
-            <tr key={task.id}>
-              <td className="number">{index + 1}</td>
-              <td className="interval">
-                {task.period_int}
-                {getPeriodTypeLabel(task.period_type)}
-              </td>
-              <td className="note">{task.note}</td>
-              <td className="action">
-                <button onClick={openEditForm} className="todo-edit">
-                  수정
-                </button>
-                {task.cat_id !== 0 && (
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(task)}
-                    className="todo-delete"
-                  >
-                    삭제
-                  </button>
-                )}
-              </td>
-            </tr>
+            <React.Fragment key={task.id}>
+              {editTaskId === task.id ? (
+                <tr>
+                  <td colSpan="4">
+                    <RoutineEditForm
+                      task={task}
+                      closeForm={closeForm}
+                      updateDefaultTask={updateDefaultTask}
+                    />
+                  </td>
+                </tr>
+              ) : (
+                <tr>
+                  <td className="number">{index + 1}</td>
+                  <td className="interval">
+                    {task.period_int}
+                    {getPeriodTypeLabel(task.period_type)}
+                  </td>
+                  <td className="note">{task.note}</td>
+                  <td className="action">
+                    <button
+                      onClick={() => openEditForm(task)}
+                      className="todo-edit"
+                    >
+                      수정
+                    </button>
+                    {task.cat_id !== 0 && (
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(task)}
+                        className="todo-delete"
+                      >
+                        삭제
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              )}
+            </React.Fragment>
           ))}
         </tbody>
       </table>

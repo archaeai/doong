@@ -19,7 +19,7 @@ export default function RoutineAddForm({ closeForm, addDefaultTask }) {
       note,
       repeatInterval,
       periodType,
-      catId,
+      catId: selectedCat.id,
     });
     await addDefaultTask(selectedCat.id);
     closeForm();
@@ -47,6 +47,7 @@ export default function RoutineAddForm({ closeForm, addDefaultTask }) {
         <option value="D">일</option>
         <option value="W">주</option>
         <option value="M">달</option>
+        <option value="Y">년</option>
       </select>
       <input
         type="text"
