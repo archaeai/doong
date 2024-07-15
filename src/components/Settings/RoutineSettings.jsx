@@ -56,9 +56,14 @@ export default function RoutineSettings() {
     <div className="routine-settings">
       <div className="routine-settings__header">
         <CatSelect />
-        <button className="routine-settings__header-add" onClick={openAddForm}>
-          루틴 추가
-        </button>
+        {!isFormVisible && (
+          <button
+            className="routine-settings__header-add"
+            onClick={openAddForm}
+          >
+            루틴 추가
+          </button>
+        )}
       </div>
       {isFormVisible && editTaskId === null && (
         <RoutineAddForm closeForm={closeForm} addDefaultTask={addDefaultTask} />

@@ -27,28 +27,30 @@ export default function RoutineAddForm({ closeForm, addDefaultTask }) {
 
   return (
     <form onSubmit={handleSubmit} className="routine-add-form">
-      <input
-        type="number"
-        value={repeatInterval}
-        onChange={(e) => updateRepeatInterval(e.target.value)}
-        placeholder="1"
-        className="routine-add-form__interval"
-        required
-      />
-      <select
-        className="settings-select"
-        value={periodType}
-        onChange={(e) => updatePeriodType(e.target.value)}
-        required
-      >
-        <option value="" disabled>
-          간격
-        </option>
-        <option value="D">일</option>
-        <option value="W">주</option>
-        <option value="M">달</option>
-        <option value="Y">년</option>
-      </select>
+      <div className="routine-edit-form__interval-container">
+        <input
+          type="number"
+          value={repeatInterval}
+          onChange={(e) => updateRepeatInterval(e.target.value)}
+          placeholder="1"
+          className="routine-edit-form__interval"
+          required
+        />
+        <select
+          className="routine-edit-form__interval"
+          value={periodType}
+          onChange={(e) => updatePeriodType(e.target.value)}
+          required
+        >
+          <option value="" disabled>
+            간격
+          </option>
+          <option value="D">일</option>
+          <option value="W">주</option>
+          <option value="M">달</option>
+          <option value="Y">년</option>
+        </select>
+      </div>
       <input
         type="text"
         value={note}

@@ -1,14 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { TaskContext } from "../../contexts/TaskContext";
 
 export default function RoutineEditForm({
   task,
   closeForm,
   updateDefaultTask,
-  updateRepeatInterval,
 }) {
-  const [note, setNote] = useState(task.note);
-  const [repeatInterval, setRepeatInterval] = useState(task.repeatInterval);
-  const [periodType, setPeriodType] = useState(task.period_type);
+  const {
+    note,
+    repeatInterval,
+    periodType,
+    updateNote,
+    updateRepeatInterval,
+    updatePeriodType,
+  } = useContext(TaskContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,13 +30,13 @@ export default function RoutineEditForm({
           value={repeatInterval}
           onChange={(e) => updateRepeatInterval(e.target.value)}
           placeholder="1"
-          className="routine-add-form__interval"
+          className="routine-edit-form__interval"
           required
         />
         <select
-          className="settings-select"
-          value={repeatInterval}
-          onChange={(e) => setRepeatInterval(e.target.value)}
+          className="routine-edit-form__interval"
+          value={periodType}
+          onChange={(e) => updatePeriodType(e.target.value)}
           required
         >
           <option value="D">일</option>
@@ -43,16 +48,17 @@ export default function RoutineEditForm({
       <input
         type="text"
         value={note}
-        onChange={(e) => setNote(e.target.value)}
+        onChange={(e) => updateNote(e.target.value)}
         required
       />
-
-      <button type="submit" className="todo-edit">
-        수정
-      </button>
-      <button type="button" onClick={closeForm} className="todo-delete">
-        취소
-      </button>
+      <div className="routine-edit-form__action">
+        <button type="submit" className="todo-edit">
+          수정
+        </button>
+        <button type="button" onClick={closeForm} className="todo-delete">
+          취소
+        </button>
+      </div>
     </form>
   );
 }
