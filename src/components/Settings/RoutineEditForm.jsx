@@ -17,7 +17,7 @@ export default function RoutineEditForm({
       note,
       period_int: repeatInterval,
       period_type: periodType,
-      cat_id: selectedCat.id,
+      cat_id: task.cat_id,
     };
     console.log("Updating task:", task.id, taskData);
     updateDefaultTask(task.id, taskData);
