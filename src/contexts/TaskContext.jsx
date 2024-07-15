@@ -14,7 +14,7 @@ export const TaskProvider = ({ children }) => {
   const [todayTasks, setTodayTasks] = useState([]);
   const [upcomingTasks, setUpcomingTasks] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [statistics, setStatistics] = useState({});
+
   // 루틴 추가 폼 상태
   const [note, setNote] = useState("");
   const [repeatInterval, setRepeatInterval] = useState("");
@@ -30,9 +30,21 @@ export const TaskProvider = ({ children }) => {
   // 오늘의 할 일 페치
   const fetchTodayTasks = useCallback(async (catId, date) => {
     try {
-      const tasks = await taskApi.getTodayTasks(catId, date);
-      setTodayTasks(tasks);
-      console.log("Fetched today tasks:", tasks); // 로그 추가
+      const [nonDailyTasks, dailyTasks] = await Promise.all([
+        taskApi.getNonDailyTaskLogs(catId, date),
+        taskApi.getTodayTasks(catId, date),
+      ]);
+      const filteredNonDailyTasks = nonDailyTasks.filter(
+        (task) => task.date === date
+      );
+      const filteredDailyTasks = dailyTasks.filter(
+        (task) => task.date === date
+      );
+      setTodayTasks([...filteredNonDailyTasks, ...filteredDailyTasks]);
+      console.log("Fetched today tasks:", [
+        ...filteredNonDailyTasks,
+        ...filteredDailyTasks,
+      ]);
     } catch (error) {
       console.error("Failed to fetch today tasks", error);
     }

@@ -112,6 +112,17 @@ export const getNonDailyTaskLogs = async (catId) => {
   }
 };
 
+export const getNonDailyTaskLogsByDate = async (catId, date) => {
+  try {
+    const response = await apiClient.get(
+      `/non_daily_task_log/cat/${catId}/date/${date}`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch non-daily task logs");
+  }
+};
+
 export const getNonDailyTaskLogsUpcoming = async (catId) => {
   try {
     const response = await apiClient.get(
