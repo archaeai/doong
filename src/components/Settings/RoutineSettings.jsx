@@ -13,6 +13,7 @@ export default function RoutineSettings() {
     addDefaultTask,
     updateDefaultTask,
     deleteDefaultTask,
+    isLoading,
   } = useContext(TaskContext);
   const { selectedCat } = useContext(CatContext);
   const [editTaskId, setEditTaskId] = useState(null);
@@ -51,6 +52,10 @@ export default function RoutineSettings() {
     setIsFormVisible(false);
     setCurrentRoutine(null);
   };
+
+  if (isLoading) {
+    return <div>루틴정보 불러오는중...</div>;
+  }
 
   return (
     <div className="routine-settings">

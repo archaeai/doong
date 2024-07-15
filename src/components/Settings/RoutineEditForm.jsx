@@ -1,25 +1,33 @@
 import { useState, useEffect, useContext } from "react";
-import { TaskContext } from "../../contexts/TaskContext";
+import { CatContext } from "../../contexts/CatContext";
 
 export default function RoutineEditForm({
   task,
   closeForm,
   updateDefaultTask,
 }) {
-  const {
-    note,
-    repeatInterval,
-    periodType,
-    updateNote,
-    updateRepeatInterval,
-    updatePeriodType,
-  } = useContext(TaskContext);
+  const { selectedCat } = useContext(CatContext);
+  const [note, setNote] = useState(task.note || "");
+  const [repeatInterval, setRepeatInterval] = useState(task.period_int || 1);
+  const [periodType, setPeriodType] = useState(task.period_type || "D");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateDefaultTask(task.id, { note, repeatInterval });
+    const taskData = {
+      note,
+      period_int: repeatInterval,
+      period_type: periodType,
+      cat_id: selectedCat.id,
+    };
+    console.log("Updating task:", task.id, taskData);
+    updateDefaultTask(task.id, taskData);
+
     closeForm();
   };
+
+  const handleNoteChange = (e) => setNote(e.target.value);
+  const handleRepeatIntervalChange = (e) => setRepeatInterval(e.target.value);
+  const handlePeriodTypeChange = (e) => setPeriodType(e.target.value);
 
   return (
     <form onSubmit={handleSubmit} className="routine-edit-form">
@@ -28,7 +36,7 @@ export default function RoutineEditForm({
         <input
           type="number"
           value={repeatInterval}
-          onChange={(e) => updateRepeatInterval(e.target.value)}
+          onChange={handleRepeatIntervalChange}
           placeholder="1"
           className="routine-edit-form__interval"
           required
@@ -36,7 +44,7 @@ export default function RoutineEditForm({
         <select
           className="routine-edit-form__interval"
           value={periodType}
-          onChange={(e) => updatePeriodType(e.target.value)}
+          onChange={handlePeriodTypeChange}
           required
         >
           <option value="D">일</option>
@@ -45,12 +53,7 @@ export default function RoutineEditForm({
           <option value="Y">년</option>
         </select>
       </div>
-      <input
-        type="text"
-        value={note}
-        onChange={(e) => updateNote(e.target.value)}
-        required
-      />
+      <input type="text" value={note} onChange={handleNoteChange} required />
       <div className="routine-edit-form__action">
         <button type="submit" className="todo-edit">
           수정

@@ -14,12 +14,12 @@ export const TaskProvider = ({ children }) => {
   const [todayTasks, setTodayTasks] = useState([]);
   const [upcomingTasks, setUpcomingTasks] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [calendarTasks, setCalendarTasks] = useState([]);
   // 루틴 추가 폼 상태
   const [note, setNote] = useState("");
   const [repeatInterval, setRepeatInterval] = useState("");
   const [periodType, setPeriodType] = useState("D");
-  const [calendarTasks, setCalendarTasks] = useState([]);
 
   // 상태 업데이트 함수
   const updateNote = (value) => setNote(value);
@@ -153,6 +153,7 @@ export const TaskProvider = ({ children }) => {
 
   //루틴설정페이지 API 함수
   const fetchDefaultTasks = async (catId) => {
+    setIsLoading(true);
     try {
       const tasks = await taskApi.getAllDefaultTasks(catId);
       setDefaultTasks(tasks);
@@ -161,6 +162,8 @@ export const TaskProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Failed to fetch default tasks", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -197,7 +200,7 @@ export const TaskProvider = ({ children }) => {
   };
 
   // 루틴을 수정하는 함수
-  const updateDefaultTask = async (id, taskData) => {
+  const updateDefaultTask = useCallback(async (id, taskData) => {
     try {
       const updatedTask = await taskApi.updateDefaultTask(id, taskData);
       setDefaultTasks((prevTasks) =>
@@ -206,7 +209,7 @@ export const TaskProvider = ({ children }) => {
     } catch (error) {
       console.error("Failed to update default task", error);
     }
-  };
+  }, []);
 
   // 루틴을 삭제하는 함수
   const deleteDefaultTask = async (taskId) => {
@@ -226,6 +229,7 @@ export const TaskProvider = ({ children }) => {
         addTasks,
         upcomingTasks,
         isEditing,
+        isLoading,
         fetchTodayTasks,
         addTodayTask,
         deleteTodayTask,
