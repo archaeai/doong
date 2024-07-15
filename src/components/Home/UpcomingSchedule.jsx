@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
+import { formatDateWithoutDay } from "../../utils/dateUtil";
 
 export default function UpcomingSchedule({ cat }) {
   const { fetchUpcomingTasks } = useContext(TaskContext);
@@ -20,12 +21,13 @@ export default function UpcomingSchedule({ cat }) {
     <div className="home-schedule__container">
       <h3 className="home-schedule__heading">다가오는 일정</h3>
       {upcomingTasks.length ? (
-        <ul>
+        <ul className="home-schedule__ul">
           {upcomingTasks.map((task) => (
-            <li key={task.id}>
-              <span>
-                {task.date} -{task.note}
+            <li key={task.id} className="home-schedule__li">
+              <span className="home-schedule__li-date">
+                {formatDateWithoutDay(new Date(task.date))}:{" "}
               </span>
+              <span>{task.note}</span>
             </li>
           ))}
         </ul>

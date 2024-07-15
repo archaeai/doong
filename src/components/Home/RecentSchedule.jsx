@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
+import { formatDateWithoutDay } from "../../utils/dateUtil";
 
 export default function RecentSchedule({ cat }) {
   const { fetchRecentDoneTasks } = useContext(TaskContext);
@@ -19,12 +20,13 @@ export default function RecentSchedule({ cat }) {
     <div className="home-schedule__container">
       <h3 className="home-schedule__heading">최근 일정</h3>
       {recentTasks.length ? (
-        <ul>
+        <ul className="home-schedule__ul">
           {recentTasks.map((task) => (
-            <li key={task.id}>
-              <span>
-                {task.date} - {task.note}
+            <li key={task.id} className="home-schedule__li">
+              <span className="home-schedule__li-date">
+                {formatDateWithoutDay(new Date(task.date))}:{" "}
               </span>
+              <span>{task.note}</span>
             </li>
           ))}
         </ul>
