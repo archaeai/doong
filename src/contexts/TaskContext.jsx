@@ -76,37 +76,43 @@ export const TaskProvider = ({ children }) => {
   const addTodayTask = useCallback(async (task) => {
     try {
       const createdTask = await taskApi.addTodayTask(task);
-      setTodayTasks([...todayTasks, createdTask]);
-      console.log("Added task:", createdTask); // 로그 추가
+      setTodayTasks((prevTasks) => [createdTask, ...prevTasks]);
+      console.log("Added task:", createdTask);
     } catch (error) {
       console.error("Failed to add task", error);
     }
   }, []);
 
   //오늘 할일 삭제
-  const deleteTodayTask = useCallback(async (id) => {
-    try {
-      await taskApi.deleteTodayTask(id);
-      setTodayTasks(todayTasks.filter((task) => task.id !== id));
-      console.log("Deleted task with id:", id); // 로그 추가
-    } catch (error) {
-      console.error("Failed to delete task", error);
-    }
-  }, []);
+  const deleteTodayTask = useCallback(
+    async (id) => {
+      try {
+        await taskApi.deleteTodayTask(id);
+        setTodayTasks(todayTasks.filter((task) => task.id !== id));
+        console.log("Deleted task with id:", id);
+      } catch (error) {
+        console.error("Failed to delete task", error);
+      }
+    },
+    [todayTasks]
+  );
 
   // 할 일 완료 여부를 토글하는 함수
-  const toggleTaskCompletion = useCallback(async (id) => {
-    try {
-      const task = todayTasks.find((t) => t.id === id);
-      if (task) {
-        const updatedTask = { ...task, done: !task.done };
-        await taskApi.updateTodayTask(id, updatedTask);
-        setTodayTasks(todayTasks.map((t) => (t.id === id ? updatedTask : t)));
+  const toggleTaskCompletion = useCallback(
+    async (id) => {
+      try {
+        const task = todayTasks.find((t) => t.id === id);
+        if (task) {
+          const updatedTask = { ...task, done: !task.done };
+          await taskApi.updateTodayTask(id, updatedTask);
+          setTodayTasks(todayTasks.map((t) => (t.id === id ? updatedTask : t)));
+        }
+      } catch (error) {
+        console.error("Failed to toggle task completion", error);
       }
-    } catch (error) {
-      console.error("Failed to toggle task completion", error);
-    }
-  }, []);
+    },
+    [todayTasks]
+  );
 
   // 캘린더 페이지 api 함수
   const fetchCalendarTasks = useCallback(async (catId) => {

@@ -4,13 +4,8 @@ import { TaskContext } from "../../contexts/TaskContext";
 import AddTodayTaskForm from "./AddTodayTaskForm";
 
 export default function todayTasks({ cat }) {
-  const {
-    todayTasks,
-    addTasks,
-    toggleTaskCompletion,
-    fetchTodayTasks,
-    deleteTodayTask,
-  } = useContext(TaskContext);
+  const { todayTasks, toggleTaskCompletion, fetchTodayTasks, deleteTodayTask } =
+    useContext(TaskContext);
 
   const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -24,8 +19,6 @@ export default function todayTasks({ cat }) {
       fetchTodayTasks(cat.id, today);
     }
   }, [cat, fetchTodayTasks]);
-
-  const allTodos = [...todayTasks, ...addTasks];
 
   const handleDelete = async (id) => {
     try {
@@ -46,8 +39,8 @@ export default function todayTasks({ cat }) {
       </div>
       {isFormVisible && <AddTodayTaskForm closeForm={closeForm} cat={cat} />}
       <ul className="checklist">
-        {allTodos.map((todo) => (
-          <li className="checklist__li" key={todo.id}>
+        {todayTasks.map((todo, index) => (
+          <li className="checklist__li" key={`${todo.id}-${index}`}>
             <input
               id={`todo-${todo.id}`}
               className="checklist__box"
@@ -63,13 +56,14 @@ export default function todayTasks({ cat }) {
             >
               {todo.note}
             </label>
-            {}
-            <button
-              className="todo-delete"
-              onClick={() => handleDelete(todo.id)}
-            >
-              삭제
-            </button>
+            {todo.task_id === 0 && (
+              <button
+                className="todo-delete"
+                onClick={() => handleDelete(todo.id)}
+              >
+                삭제
+              </button>
+            )}
           </li>
         ))}
       </ul>

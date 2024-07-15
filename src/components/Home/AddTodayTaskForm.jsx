@@ -10,7 +10,7 @@ export default function AddTodayTaskForm({ closeForm, cat }) {
     e.preventDefault();
     if (newTodo.trim()) {
       const taskLogData = {
-        date: new Date().toISOString().split("T")[0], // 오늘 날짜
+        date: new Date().toISOString().split("T")[0],
         note: newTodo,
         done: false,
         task_id: 0,
