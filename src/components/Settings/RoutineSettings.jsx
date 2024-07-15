@@ -74,43 +74,45 @@ export default function RoutineSettings() {
         <tbody>
           {defaultTasks.map((task, index) => (
             <React.Fragment key={task.id}>
-              {editTaskId === task.id ? (
-                <tr>
-                  <td colSpan="4">
-                    <RoutineEditForm
-                      task={task}
-                      closeForm={closeForm}
-                      updateDefaultTask={updateDefaultTask}
-                    />
-                  </td>
-                </tr>
-              ) : (
-                <tr>
-                  <td className="number">{index + 1}</td>
-                  <td className="interval">
-                    {task.period_int}
-                    {getPeriodTypeLabel(task.period_type)}
-                  </td>
-                  <td className="note">{task.note}</td>
-                  <td className="action">
-                    <button
-                      onClick={() => openEditForm(task)}
-                      className="todo-edit"
-                    >
-                      수정
-                    </button>
-                    {task.cat_id !== 0 && (
+              <tr>
+                <td className="number">{index + 1}</td>
+                {editTaskId === task.id ? (
+                  <>
+                    <td colSpan="4">
+                      <RoutineEditForm
+                        task={task}
+                        closeForm={closeForm}
+                        updateDefaultTask={updateDefaultTask}
+                      />
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td className="interval">
+                      {task.period_int}
+                      {getPeriodTypeLabel(task.period_type)}
+                    </td>
+                    <td className="note">{task.note}</td>
+                    <td className="action">
                       <button
-                        type="button"
-                        onClick={() => handleDelete(task)}
-                        className="todo-delete"
+                        onClick={() => openEditForm(task)}
+                        className="todo-edit"
                       >
-                        삭제
+                        수정
                       </button>
-                    )}
-                  </td>
-                </tr>
-              )}
+                      {task.cat_id !== 0 && (
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(task)}
+                          className="todo-delete"
+                        >
+                          삭제
+                        </button>
+                      )}
+                    </td>
+                  </>
+                )}
+              </tr>
             </React.Fragment>
           ))}
         </tbody>
