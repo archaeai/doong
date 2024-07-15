@@ -18,7 +18,7 @@ export default function useFormState(initialState, validateStep) {
     } else {
       setFormData((prevData) => ({
         ...prevData,
-        [name]: name === "neutered" ? value === "수술함" : value,
+        [name]: name === "neutered" ? value === "true" : value,
       }));
     }
   };

@@ -4,8 +4,8 @@ export const genderOptions = [
 ];
 
 export const neuteredOptions = [
-  { value: "yes", label: "수술함" },
-  { value: "no", label: "수술안함" },
+  { value: "true", label: "수술함" },
+  { value: "false", label: "수술안함" },
 ];
 
 export const moodOptions = [

@@ -1,0 +1,27 @@
+.radio-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.radio-button-group label {
+  display: block;
+  padding: 10px 10px;
+  color: var(--color-grey);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  width: 100px;
+  transition: background-color 0.3s, border-color 0.3s;
+  margin-right: 10px;
+}
+
+.radio-button-group input[type="radio"] {
+  display: none;
+}
+
+.radio-button-group label:hover,
+.radio-button-group input[type="radio"]:checked + label {
+  background-color: var(--color-yellow2);
+}

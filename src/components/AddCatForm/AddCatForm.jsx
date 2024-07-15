@@ -14,7 +14,7 @@ const initialState = {
   birthDate: "",
   adoptDate: "",
   gender: "",
-  neutered: true,
+  neutered: null,
   weight: "",
   photo: null,
   vaccinationDate: "",

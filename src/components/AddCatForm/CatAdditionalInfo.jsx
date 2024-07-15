@@ -9,11 +9,6 @@ export default function CatAdditionalInfo({
   photoPreview,
   errors,
 }) {
-  const handleFileChange = (event) => {
-    handleChange(event);
-    handleFilePreview(event);
-  };
-
   return (
     <>
       <h2>새 친구의 추가 정보를 입력해주세요.</h2>
@@ -33,7 +28,7 @@ export default function CatAdditionalInfo({
           name="neutered"
           options={neuteredOptions}
           onChange={handleChange}
-          selectedValue={catData.neutered ? "수술함" : "수술안함"}
+          selectedValue={String(catData.neutered)}
         />
         {errors.neutered && <p className="control-error">{errors.neutered}</p>}
       </div>
