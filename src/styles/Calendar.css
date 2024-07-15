@@ -71,16 +71,15 @@
 }
 
 .react-calendar__tile .event {
-  position: absolute;
-  top: 30px;
-  left: 5px;
-  right: 5px;
+  list-style: none;
   background-color: var(--color-yellow2);
   color: var(--color-gery);
   border-radius: 4px;
-  padding: 2px 4px;
-  font-size: 12px;
+  padding: 0 3px;
+  margin-bottom: 2px;
+  font-size: 11px;
 }
+
 .event.event-lavender {
   background-color: #e6e6fa;
 }

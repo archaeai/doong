@@ -95,9 +95,11 @@ export default function CalendarPage() {
     return calendarTasks
       .filter((event) => event.date === dateString)
       .map((event, index) => (
-        <div key={index} className={`event ${getEventClass(event.cat_id)}`}>
-          <p>{event.note}</p>
-        </div>
+        <ul key={index}>
+          <li className={`event ${getEventClass(event.cat_id)}`}>
+            {event.note}
+          </li>
+        </ul>
       ));
   };
 
