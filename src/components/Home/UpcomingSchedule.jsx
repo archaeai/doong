@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../../contexts/TaskContext";
-import { formatDateWithoutDay } from "../../utils/dateUtil";
+import { formatDate } from "../../utils/dateUtil";
 
 export default function UpcomingSchedule({ cat }) {
   const { fetchUpcomingTasks } = useContext(TaskContext);
@@ -25,7 +25,7 @@ export default function UpcomingSchedule({ cat }) {
           {upcomingTasks.map((task) => (
             <li key={task.id} className="home-schedule__li">
               <span className="home-schedule__li-date">
-                {formatDateWithoutDay(new Date(task.date))}:{" "}
+                {formatDate(new Date(task.date))}:{" "}
               </span>
               <span>{task.note}</span>
             </li>
