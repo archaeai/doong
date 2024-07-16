@@ -1,8 +1,10 @@
 # crud/cat_profile.py
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from backend.models import CatProfile
+from backend.models import CatProfile, DefaultTask, DailyTaskLog
 from backend.schemas import CatProfileCreate, CatProfileUpdate
+from datetime import datetime, timedelta, date
+from dateutil.relativedelta import relativedelta
 
 
 def get_cat_profile(db: Session, cat_profile_id: int) -> Optional[CatProfile]:
@@ -17,11 +19,76 @@ def get_cat_profiles_by_user(db: Session, user_id : str) -> List[CatProfile]:
     return db.query(CatProfile).filter(CatProfile.user_id == user_id).all()
 
 
-def create_cat_profile(db: Session, cat_profile: CatProfileCreate) -> CatProfile:
+    
+def calculate_next_date(start_date: date, period_type: str, period_int: int) -> date:
+    if period_type == "D":
+        return start_date + timedelta(days=period_int)
+    elif period_type == "W":
+        return start_date + timedelta(weeks=period_int)
+    elif period_type == "M":
+        return start_date + relativedelta(months=period_int)
+    elif period_type == "Y":
+        return start_date + relativedelta(years=period_int)
+    return start_date
+
+
+
+def create_cat_profile(db: Session, task_dict: dict, cat_profile: CatProfileCreate) -> CatProfile:
     db_cat_profile = CatProfile(**cat_profile.dict())
     db.add(db_cat_profile)
     db.commit()
     db.refresh(db_cat_profile)
+
+    # note를 통해 DefaultTask 가져오기
+    heartworm_task = db.query(DefaultTask).filter(DefaultTask.note == "심장사상충 예방약 투여").first()
+    litter_task = db.query(DefaultTask).filter(DefaultTask.note == "모래갈이").first()
+    vaccine_task = db.query(DefaultTask).filter(DefaultTask.note == "연간 백신 접종").first()
+
+    # task_dict에 있는 날짜를 이용하여 DailyTaskLog 생성
+    for task_date_key, task_date_value in task_dict.items():
+        if task_date_value:
+            task_date_value = datetime.strptime(task_date_value, '%Y-%m-%d').date()
+            task = None
+            if task_date_key == 'heart_warm_date':
+                task = heartworm_task
+            elif task_date_key == 'litter_date':
+                task = litter_task
+            elif task_date_key == 'vaccine_date':
+                task = vaccine_task
+
+            if task:
+                # 첫 번째 DailyTaskLog 생성
+                daily_task_log = DailyTaskLog(
+                    date=task_date_value,
+                    note=task.note,
+                    cat_id=db_cat_profile.id,
+                    done=True,
+                    task_id=task.id,
+                )
+                db.add(daily_task_log)
+
+                # 다음 수행 날짜 계산 및 생성
+                next_date = calculate_next_date(task_date_value, task.period_type, task.period_int)
+                if next_date <= date.today():
+                    daily_task_log = DailyTaskLog(
+                        date=date.today(),
+                        note=task.note,
+                        cat_id=db_cat_profile.id,
+                        done=False,
+                        task_id=task.id
+                    )
+                else:
+                    daily_task_log = DailyTaskLog(
+                        date=next_date,
+                        note=task.note,
+                        cat_id=db_cat_profile.id,
+                        done=False,
+                        task_id=task.id
+                    )
+                db.add(daily_task_log)
+                next_date = calculate_next_date(next_date, task.period_type, task.period_int)
+    db.commit()
+
     return db_cat_profile
 
 

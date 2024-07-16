@@ -70,15 +70,16 @@ async def create_cat_profile(
         gender=gender,
         birthday=birthday,
         adopted_day=adopted_day,
-        vaccine_date=vaccine_date,
-        heart_warm_date=heart_warm_date,
-        litter_date=litter_date,
         neutered=neutered,
         weight=weight,
         user_id=current_user,
         photo_url=photo_url
     )
-    return crud_cat_profile.create_cat_profile(db=db, cat_profile=cat_profile)
+    
+    task_dict = {'vaccine_date':vaccine_date,
+                 'heart_warm_date':heart_warm_date,
+                 'litter_date':litter_date}
+    return crud_cat_profile.create_cat_profile(db=db,task_dict=task_dict, cat_profile=cat_profile)
 
 
 @router.put("/{cat_profile_id}", response_model=CatProfileResponse)

@@ -28,7 +28,7 @@ def get_non_daily_task_logs_by_cat_and_date(db: Session, cat_id: int, date: str)
     return db.query(NonDailyTaskLog).options(joinedload(NonDailyTaskLog.default_task)).filter(
         and_(NonDailyTaskLog.cat_id == cat_id, NonDailyTaskLog.date == target_date)
     ).all()
-
+    
 
 
 def create_non_daily_task_log(db: Session, non_daily_task_log: NonDailyTaskLogCreate) -> NonDailyTaskLog:
