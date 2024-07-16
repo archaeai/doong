@@ -37,7 +37,7 @@ export default function ProfileSettings() {
   const handleUpdateCat = () => {
     updateCat(editCat.id, editCat)
       .then(() => {
-        console.log("Cat updated successfully");
+        console.log("Cat updated successfully", editCat);
         setIsEditing(false);
       })
       .catch((error) => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function useFilePreviewt() {
+export default function useFilePreview() {
   const [photoPreview, setPhotoPreview] = useState(null);
 
   const handleFilePreview = (event) => {

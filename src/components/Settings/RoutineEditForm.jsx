@@ -6,7 +6,6 @@ export default function RoutineEditForm({
   closeForm,
   updateDefaultTask,
 }) {
-  const { selectedCat } = useContext(CatContext);
   const [note, setNote] = useState(task.note || "");
   const [repeatInterval, setRepeatInterval] = useState(task.period_int || 1);
   const [periodType, setPeriodType] = useState(task.period_type || "D");

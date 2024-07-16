@@ -46,7 +46,7 @@ export default function CatAdditionalInfo({
         {errors.weight && <p className="control-error">{errors.weight}</p>}
       </div>
       <div>
-        <label htmlFor="weight">사진을 선택해주세요</label>
+        <label htmlFor="photo">사진을 선택해주세요</label>
         <input
           id="photo"
           type="file"

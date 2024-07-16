@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import useFilePreview from "../../hooks/useFilePreview";
 
-export default function ProfileEditForm({ cat = {}, isEditing, onChange }) {
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    onChange((prevCat) => ({ ...prevCat, [name]: value }));
+export default function ProfileEditForm({ cat, isEditing, onChange }) {
+  const { photoPreview, handleFilePreview } = useFilePreview();
+
+  const handleInputChange = async (e) => {
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      const file = files[0];
+      onChange((prevCat) => ({
+        ...prevCat,
+        [name]: file,
+      }));
+      handleFilePreview(e);
+    } else {
+      onChange((prevCat) => ({ ...prevCat, [name]: value }));
+    }
   };
 
   const handleCheckboxChange = (e) => {
@@ -11,86 +23,30 @@ export default function ProfileEditForm({ cat = {}, isEditing, onChange }) {
     onChange((prevCat) => ({ ...prevCat, [name]: checked }));
   };
 
+  const renderInputField = (label, name, type = "text", value = "") => (
+    <li className="profile-settings-content__li">
+      <label className="profile-settings-content__label">{label}:</label>
+      {isEditing ? (
+        <input
+          type={type}
+          name={name}
+          value={value}
+          onChange={handleInputChange}
+        />
+      ) : (
+        <span>{value}</span>
+      )}
+    </li>
+  );
+
   return (
     <ul className="profile-settings-content__ul">
-      <li className="profile-settings-content__li">
-        <label className="profile-settings-content__label">이름:</label>
-        {isEditing ? (
-          <input
-            type="text"
-            name="name"
-            value={cat.name}
-            onChange={handleInputChange}
-          />
-        ) : (
-          <span>{cat.name}</span>
-        )}
-      </li>
-      <li className="profile-settings-content__li">
-        <label className="profile-settings-content__label">품종:</label>
-        {isEditing ? (
-          <input
-            type="text"
-            name="breed"
-            value={cat.breed}
-            onChange={handleInputChange}
-          />
-        ) : (
-          <span>{cat.breed}</span>
-        )}
-      </li>
-      <li className="profile-settings-content__li">
-        <label className="profile-settings-content__label">체중:</label>
-        {isEditing ? (
-          <input
-            type="text"
-            name="weight"
-            value={cat.weight}
-            onChange={handleInputChange}
-          />
-        ) : (
-          <span>{cat.weight}</span>
-        )}
-      </li>
-      <li className="profile-settings-content__li">
-        <label className="profile-settings-content__label">성별:</label>
-        {isEditing ? (
-          <input
-            type="text"
-            name="gender"
-            value={cat.gender}
-            onChange={handleInputChange}
-          />
-        ) : (
-          <span>{cat.gender}</span>
-        )}
-      </li>
-      <li className="profile-settings-content__li">
-        <label className="profile-settings-content__label">생일:</label>
-        {isEditing ? (
-          <input
-            type="date"
-            name="birthday"
-            value={cat.birthday}
-            onChange={handleInputChange}
-          />
-        ) : (
-          <span>{cat.birthday}</span>
-        )}
-      </li>
-      <li className="profile-settings-content__li">
-        <label className="profile-settings-content__label">입양일:</label>
-        {isEditing ? (
-          <input
-            type="date"
-            name="adopted_day"
-            value={cat.adopted_day}
-            onChange={handleInputChange}
-          />
-        ) : (
-          <span>{cat.adopted_day}</span>
-        )}
-      </li>
+      {renderInputField("이름", "name", "text", cat.name)}
+      {renderInputField("품종", "breed", "text", cat.breed)}
+      {renderInputField("체중", "weight", "text", cat.weight)}
+      {renderInputField("성별", "gender", "text", cat.gender)}
+      {renderInputField("생일", "birthday", "date", cat.birthday)}
+      {renderInputField("입양일", "adopted_day", "date", cat.adopted_day)}
       <li className="profile-settings-content__li">
         <label className="profile-settings-content__label">중성화:</label>
         {isEditing ? (
@@ -102,6 +58,31 @@ export default function ProfileEditForm({ cat = {}, isEditing, onChange }) {
           />
         ) : (
           <span>{cat.neutered ? "수술함" : "수술안함"}</span>
+        )}
+      </li>
+      <li className="profile-settings-content__li">
+        <label htmlFor="photo" className="profile-settings-content__label">
+          사진:
+        </label>
+        {isEditing ? (
+          <>
+            <input
+              id="photo"
+              type="file"
+              name="photo"
+              accept="image/*"
+              onChange={handleInputChange}
+            />
+            {photoPreview && (
+              <img
+                src={photoPreview}
+                alt="Preview"
+                style={{ width: "100px", height: "100px" }}
+              />
+            )}
+          </>
+        ) : (
+          <span>{cat.photo_url}</span>
         )}
       </li>
     </ul>
