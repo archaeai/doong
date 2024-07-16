@@ -69,7 +69,6 @@ class DiaryBase(BaseModel):
     photo_url : Optional[str] = None
 
 class DiaryCreate(DiaryBase):
-    user_id: str
     cat_id: int
 
 class DiaryUpdate(DiaryBase):
@@ -77,7 +76,6 @@ class DiaryUpdate(DiaryBase):
 
 class DiaryResponse(DiaryBase):
     id: int
-    user_id: str
     cat_id: int
 
     class Config:

@@ -9,8 +9,6 @@ class User(Base):
     user_id = Column(String, primary_key=True, nullable=False)
     password = Column(String, nullable=False, comment='해쉬 암호화해서 저장')
     cat_profiles = relationship('CatProfile', back_populates='user')
-    diaries = relationship('Diary', back_populates='user')
-
 
 class CatProfile(Base):
     __tablename__ = 'cat_profile'
@@ -53,8 +51,6 @@ class Diary(Base):
     comment = Column(Text, nullable=True)
     photo_url = Column(String, nullable=True)
     
-    user_id = Column(String, ForeignKey('user.user_id'), nullable=False)
-    user = relationship('User', back_populates='diaries')
     cat_profile = relationship('CatProfile', back_populates='diary')
     
 

@@ -48,7 +48,6 @@ def create_test_data(db: Session):
         abnomal_act = "없음",
         note = "강씨 방문",
         comment = "까칠",
-        user=user1,
         cat_profile = cat1,
         photo_url = ''
     )
