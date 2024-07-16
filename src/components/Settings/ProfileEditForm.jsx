@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
-import useFilePreview from "../../hooks/useFilePreview";
-
-export default function ProfileEditForm({ cat, isEditing, onChange }) {
-  const { photoPreview, handleFilePreview } = useFilePreview();
-
+export default function ProfileEditForm({
+  cat,
+  isEditing,
+  onChange,
+  handleFilePreview,
+}) {
   const handleInputChange = async (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
@@ -41,6 +41,20 @@ export default function ProfileEditForm({ cat, isEditing, onChange }) {
 
   return (
     <ul className="profile-settings-content__ul">
+      {isEditing && (
+        <li className="profile-settings-content__li">
+          <label htmlFor="photo" className="profile-settings-content__label">
+            사진:
+          </label>
+          <input
+            id="photo"
+            type="file"
+            name="photo"
+            accept="image/*"
+            onChange={handleInputChange}
+          />
+        </li>
+      )}
       {renderInputField("이름", "name", "text", cat.name)}
       {renderInputField("품종", "breed", "text", cat.breed)}
       {renderInputField("체중", "weight", "text", cat.weight)}
@@ -58,31 +72,6 @@ export default function ProfileEditForm({ cat, isEditing, onChange }) {
           />
         ) : (
           <span>{cat.neutered ? "수술함" : "수술안함"}</span>
-        )}
-      </li>
-      <li className="profile-settings-content__li">
-        <label htmlFor="photo" className="profile-settings-content__label">
-          사진:
-        </label>
-        {isEditing ? (
-          <>
-            <input
-              id="photo"
-              type="file"
-              name="photo"
-              accept="image/*"
-              onChange={handleInputChange}
-            />
-            {photoPreview && (
-              <img
-                src={photoPreview}
-                alt="Preview"
-                style={{ width: "100px", height: "100px" }}
-              />
-            )}
-          </>
-        ) : (
-          <span>{cat.photo_url}</span>
         )}
       </li>
     </ul>

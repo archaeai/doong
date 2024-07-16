@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { CatContext } from "../../contexts/CatContext";
-import catImg from "../../assets/cat-image.png";
+import defaultCatImg from "../../assets/cat-image.png";
 import ProfileEditForm from "./ProfileEditForm";
 import CatSelect from "../../UI/CatSelect";
+import useFilePreview from "../../hooks/useFilePreview";
 
 export default function ProfileSettings() {
   const {
@@ -16,7 +17,7 @@ export default function ProfileSettings() {
     updateCat,
     deleteCat,
   } = useContext(CatContext);
-
+  const { photoPreview, handleFilePreview } = useFilePreview();
   const [isEditing, setIsEditing] = useState(false);
   const [editCat, setEditCat] = useState({});
 
@@ -55,6 +56,11 @@ export default function ProfileSettings() {
       });
   };
 
+  const handleCancelEdit = () => {
+    setEditCat(selectedCat);
+    setIsEditing(false);
+  };
+
   if (isLoading) {
     return <div>Loading cat profiles...</div>;
   }
@@ -73,28 +79,38 @@ export default function ProfileSettings() {
         <CatSelect />
         <div>
           {isEditing ? (
-            <button
-              className="profile-settings-header__edit"
-              onClick={handleUpdateCat}
-            >
-              저장
-            </button>
+            <>
+              <button
+                className="profile-settings-header__edit"
+                onClick={handleUpdateCat}
+              >
+                저장
+              </button>
+              <button
+                className="profile-settings-header__delete"
+                onClick={handleCancelEdit}
+              >
+                취소
+              </button>
+            </>
           ) : (
-            <button
-              className="profile-settings-header__edit"
-              onClick={() => setIsEditing(true)}
-              disabled={!selectedCat}
-            >
-              수정
-            </button>
+            <>
+              <button
+                className="profile-settings-header__edit"
+                onClick={() => setIsEditing(true)}
+                disabled={!selectedCat}
+              >
+                수정
+              </button>
+              <button
+                className="profile-settings-header__delete"
+                onClick={() => handleDeleteCat(selectedCat.id)}
+                disabled={!selectedCat}
+              >
+                삭제
+              </button>
+            </>
           )}
-          <button
-            className="profile-settings-header__delete"
-            onClick={() => handleDeleteCat(selectedCat.id)}
-            disabled={!selectedCat}
-          >
-            삭제
-          </button>
         </div>
       </div>
       {selectedCat ? (
@@ -103,9 +119,11 @@ export default function ProfileSettings() {
             <img
               className="profile-settings-content__heading-img"
               src={
-                selectedCat.photo_url
+                photoPreview
+                  ? photoPreview
+                  : selectedCat.photo_url
                   ? `backend/${selectedCat.photo_url}`
-                  : catImg
+                  : defaultCatImg
               }
               alt={selectedCat.name}
             />
@@ -115,6 +133,8 @@ export default function ProfileSettings() {
             cat={editCat}
             isEditing={isEditing}
             onChange={setEditCat}
+            photoPreview={photoPreview}
+            handleFilePreview={handleFilePreview}
           />
         </section>
       ) : (
