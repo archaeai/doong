@@ -27,9 +27,6 @@ class CatProfileBase(BaseModel):
     gender: str
     birthday: Optional[date]
     adopted_day: Optional[date]
-    vaccine_date: Optional[date]
-    heart_warm_date: Optional[date]
-    litter_date: Optional[date]
     neutered: Optional[bool]
     weight: Optional[float]
     photo_url: Optional[str]
@@ -69,7 +66,6 @@ class DiaryBase(BaseModel):
     photo_url : Optional[str] = None
 
 class DiaryCreate(DiaryBase):
-    user_id: str
     cat_id: int
 
 class DiaryUpdate(DiaryBase):
@@ -77,7 +73,6 @@ class DiaryUpdate(DiaryBase):
 
 class DiaryResponse(DiaryBase):
     id: int
-    user_id: str
     cat_id: int
 
     class Config:

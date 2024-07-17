@@ -18,9 +18,6 @@ def get_diaries_by_user_and_date(db: Session, cat_id: int, date: str) -> List[Di
 
 def create_diary(db: Session, diary: DiaryCreate) -> Diary:
     diary_data = diary.dict()
-    # 날짜를 "YYYY-MM-DD" 형식으로 변환
-    if diary_data["date"]:
-        diary_data["date"] = datetime.strptime(diary_data["date"], "%Y-%m-%d").date()
     db_diary = Diary(**diary_data)
     db.add(db_diary)
     db.commit()
@@ -28,13 +25,16 @@ def create_diary(db: Session, diary: DiaryCreate) -> Diary:
     return db_diary
 
 
-def update_diary(db: Session, diary_id: int, diary: DiaryUpdate) -> Optional[Diary]:
+def update_diary(db: Session, diary_id: int, diary_data: dict):
     db_diary = db.query(Diary).filter(Diary.id == diary_id).first()
-    if db_diary:
-        for key, value in diary.dict(exclude_unset=True).items():
-            setattr(db_diary, key, value)
-        db.commit()
-        db.refresh(db_diary)
+    if not db_diary:
+        return None
+
+    for key, value in diary_data.items():
+        setattr(db_diary, key, value)
+
+    db.commit()
+    db.refresh(db_diary)
     return db_diary
 
 

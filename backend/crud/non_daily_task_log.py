@@ -28,7 +28,7 @@ def get_non_daily_task_logs_by_cat_and_date(db: Session, cat_id: int, date: str)
     return db.query(NonDailyTaskLog).options(joinedload(NonDailyTaskLog.default_task)).filter(
         and_(NonDailyTaskLog.cat_id == cat_id, NonDailyTaskLog.date == target_date)
     ).all()
-
+    
 
 
 def create_non_daily_task_log(db: Session, non_daily_task_log: NonDailyTaskLogCreate) -> NonDailyTaskLog:
@@ -81,10 +81,12 @@ def delete_non_daily_task_log(db: Session, non_daily_task_log_id: int) -> Option
     return db_non_daily_task_log
 
 def get_upcoming_non_daily_task_logs(db: Session, cat_id: int) -> List[NonDailyTaskLog]:
-    today = date.today()
+    seoul_tz = pytz.timezone('Asia/Seoul')
+    today_seoul = datetime.now(seoul_tz).date()
+
     return db.query(NonDailyTaskLog)\
              .filter(and_(NonDailyTaskLog.cat_id == cat_id, 
-                          NonDailyTaskLog.date >= today, 
+                          NonDailyTaskLog.date > today_seoul,  # 오늘을 제외하고 필터링
                           NonDailyTaskLog.done == False))\
              .order_by(NonDailyTaskLog.date)\
              .limit(3)\

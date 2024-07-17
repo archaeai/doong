@@ -26,9 +26,6 @@ def create_test_data(db: Session):
         gender="Male",
         birthday=date(2022, 7, 20),
         adopted_day=date(2021, 6, 15),
-        vaccine_date=date(2021, 6, 15),
-        heart_warm_date=date(2021, 6, 15),
-        litter_date=date(2021, 6, 15),
         neutered=True,
         weight=6.5,
         user=user1
@@ -48,7 +45,6 @@ def create_test_data(db: Session):
         abnomal_act = "없음",
         note = "강씨 방문",
         comment = "까칠",
-        user=user1,
         cat_profile = cat1,
         photo_url = ''
     )
@@ -127,7 +123,7 @@ def create_test_data(db: Session):
         period_type="W",
         period_int=1,
         cat_id =0,
-        note="모래"
+        note="모래갈이"
     ) 
     tz = pytz.timezone('Asia/Seoul')
     # 일일 작업 로그 생성
@@ -231,7 +227,7 @@ def create_test_data(db: Session):
     )
 
     # 데이터베이스에 추가
-    db.add_all([user1, cat1, diary1, vaccine_task, heartworm_task, task1, task2, task3,task4,task5,task6,task7,task8,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1, non_daily_task_log2])
+    db.add_all([user1, cat1, diary1, vaccine_task, heartworm_task, task1, task2, task3,task4,task5,task6,task7,task8,task10,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1, non_daily_task_log2])
     db.commit()
 
 # 세션 생성 및 테스트 데이터 생성 함수 호출
