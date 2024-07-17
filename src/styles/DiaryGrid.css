@@ -5,7 +5,7 @@
   gap: 0; /* 셀 사이 간격 제거 */
   width: 100%;
   height: auto;
-  aspect-ratio: 11 / 11; /* 11열과 11행의 비율 유지 */
+  aspect-ratio: 11 / 13; /* 11열과 11행의 비율 유지 */
   border: 1px solid var(--color-grey); /* 테두리 추가 */
 }
 

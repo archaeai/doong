@@ -24,16 +24,10 @@ export default function DiaryPage() {
   } = useContext(DiaryContext);
 
   useEffect(() => {
-    if (selectedCat) {
-      fetchDiariesByCat(selectedCat.id);
+    if (selectedCat && currentDate) {
+      fetchDiaryByCatAndDate(selectedCat.id, currentDate);
     }
-  }, [selectedCat]);
-
-  // useEffect(() => {
-  //   if (selectedCat) {
-  //     fetchDiaryByCatAndDate(selectedCat.id, currentDate);
-  //   }
-  // }, []);
+  }, [selectedCat, currentDate]);
 
   return (
     <>
