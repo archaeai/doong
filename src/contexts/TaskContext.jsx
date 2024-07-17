@@ -85,11 +85,11 @@ export const TaskProvider = ({ children }) => {
 
   //오늘 할일 삭제
   const deleteTodayTask = useCallback(
-    async (id) => {
+    async (taskId) => {
       try {
-        await taskApi.deleteTodayTask(id);
-        setTodayTasks(todayTasks.filter((task) => task.id !== id));
-        console.log("Deleted task with id:", id);
+        await taskApi.deleteTodayTask(taskId);
+        setTodayTasks(todayTasks.filter((task) => task.task_id !== taskId));
+        console.log("Deleted task with id:", taskId);
       } catch (error) {
         console.error("Failed to delete task", error);
       }

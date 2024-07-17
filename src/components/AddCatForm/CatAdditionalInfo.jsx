@@ -1,9 +1,14 @@
 import RadioButton from "../../UI/RadioButton";
-import { genderOptions, neuteredOptions } from "../../utils/formOptions";
+import {
+  genderOptions,
+  neuteredOptions,
+  stickerOptions,
+} from "../../utils/formOptions";
 
 export default function CatAdditionalInfo({
   catData,
   handleChange,
+  handleStickerChange,
   handlePrevStep,
   handleNextStep,
   photoPreview,
@@ -64,6 +69,13 @@ export default function CatAdditionalInfo({
         )}
         {errors.photo && <p className="control-error">{errors.photo}</p>}
       </div>
+      <RadioButton
+        label="스티커를 선택해주세요"
+        name="sticker"
+        options={stickerOptions}
+        onChange={handleStickerChange}
+        selectedValue={catData.sticker}
+      />
       <div className="add-cat-form-button-container">
         <button type="button" onClick={handlePrevStep}>
           이전

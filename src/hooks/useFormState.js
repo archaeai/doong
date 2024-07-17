@@ -5,6 +5,7 @@ export default function useFormState(initialState, validateStep) {
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
   const [photoPreview, setPhotoPreview] = useState(null);
+  const [sticker, setSticker] = useState("none");
 
   const handleChange = (event) => {
     const { name, value, type, files } = event.target;
@@ -30,10 +31,21 @@ export default function useFormState(initialState, validateStep) {
     }));
   };
 
+  const handlStickerChange = (event) => {
+    setSticker(event.target.value);
+    setFormData((prevData) => ({
+      ...prevData,
+      sticker: event.target.value,
+    }));
+  };
+
   const resetForm = () => {
     setFormData(initialState);
     setStep(1);
     setErrors({});
+    setPhotoPreview(null);
+    setSticker(null);
+    setSticker("none");
   };
 
   const validateForm = () => {
@@ -53,7 +65,7 @@ export default function useFormState(initialState, validateStep) {
   const handleSubmit = (event, submitCallback) => {
     event.preventDefault();
     if (validateForm()) {
-      submitCallback(formData);
+      submitCallback({ ...formData, sticker });
       resetForm();
     }
   };
@@ -62,6 +74,7 @@ export default function useFormState(initialState, validateStep) {
     formData,
     handleChange,
     handleSelectChange,
+    handlStickerChange,
     step,
     resetForm,
     errors,
@@ -69,5 +82,6 @@ export default function useFormState(initialState, validateStep) {
     handlePrevStep,
     handleSubmit,
     photoPreview,
+    sticker,
   };
 }

@@ -17,6 +17,7 @@ const initialState = {
   neutered: null,
   weight: "",
   photo: null,
+  sticker: "none",
   vaccinationDate: "",
   heartwormDate: "",
   litterDate: "",
@@ -28,6 +29,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
     formData: catData,
     handleChange,
     handleSelectChange,
+    handlStickerChange,
     step,
     resetForm,
     errors,
@@ -35,6 +37,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
     handlePrevStep,
     handleSubmit,
     photoPreview,
+    sticker,
   } = useFormState(initialState, validateCatForm);
 
   useEffect(() => {
@@ -45,7 +48,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
 
   const handleAddCat = (data) => {
     try {
-      const newCat = addCat(data);
+      const newCat = addCat(data, sticker);
       resetForm();
       closeModal();
       console.log("Submitted Data:", data);
@@ -71,6 +74,7 @@ export default function AddCatForm({ isOpen, closeModal }) {
           <CatAdditionalInfo
             catData={catData}
             handleChange={handleChange}
+            handleStickerChange={handlStickerChange}
             handlePrevStep={handlePrevStep}
             handleNextStep={handleNextStep}
             photoPreview={photoPreview}

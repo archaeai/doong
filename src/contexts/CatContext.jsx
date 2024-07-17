@@ -41,12 +41,13 @@ export const CatProvider = ({ children }) => {
     }
   }, []);
 
-  const addCat = useCallback(async (catData) => {
+  const addCat = useCallback(async (catData, sticker) => {
     setIsLoading(true);
     setIsError(false);
     setErrorMessage("");
     try {
-      const newCat = await addCatProfileApi(catData);
+      console.log("catData:", catData);
+      const newCat = await addCatProfileApi(catData, sticker);
       console.log("New Cat added:", newCat);
       setCats((prevCats) => {
         const updatedCats = [...prevCats, newCat];

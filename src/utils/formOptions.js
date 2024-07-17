@@ -8,6 +8,12 @@ export const neuteredOptions = [
   { value: "false", label: "수술안함" },
 ];
 
+export const stickerOptions = [
+  { value: "none", label: "선택안함" },
+  { value: "happy", label: "행복" },
+  { value: "sad", label: "슬픔" },
+];
+
 export const moodOptions = [
   { value: "행복", label: "행복" },
   { value: "스트레스", label: "스트레스" },
