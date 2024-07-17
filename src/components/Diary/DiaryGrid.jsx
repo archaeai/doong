@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import "../../styles/DiaryGrid.css";
-import { CatContext } from "../../contexts/CatContext";
 import {
   getMoodMessage,
   getActivityMessage,
@@ -8,8 +6,7 @@ import {
   getPCondMessage,
 } from "../../utils/diaryMessage";
 
-export default function DiaryGrid({ diaryData }) {
-  const { selectedCat } = useContext(CatContext);
+export default function DiaryGrid({ selectedCat, diaryData }) {
   const {
     date = "",
     note = "",
@@ -77,9 +74,11 @@ export default function DiaryGrid({ diaryData }) {
       }는 ${moodMessage} ${activityMessage} ${portionMessage} ${additionalMessages.join(
         " "
       )}`
-    : "아직 작성된 일기가 없습니다.";
+    : "아직 작성된 일기가 없어요. 일기를 추가해주세요.";
 
-  const gridItems = Array.from({ length: 143 }, (_, index) => {
+  const gridLength = diaryData ? 143 : 143;
+
+  const gridItems = Array.from({ length: gridLength }, (_, index) => {
     const char = message[index] || ""; // 이름의 각 글자를 순서대로 가져옴, 없으면 빈 문자열
     return (
       <div key={index} className="grid-item">

@@ -47,7 +47,7 @@ export default function DiaryPage() {
               alt="diary illustration"
               className="diary-illustration"
             />
-            {/* <p>오늘의 둥이</p> */}
+            <p className="diary-name">{selectedCat.name}의 일기</p>
           </div>
         </div>
         <div className="divider"></div>
@@ -57,7 +57,10 @@ export default function DiaryPage() {
           ) : isError ? (
             <p>Error...</p>
           ) : (
-            <DiaryGrid diaryData={diaryEntries[0] || null} />
+            <DiaryGrid
+              selectedCat={selectedCat}
+              diaryData={diaryEntries[0] || null}
+            />
           )}
         </div>
 
