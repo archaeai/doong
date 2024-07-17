@@ -97,8 +97,8 @@ export const updateTodayTask = async (id, taskLogData) => {
   return response.data;
 };
 
-export const deleteTodayTask = async (id) => {
-  const response = await apiClient.delete(`/daily_task_log/${id}`);
+export const deleteTodayTask = async (task_id) => {
+  const response = await apiClient.delete(`/daily_task_log/${task_id}`);
   return response.data;
 };
 

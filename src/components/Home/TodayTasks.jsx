@@ -20,12 +20,12 @@ export default function todayTasks({ cat }) {
     }
   }, [cat, fetchTodayTasks]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (taskId) => {
     try {
-      await deleteTodayTask(id);
-      console.log(`Task with id ${id} has been deleted`);
+      await deleteTodayTask(taskId);
+      console.log(`Task with task_id ${taskId} has been deleted`);
     } catch (error) {
-      console.error(`Failed to delete task with id ${id}: `, error);
+      console.error(`Failed to delete task with id ${taskId}: `, error);
     }
   };
 
@@ -59,7 +59,7 @@ export default function todayTasks({ cat }) {
             {todo.task_id === 0 && (
               <button
                 className="todo-delete"
-                onClick={() => handleDelete(todo.id)}
+                onClick={() => handleDelete(todo.task_id)}
               >
                 삭제
               </button>
