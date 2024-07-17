@@ -4,8 +4,8 @@ import { DiaryContext } from "../contexts/DiaryContext";
 
 import useModal from "../hooks/useModal";
 import useCurrentDate from "../hooks/useCurrentDate";
-
-import DiaryForm from "../components/DiaryForm";
+import DiaryGrid from "../components/Diary/DiaryGrid";
+import DiaryForm from "../components/Diary/DiaryForm";
 import Modal from "../UI/Modal";
 import diaryDefaultImg from "../assets/diary-default-image.png";
 import CatSelect from "../UI/CatSelect";
@@ -43,22 +43,28 @@ export default function DiaryPage() {
           <h2 className="add-diary-heading" onClick={openModal}>
             일기쓰기
           </h2>
-          <CatSelect />
-          <input type="date" name="adoptDate" />
+          <div className="diary-select-container">
+            <CatSelect />
+            <input type="date" name="adoptDate" className="diary-date-input" />
+          </div>
           <div className="diary-illustration-area">
             <img
               src={diaryDefaultImg}
               alt="diary illustration"
               className="diary-illustration"
             />
-            <p>오늘의 둥이</p>
+            {/* <p>오늘의 둥이</p> */}
           </div>
         </div>
         <div className="divider"></div>
         <div className="diary-text-area">
-          <p className="no-diary-message">아직 작성된 일기가 없습니다.</p>
-          <br />
-          <p>오늘의 일기를 작성해 보세요!</p>
+          {isLoading ? (
+            <p>다이어리 불러오는중...</p>
+          ) : isError ? (
+            <p>Error...</p>
+          ) : (
+            <DiaryGrid diaryData={diaryEntries[0] || null} />
+          )}
         </div>
 
         <Modal isOpen={isModalOpen} onClose={closeModal}>

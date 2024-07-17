@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import useFormState from "../hooks/useFormState";
-import { DiaryContext } from "../contexts/DiaryContext";
-import RadioButton from "../UI/RadioButton";
-import { validateDiaryForm } from "../utils/validation";
+import useFormState from "../../hooks/useFormState";
+import { DiaryContext } from "../../contexts/DiaryContext";
+import RadioButton from "../../UI/RadioButton";
+import { validateDiaryForm } from "../../utils/validation";
 import {
   moodOptions,
   activityOptions,
@@ -12,8 +12,8 @@ import {
   peeCountOptions,
   peeSizeOptions,
   symptomOptions,
-} from "../utils/formOptions";
-import "../styles/DiaryForm.css";
+} from "../../utils/formOptions";
+import "../../styles/DiaryForm.css";
 
 const DiaryForm = ({ closeModal }) => {
   const { addDiaryEntry } = useContext(DiaryContext);
