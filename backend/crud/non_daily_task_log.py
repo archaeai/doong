@@ -2,13 +2,13 @@
 from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
 
-from sqlalchemy import and_
+from sqlalchemy import and_, func
 from sqlalchemy.orm import Session, joinedload
 from typing import List, Optional
 from backend.models import NonDailyTaskLog, DefaultTask
 from backend.schemas import NonDailyTaskLogCreate, NonDailyTaskLogUpdate
 import pytz
-
+from fastapi import APIRouter, Depends, HTTPException, status
 
 
 
@@ -75,6 +75,9 @@ Optional[NonDailyTaskLog]:
 
 def delete_non_daily_task_log(db: Session, non_daily_task_log_id: int) -> Optional[NonDailyTaskLog]:
     db_non_daily_task_log = db.query(NonDailyTaskLog).filter(NonDailyTaskLog.id == non_daily_task_log_id).first()
+    max_id = db.query(func.max(DefaultTask.id)).filter(DefaultTask.cat_id == 0).scalar()
+    if max_id and max_id >= non_daily_task_log_id and non_daily_task_log_id >0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="기본업무는 삭제할 수 없습니다.")
     if db_non_daily_task_log:
         db.delete(db_non_daily_task_log)
         db.commit()
