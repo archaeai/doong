@@ -1,28 +1,78 @@
 import axios from "axios";
+import { getToken } from "./userApi";
 
-const API_URL = "http://your-backend-url/api/diary/";
+const API_BASE_URL = "http://127.0.0.1/api";
 
-export const getDiariesByUser = async (userId) => {
-  const response = await axios.get(`${API_URL}user/${userId}`);
-  return response.data;
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+const handleError = (error) => {
+  console.error(error);
+  throw new Error(
+    error.response ? error.response.data.message : "Network Error"
+  );
 };
 
-export const getDiariesByUserAndDate = async (userId, date) => {
-  const response = await axios.get(`${API_URL}user/${userId}/date/${date}`);
-  return response.data;
+export const getDiariesByCat = async (catId, skip = 0, limit = 10) => {
+  try {
+    const response = await apiClient.get(`/diary/cat/${catId}`, {
+      params: { skip, limit },
+    });
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getDiaryByCatAndDate = async (catId, date) => {
+  try {
+    const response = await apiClient.get(`/diary/cat/${catId}/date/${date}`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
 };
 
 export const createDiary = async (diary) => {
-  const response = await axios.post(API_URL, diary);
-  return response.data;
+  try {
+    const response = await apiClient.post("/diary/", diary);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
 };
 
 export const updateDiary = async (diaryId, diary) => {
-  const response = await axios.put(`${API_URL}${diaryId}`, diary);
-  return response.data;
+  try {
+    const response = await apiClient.put(`/diary/${diaryId}`, diary);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
 };
 
 export const deleteDiary = async (diaryId) => {
-  const response = await axios.delete(`${API_URL}${diaryId}`);
-  return response.data;
+  try {
+    const response = await apiClient.delete(`/diary/${diaryId}`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
 };
