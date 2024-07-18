@@ -17,9 +17,9 @@ body {
 :root {
   --color-grey: #808080;
   --color-navy: #2c3e50;
-  --color-blue: #add8e6;
+  --color-blue: #bde0fe;
   --color-mint: #dff0e6;
-  --color-pink: #ffc0cb;
+  --color-pink: #ffc8dd;
   --color-maroon: #b03060;
   --color-green: #a8c686;
   --color-yellow1: #fffae2;
@@ -195,5 +195,6 @@ h1 {
     position: relative;
     margin: 0 2% 2% 2%;
     padding: 1.25rem;
+    z-index: 10;
   }
 }
