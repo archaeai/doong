@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form } from "react-router-dom";
-import useCurrentDate from "../hooks/useCurrentDate";
+import { getFormattedCurrentDate } from "../utils/dateUtil";
 import UserSettings from "../components/Settings/UserSettings";
 import ProfileSettings from "../components/Settings/ProfileSettings";
 import RoutineSettings from "../components/Settings/RoutineSettings";
@@ -8,7 +8,6 @@ import "../styles/Settings.css";
 
 export default function SettingsPage() {
   const [selectedMenu, setSelectedMenu] = useState("userSettings");
-  const currentDate = useCurrentDate();
 
   const renderContent = () => {
     switch (selectedMenu) {
@@ -25,7 +24,7 @@ export default function SettingsPage() {
 
   return (
     <>
-      <h1>{currentDate}</h1>
+      <h1>{getFormattedCurrentDate()}</h1>
 
       <div className="page-content settings-page-content">
         <aside className="sidebar">

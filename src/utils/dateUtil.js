@@ -17,6 +17,15 @@ export const formatDate = (date) => {
   return `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
 };
 
+// 년도를 포함하지 않은 날짜 포맷 함수
+export const formatDateWithoutYear = (date) => {
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const dayOfWeek = daysOfWeek[date.getDay()];
+
+  return `${month}월 ${day}일 (${dayOfWeek})`;
+};
+
 // 요일을 포함하지 않은 날짜 포맷 함수
 export const formatDateWithoutDay = (date) => {
   const year = date.getFullYear();
@@ -30,6 +39,12 @@ export const formatDateWithoutDay = (date) => {
 export const formatServerDate = (serverDate) => {
   const date = new Date(serverDate);
   return formatDateWithoutDay(date);
+};
+
+// 서버에서 받은 날짜 데이터를 포맷하는 함수(년도 제외)
+export const formatServerDateWithoutYear = (serverDate) => {
+  const date = new Date(serverDate);
+  return formatDateWithoutYear(date);
 };
 
 // 현재 날짜 가져오기

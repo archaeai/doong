@@ -1,19 +1,22 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { CatContext } from "../contexts/CatContext";
 import { DiaryContext } from "../contexts/DiaryContext";
 
 import useModal from "../hooks/useModal";
-import useCurrentDate from "../hooks/useCurrentDate";
 import DiaryGrid from "../components/Diary/DiaryGrid";
 import DiaryForm from "../components/Diary/DiaryForm";
+import {
+  formatServerDateWithoutYear,
+  getFormattedCurrentDate,
+  getCurrentLocalISODateString,
+} from "../utils/dateUtil";
 import Modal from "../UI/Modal";
-import diaryDefaultImg from "../assets/diary-default-image.png";
 import CatSelect from "../UI/CatSelect";
+import diaryDefaultImg from "../assets/diary-default-image.png";
 import "../styles/Diary.css";
 
 export default function DiaryPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
-  const currentDate = useCurrentDate();
   const { selectedCat } = useContext(CatContext);
   const {
     fetchDiaryByCatAndDate,
@@ -22,16 +25,23 @@ export default function DiaryPage() {
     isLoading,
     isError,
   } = useContext(DiaryContext);
+  const [selectedDate, setSelectedDate] = useState(
+    getCurrentLocalISODateString()
+  );
 
   useEffect(() => {
-    if (selectedCat && currentDate) {
-      fetchDiaryByCatAndDate(selectedCat.id, currentDate);
+    if (selectedCat && selectedDate) {
+      fetchDiaryByCatAndDate(selectedCat.id, selectedDate);
     }
-  }, [selectedCat, currentDate]);
+  }, [selectedCat, selectedDate]);
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
 
   return (
     <>
-      <h1>{currentDate}</h1>
+      <h1>{getFormattedCurrentDate()}</h1>
       <div className="page-content">
         <div className="diary-right-side">
           <h2 className="add-diary-heading" onClick={openModal}>
@@ -39,7 +49,13 @@ export default function DiaryPage() {
           </h2>
           <div className="diary-select-container">
             <CatSelect />
-            <input type="date" name="adoptDate" className="diary-date-input" />
+            <input
+              type="date"
+              name="adoptDate"
+              className="diary-date-input"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
           </div>
           <div className="diary-illustration-area">
             <img
@@ -48,9 +64,11 @@ export default function DiaryPage() {
               className="diary-illustration"
             />
             <p className="diary-name">
-              {selectedCat
-                ? `${selectedCat.name}의 일기`
-                : "고양이를 선택해주세요"}
+              {selectedCat && diaryEntries[0]
+                ? `${formatServerDateWithoutYear(diaryEntries[0].date)} ${
+                    selectedCat.name
+                  }의 일기`
+                : "다른 날짜를 선택해주세요"}
               {/* // {diaryEntries.date}
               // {selectedCat.name}의 일기 */}
             </p>

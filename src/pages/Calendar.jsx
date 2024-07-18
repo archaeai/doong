@@ -1,11 +1,14 @@
 import { useState, useContext, useEffect } from "react";
 import Calendar from "react-calendar";
 import useModal from "../hooks/useModal";
-import useCurrentDate from "../hooks/useCurrentDate";
 import Modal from "../UI/Modal";
 import AddEventForm from "../components/Calendar/AddEventForm";
 import EventListModal from "../components/Calendar/EventListModal";
-import { getLocalISODateString, getDateRange } from "../utils/dateUtil";
+import {
+  getFormattedCurrentDate,
+  getLocalISODateString,
+  getDateRange,
+} from "../utils/dateUtil";
 import { CatContext } from "../contexts/CatContext";
 import { TaskContext } from "../contexts/TaskContext";
 import "react-calendar/dist/Calendar.css";
@@ -24,7 +27,6 @@ export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState("");
   const [isAddEvent, setIsAddEvent] = useState(false);
   const { minDate, maxDate } = getDateRange(5);
-  const currentDate = useCurrentDate();
 
   const getEventClass = (catId) => {
     switch (catId) {
@@ -105,7 +107,7 @@ export default function CalendarPage() {
 
   return (
     <>
-      <h1>{currentDate}</h1>
+      <h1>{getFormattedCurrentDate()}</h1>
       <div className="page-content calendar-page-content">
         <div className="calendar-container">
           <span className="add-event-text" onClick={handleOpenAddEvent}>

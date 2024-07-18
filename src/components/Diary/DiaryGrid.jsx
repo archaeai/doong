@@ -24,8 +24,6 @@ export default function DiaryGrid({ selectedCat, diaryData }) {
     comment = "",
   } = diaryData || {};
 
-  const safeValue = (value) => value ?? "";
-
   const moodMessage = getMoodMessage(mood);
   const activityMessage = getActivityMessage(activity_level);
   const portionMessage = getPortionMessage(portion_status);
@@ -78,16 +76,21 @@ export default function DiaryGrid({ selectedCat, diaryData }) {
     additionalMessages.push(message);
   }
 
-  if (comment) {
-    additionalMessages.push(`추가로 ${comment}`);
+  if (note) {
+    additionalMessages.push(`추가로 ${note}.`);
   }
 
+  const generateMessage = () => {
+    const baseMessage = `${
+      selectedCat.name
+    }는 ${moodMessage} ${activityMessage} ${portionMessage} ${additionalMessages.join(
+      " "
+    )}`;
+    return comment ? `${comment}, ${baseMessage}` : baseMessage;
+  };
+
   const message = diaryData
-    ? `${date} ${note}, ${
-        selectedCat.name
-      }는 ${moodMessage} ${activityMessage} ${portionMessage} ${additionalMessages.join(
-        " "
-      )}`
+    ? generateMessage()
     : "아직 작성된 일기가 없어요. 일기를 추가해주세요.";
 
   const gridLength = diaryData ? 143 : 143;

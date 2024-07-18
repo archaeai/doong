@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { CatContext } from "../contexts/CatContext";
 import useModal from "../hooks/useModal";
-import useCurrentDate from "../hooks/useCurrentDate";
+import { getFormattedCurrentDate } from "../utils/dateUtil";
 import AddHeader from "../components/Home/AddHeader";
 import CatProfile from "../components/Home/CatProfile";
 import RecentSchedule from "../components/Home/RecentSchedule";
@@ -14,7 +14,6 @@ import "../styles/Home.css";
 export default function HomePage() {
   const { cats, selectedCat, loadCats, selectCat } = useContext(CatContext);
   const { isModalOpen, openModal, closeModal } = useModal();
-  const currentDate = useCurrentDate();
 
   useEffect(() => {
     if (cats.length === 0) {
@@ -26,7 +25,7 @@ export default function HomePage() {
 
   return (
     <>
-      <h1>{currentDate}</h1>
+      <h1>{getFormattedCurrentDate()}</h1>
       <div className="page-content home-page-content">
         <div className="header-container">
           <div className="header-profile-container">
