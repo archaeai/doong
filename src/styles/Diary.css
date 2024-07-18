@@ -55,20 +55,57 @@
   border-top: 2px solid var(--color-grey);
 }
 
+.diary-grid-container {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr); /* 11열 고정 */
+  grid-auto-rows: 1fr; /* 각 셀이 정사각형을 유지하도록 행 높이 조정 */
+  gap: 0; /* 셀 사이 간격 제거 */
+  width: 100%;
+  height: auto;
+  aspect-ratio: 11 / 13; /* 11열과 11행의 비율 유지 */
+  border: 1px solid var(--color-grey); /* 테두리 추가 */
+  overflow-y: auto;
+}
+
+.grid-item {
+  box-sizing: border-box;
+  border: 1px solid var(--color-grey); /* 셀 테두리 */
+  background: transparent;
+  display: flex; /* Flexbox 사용 */
+  align-items: center; /* 세로 가운데 정렬 */
+  justify-content: center; /* 가로 가운데 정렬 */
+  font-size: 1.4rem; /* 글자 크기 조정 */
+  color: var(--color-navy);
+}
+
+.diary-grid-container {
+  border-collapse: collapse; /* 테두리 겹침 제거 */
+}
+
+.grid-item {
+  border-collapse: collapse; /* 테두리 겹침 제거 */
+}
+
 @media (min-width: 768px) {
+  .add-diary-heading {
+    margin: 0;
+  }
+
   .diary-right-side {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-around;
     width: 70%;
-  }
-  .add-diary-heading {
   }
 
   .diary-illustration-area {
-    margin-right: 20px;
-    height: 18rem;
+    min-height: 18rem;
     border: 2px solid var(--color-grey);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
   }
 
   .diary-illustration {
@@ -79,16 +116,32 @@
 
   .diary-text-area {
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.4rem;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .diary-grid-parant-container {
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: auto;
   }
 
-  .diary-text-area {
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 2%;
+  .diary-grid-container {
+    max-width: 31.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .add-diary-heading {
+    font-size: 2.188rem;
+  }
+
+  .grid-item {
+    font-size: 1.563rem;
+    color: var(--color-navy);
   }
 }

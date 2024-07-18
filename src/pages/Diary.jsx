@@ -18,13 +18,8 @@ import "../styles/Diary.css";
 export default function DiaryPage() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const { selectedCat } = useContext(CatContext);
-  const {
-    fetchDiaryByCatAndDate,
-    fetchDiariesByCat,
-    diaryEntries,
-    isLoading,
-    isError,
-  } = useContext(DiaryContext);
+  const { fetchDiaryByCatAndDate, diaryEntries, isLoading, isError } =
+    useContext(DiaryContext);
   const [selectedDate, setSelectedDate] = useState(
     getCurrentLocalISODateString()
   );
@@ -69,8 +64,6 @@ export default function DiaryPage() {
                     selectedCat.name
                   }의 일기`
                 : "다른 날짜를 선택해주세요"}
-              {/* // {diaryEntries.date}
-              // {selectedCat.name}의 일기 */}
             </p>
           </div>
         </div>

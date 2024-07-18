@@ -1,4 +1,3 @@
-import "../../styles/DiaryGrid.css";
 import {
   getJosa,
   getMoodMessage,
@@ -89,9 +88,7 @@ export default function DiaryGrid({ selectedCat, diaryData }) {
     return comment ? `${comment}, ${baseMessage}` : baseMessage;
   };
 
-  const message = diaryData
-    ? generateMessage()
-    : "아직 작성된 일기가 없어요. 일기를 추가해주세요.";
+  const message = diaryData ? generateMessage() : "오늘의 일기를 추가해주세요.";
 
   const gridLength = diaryData ? 143 : 143;
 
@@ -104,5 +101,9 @@ export default function DiaryGrid({ selectedCat, diaryData }) {
     );
   });
 
-  return <div className="diary-grid-container">{gridItems}</div>;
+  return (
+    <div className="diary-grid-parant-container">
+      <div className="diary-grid-container">{gridItems}</div>
+    </div>
+  );
 }

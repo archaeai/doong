@@ -58,13 +58,14 @@ h1 {
 }
 
 .divider {
-  width: 4px;
+  width: 10px;
   background-image: linear-gradient(
     var(--color-brown) 50%,
     rgba(255, 255, 255, 0) 0%
   );
-  background-position: right;
-  background-size: 4px 16px; /* 점선의 간격 조절 */
+  background-position: center;
+  padding: 0 1.25rem 0 1.25rem;
+  background-size: 0.25rem 1rem; /* 점선의 간격 조절 */
   background-repeat: repeat-y;
 }
 
@@ -195,20 +196,4 @@ h1 {
     margin: 0 2% 2% 2%;
     padding: 1.25rem;
   }
-  /* 제목 추가 안했을 때
-  .page-content {
-    height: 90vh;
-    width: calc(100vw - 2.5rem);
-    max-height: calc(100vh - 6.25rem);
-    flex-direction: row;
-    position: relative;
-    top: 3.125rem;
-    margin: 2%;
-    padding: 1.25rem;
-  } */
 }
-/* @media (min-width: 1024px) {
-  .page-content {
-    height: calc(100vh - 6.25px);
-  }
-} */
