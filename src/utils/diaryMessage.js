@@ -1,12 +1,19 @@
-// utils.js
+export const getJosa = (word) => {
+  const lastChar = word[word.length - 1];
+  const hasJongSeong = (lastChar.charCodeAt(0) - 0xac00) % 28 > 0;
+  return hasJongSeong ? "을" : "를";
+};
+
 export const getMoodMessage = (mood) => {
   switch (mood) {
     case "행복":
       return "기분 최고였어요!";
-    case "스트레스":
-      return "예민했어요.";
+    case "예민":
+      return "까칠했어요.";
     case "불안":
-      return "불안했어요.";
+      return "불안해보였어요.";
+    case "무기력":
+      return "기운이 없었어요.";
     default:
       return "";
   }

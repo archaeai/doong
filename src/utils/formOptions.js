@@ -10,8 +10,9 @@ export const neuteredOptions = [
 
 export const moodOptions = [
   { value: "행복", label: "행복" },
-  { value: "스트레스", label: "스트레스" },
+  { value: "예민", label: "예민" },
   { value: "불안", label: "불안" },
+  { value: "무기력", label: "무기력" },
 ];
 
 export const activityOptions = [
@@ -27,6 +28,7 @@ export const mealOptions = [
 ];
 
 export const poopCountOptions = [
+  { value: "없음", label: "없음" },
   { value: "1", label: "1" },
   { value: "2", label: "2" },
   { value: "3", label: "3" },
@@ -42,6 +44,7 @@ export const poopTypeOptions = [
 ];
 
 export const peeCountOptions = [
+  { value: "없음", label: "없음" },
   { value: "1", label: "1" },
   { value: "2", label: "2" },
   { value: "3-4개", label: "3-4개" },
@@ -52,7 +55,6 @@ export const peeSizeOptions = [
   { value: "정상", label: "정상" },
   { value: "작음", label: "작음" },
   { value: "큼", label: "큼" },
-  { value: "없음", label: "없음" },
 ];
 
 export const symptomOptions = [

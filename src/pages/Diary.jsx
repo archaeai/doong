@@ -47,7 +47,10 @@ export default function DiaryPage() {
               alt="diary illustration"
               className="diary-illustration"
             />
-            <p className="diary-name">{selectedCat.name}의 일기</p>
+            <p className="diary-name">
+              {diaryEntries.date}
+              {selectedCat.name}의 일기
+            </p>
           </div>
         </div>
         <div className="divider"></div>

@@ -1,5 +1,6 @@
 import "../../styles/DiaryGrid.css";
 import {
+  getJosa,
   getMoodMessage,
   getActivityMessage,
   getPortionMessage,
@@ -28,42 +29,55 @@ export default function DiaryGrid({ selectedCat, diaryData }) {
   const moodMessage = getMoodMessage(mood);
   const activityMessage = getActivityMessage(activity_level);
   const portionMessage = getPortionMessage(portion_status);
-
   const additionalMessages = [];
-  if (sweet_potato_num || sweet_potato_cond) {
-    let message = "";
-    if (sweet_potato_cond) {
-      message += `${getPCondMessage(sweet_potato_cond)} 고구마를 `;
-    } else {
-      message += "고구마를 ";
-    }
-    if (sweet_potato_num) {
-      message += `${sweet_potato_num}개 `;
-    }
-    message += "만들었어요.";
-    additionalMessages.push(message);
-  }
 
-  if (potato_num || potato_cond) {
-    let message = "";
-    if (potato_cond) {
-      message += `${getPCondMessage(potato_cond)} 감자를 `;
-    } else {
-      message += "감자를 ";
+  const createPMessages = (num, cond, type) => {
+    if (num === "없음") {
+      return `${type}가 없었어요.`;
+    } else if (num || cond) {
+      let message = "";
+      if (cond) {
+        message += `${getPCondMessage(cond)} ${type}${getJosa(type)} `;
+      } else {
+        message += `${type}${getJosa(type)} `;
+      }
+      if (num) {
+        message += `${num}개 `;
+      }
+      message += "만들었어요.";
+      return message;
     }
-    if (potato_num) {
-      message += `${potato_num}개 `;
-    }
-    message += "만들었어요.";
-    additionalMessages.push(message);
-  }
+    return "";
+  };
+
+  const poopMessage = createPMessages(
+    sweet_potato_num,
+    sweet_potato_cond,
+    "맛동산"
+  );
+  const peeMessage = createPMessages(potato_num, potato_cond, "감자");
+
+  if (poopMessage) additionalMessages.push(poopMessage);
+  if (peeMessage) additionalMessages.push(peeMessage);
 
   if (weight) {
     additionalMessages.push(`몸무게는 ${weight}kg`);
   }
-  if (abnomal_act) {
-    additionalMessages.push(`특이행동은 ${abnomal_act}. ${abnomal_detail}`);
+  if (abnomal_act || abnomal_detail) {
+    let message = "특이행동은 ";
+    if (abnomal_act) {
+      message += `${abnomal_act}`;
+    }
+    if (abnomal_act && abnomal_detail) {
+      message += `, `;
+    }
+    if (abnomal_detail) {
+      message += `${abnomal_detail}`;
+    }
+    message += ".";
+    additionalMessages.push(message);
   }
+
   if (comment) {
     additionalMessages.push(`추가로 ${comment}`);
   }
