@@ -44,9 +44,11 @@ export const DiaryProvider = ({ children }) => {
     }
   };
 
-  const addDiaryEntry = async (entry) => {
+  const addDiaryEntry = async (diaryData) => {
+    console.log("Adding diary entry:", diaryData);
     try {
-      const newEntry = await diaryApi.createDiary(entry);
+      const newEntry = await diaryApi.createDiary(diaryData);
+      console.log("New diary entry:", newEntry);
       setDiaryEntries((prevEntries) => [...prevEntries, newEntry]);
       setIsError(false);
     } catch (error) {

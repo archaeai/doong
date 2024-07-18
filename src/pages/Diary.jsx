@@ -48,8 +48,11 @@ export default function DiaryPage() {
               className="diary-illustration"
             />
             <p className="diary-name">
-              {diaryEntries.date}
-              {selectedCat.name}의 일기
+              {selectedCat
+                ? `${selectedCat.name}의 일기`
+                : "고양이를 선택해주세요"}
+              {/* // {diaryEntries.date}
+              // {selectedCat.name}의 일기 */}
             </p>
           </div>
         </div>
@@ -68,7 +71,7 @@ export default function DiaryPage() {
         </div>
 
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <DiaryForm closeModal={closeModal} />
+          <DiaryForm closeModal={closeModal} selectedCat={selectedCat} />
         </Modal>
       </div>
     </>

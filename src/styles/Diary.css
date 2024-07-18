@@ -49,6 +49,7 @@
 }
 
 .diary-name {
+  width: 100%;
   font-size: 1.4rem;
   color: var(--color-navy);
   border-top: 2px solid var(--color-grey);

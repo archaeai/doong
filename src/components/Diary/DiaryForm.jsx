@@ -2,6 +2,7 @@ import { useContext } from "react";
 import useFormState from "../../hooks/useFormState";
 import { DiaryContext } from "../../contexts/DiaryContext";
 import RadioButton from "../../UI/RadioButton";
+import { getCurrentLocalISODateString } from "../../utils/dateUtil";
 import { validateDiaryForm } from "../../utils/validation";
 import {
   moodOptions,
@@ -15,7 +16,7 @@ import {
 } from "../../utils/formOptions";
 import "../../styles/DiaryForm.css";
 
-const DiaryForm = ({ closeModal }) => {
+const DiaryForm = ({ closeModal, selectedCat }) => {
   const { addDiaryEntry } = useContext(DiaryContext);
   const {
     formData: diaryData,
@@ -25,27 +26,50 @@ const DiaryForm = ({ closeModal }) => {
     photoPreview,
   } = useFormState(
     {
-      photo: null,
+      photo_url: null,
+      date: getCurrentLocalISODateString(),
+      cat_id: selectedCat.id,
       mood: "",
-      activity: "",
-      meal: "",
-      poopCount: "",
-      poopType: "",
-      peeCount: "",
-      peeSize: "",
-      symptoms: "",
-      symptomsDetails: "",
-      environmentDetails: "",
-      notes: "",
+      activity_level: "",
+      portion_status: "",
+      sweet_potato_num: "",
+      sweet_potato_cond: "",
+      potato_num: "",
+      potato_cond: "",
+      weight: 0,
+      abnormal_act: "",
+      abnormal_detail: "",
+      note: "",
+      comment: "",
     },
     validateDiaryForm
   );
 
-  const submitForm = (data) => {
-    addDiaryEntry(data);
-    closeModal();
-    console.log("Submitted Data:", data);
+  const submitForm = async (diaryData) => {
+    try {
+      await addDiaryEntry(diaryData);
+      console.log("Submitted Data:", diaryData);
+      closeModal();
+    } catch (error) {
+      console.error("Failed to submit the diary entry:", error);
+    }
   };
+
+  // const submitForm = async (data) => {
+  //   const formData = new FormData();
+  //   for (const key in data) {
+  //     if (key === "photo") {
+  //       formData.append("photo", data[key]);
+  //     } else {
+  //       formData.append(key, data[key]);
+  //     }
+  //   }
+  //   await addDiaryEntry(formData);
+  //   closeModal();
+  //   console.log("Submitted Data:", formData, data.photo);
+  //   // closeModal();
+  //   // console.log("Submitted Data:", data);
+  // };
 
   return (
     <form
@@ -60,7 +84,7 @@ const DiaryForm = ({ closeModal }) => {
         <input
           id="photo"
           type="file"
-          name="photo"
+          name="photo_url"
           accept="image/*"
           onChange={handleChange}
         />
@@ -84,105 +108,114 @@ const DiaryForm = ({ closeModal }) => {
       />
       <RadioButton
         label="3. 오늘의 활동량은 어땠나요? (필수)"
-        name="activity"
+        name="activity_level"
         options={activityOptions}
         error={errors.activity}
         onChange={handleChange}
-        selectedValue={diaryData.activity}
+        selectedValue={diaryData.activity_level}
       />
       <RadioButton
         label="4. 오늘의 식사는 어땠나요? (필수)"
-        name="meal"
+        name="portion_status"
         options={mealOptions}
         error={errors.meal}
         onChange={handleChange}
-        selectedValue={diaryData.meal}
+        selectedValue={diaryData.portion_status}
       />
       <div className="form-group">
-        <label>5. 오늘 등의 배변 상태를 기록해주세요. (선택)</label>
+        <label>5. 오늘 배변 상태를 기록해주세요. (선택)</label>
         <div>
           <p>맛동산</p>
           <RadioButton
             label="갯수"
-            name="poopCount"
+            name="sweet_potato_num"
             options={poopCountOptions}
             error={errors.poopCount}
             onChange={handleChange}
-            selectedValue={diaryData.poopCount}
+            selectedValue={diaryData.sweet_potato_num}
           />
           <RadioButton
             label="상태"
-            name="poopType"
+            name="sweet_potato_cond"
             options={poopTypeOptions}
             error={errors.poopType}
             onChange={handleChange}
-            selectedValue={diaryData.poopType}
+            selectedValue={diaryData.sweet_potato_cond}
           />
         </div>
         <div>
           <p>감자</p>
           <RadioButton
             label="갯수"
-            name="peeCount"
+            name="potato_num"
             options={peeCountOptions}
             error={errors.peeCount}
             onChange={handleChange}
-            selectedValue={diaryData.peeCount}
+            selectedValue={diaryData.potato_num}
           />
           <RadioButton
             label="크기"
-            name="peeSize"
+            name="potato_cond"
             options={peeSizeOptions}
             error={errors.peeSize}
             onChange={handleChange}
-            selectedValue={diaryData.peeSize}
+            selectedValue={diaryData.potato_cond}
           />
         </div>
       </div>
+      <div>
+        <label>6. 오늘의 체중을 기록해주세요. (선택)</label>
+        <input
+          type="number"
+          name="weight"
+          onChange={handleChange}
+          value={diaryData.weight}
+        />
+      </div>
       <div className="form-group">
         <label htmlFor="symptomsDetails">
-          6. 오늘 등의 이상 증상을 기록해주세요. (선택)
+          7. 오늘 이상증상이 있었다면 기록해주세요. (선택)
         </label>
         <RadioButton
           label="증상"
-          name="symptoms"
+          name="abnomal_act"
           options={symptomOptions}
           error={errors.symptoms}
           onChange={handleChange}
-          selectedValue={diaryData.symptoms}
+          selectedValue={diaryData.abnomal_act}
         />
         <input
           id="symptomsDetails"
           type="text"
-          name="symptomsDetails"
+          name="abnomal_detail"
           placeholder="색깔 등 상세 내용을 적어주세요"
-          value={diaryData.symptomsDetails}
+          value={diaryData.abnomal_detail}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
         <label htmlFor="environmentDetails">
-          7. 오늘 등의 환경 변화를 기록해주세요. (선택)
+          8. 오늘 환경 변화를 기록해주세요. (선택)
         </label>
         <input
           id="environmentDetails"
           type="text"
-          name="environmentDetails"
+          name="note"
           placeholder="캣타워 교체, 손님 맞이 등 자유롭게 적어주세요."
-          value={diaryData.environmentDetails}
+          value={diaryData.note}
           onChange={handleChange}
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="notes">
-          8. 오늘 남기고 싶은 이야기를 기록해주세요.(선택)
+        <label htmlFor="comment">
+          9. 오늘 남기고 싶은 이야기를 기록해주세요.(선택)
         </label>
         <textarea
           id="notes"
-          name="notes"
+          name="comment"
           placeholder="예) 오늘 둥이가 처음으로 골골송을 불렀다!"
-          value={diaryData.notes || ""}
+          value={diaryData.comment || ""}
           onChange={handleChange}
           rows={4}
         />

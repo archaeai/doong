@@ -5,9 +5,6 @@ const API_BASE_URL = "http://127.0.0.1/api";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 apiClient.interceptors.request.use(
@@ -34,6 +31,9 @@ export const getDiariesByCat = async (catId, skip = 0, limit = 10) => {
   try {
     const response = await apiClient.get(`/diary/cat/${catId}`, {
       params: { skip, limit },
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     return response.data;
   } catch (error) {
@@ -43,7 +43,11 @@ export const getDiariesByCat = async (catId, skip = 0, limit = 10) => {
 
 export const getDiaryByCatAndDate = async (catId, date) => {
   try {
-    const response = await apiClient.get(`/diary/cat/${catId}/date/${date}`);
+    const response = await apiClient.get(`/diary/cat/${catId}/date/${date}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     handleError(error);
@@ -52,7 +56,21 @@ export const getDiaryByCatAndDate = async (catId, date) => {
 
 export const createDiary = async (diary) => {
   try {
-    const response = await apiClient.post("/diary/", diary);
+    const formData = new FormData();
+    Object.keys(diary).forEach((key) => {
+      formData.append(key, diary[key]);
+    });
+
+    console.log("FormData entries:");
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+
+    const response = await apiClient.post("/diary/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error) {
     handleError(error);
@@ -61,7 +79,11 @@ export const createDiary = async (diary) => {
 
 export const updateDiary = async (diaryId, diary) => {
   try {
-    const response = await apiClient.put(`/diary/${diaryId}`, diary);
+    const response = await apiClient.put(`/diary/${diaryId}`, diary, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     handleError(error);
@@ -70,7 +92,11 @@ export const updateDiary = async (diaryId, diary) => {
 
 export const deleteDiary = async (diaryId) => {
   try {
-    const response = await apiClient.delete(`/diary/${diaryId}`);
+    const response = await apiClient.delete(`/diary/${diaryId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     handleError(error);

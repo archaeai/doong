@@ -66,12 +66,13 @@ export const validateCatForm = (formData, step) => {
 
 export const validateDiaryForm = (formData) => {
   const newErrors = {};
-  if (!isFileSelected(formData.photo)) newErrors.photo = "사진을 추가해주세요.";
+  if (!isFileSelected(formData.photo_url))
+    newErrors.photo_url = "사진을 추가해주세요.";
   if (!isRadioSelected(formData.mood)) newErrors.mood = "기분을 선택해주세요.";
-  if (!isRadioSelected(formData.activity))
-    newErrors.activity = "활동량을 선택해주세요.";
-  if (!isRadioSelected(formData.meal))
-    newErrors.meal = "식사량을 선택해주세요.";
+  if (!isRadioSelected(formData.activity_level))
+    newErrors.activity_level = "활동량을 선택해주세요.";
+  if (!isRadioSelected(formData.portion_status))
+    newErrors.portion_status = "식사량을 선택해주세요.";
   return newErrors;
 };
 

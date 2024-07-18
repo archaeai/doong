@@ -28,11 +28,11 @@ export const mealOptions = [
 ];
 
 export const poopCountOptions = [
-  { value: "없음", label: "없음" },
   { value: "1", label: "1" },
   { value: "2", label: "2" },
   { value: "3", label: "3" },
   { value: "4개 이상", label: "4개 이상" },
+  { value: "없음", label: "없음" },
 ];
 
 export const poopTypeOptions = [
@@ -44,11 +44,11 @@ export const poopTypeOptions = [
 ];
 
 export const peeCountOptions = [
-  { value: "없음", label: "없음" },
   { value: "1", label: "1" },
   { value: "2", label: "2" },
   { value: "3-4개", label: "3-4개" },
   { value: "5개 이상", label: "5개 이상" },
+  { value: "없음", label: "없음" },
 ];
 
 export const peeSizeOptions = [
