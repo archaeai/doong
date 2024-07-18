@@ -57,6 +57,23 @@ h1 {
   margin: 0 0 10px 20px;
 }
 
+/* 스크롤바 디자인 */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-yellow3);
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brown);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-grey);
+}
+
 .divider {
   width: 10px;
   background-image: linear-gradient(

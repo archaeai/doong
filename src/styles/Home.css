@@ -227,11 +227,6 @@
 
   .checklist {
     overflow-y: auto;
-    scrollbar-width: none;
-  }
-  /* 웹킷 기반 브라우저에서 스크롤바 숨김 */
-  .page-content::-webkit-scrollbar {
-    display: none;
   }
 }
 
