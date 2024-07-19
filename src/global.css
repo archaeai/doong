@@ -64,11 +64,10 @@ h1 {
 }
 ::-webkit-scrollbar-track {
   background: var(--color-yellow3);
-
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-brown);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-grey);

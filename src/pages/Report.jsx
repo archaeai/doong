@@ -1,6 +1,7 @@
 import { getFormattedCurrentDate } from "../utils/dateUtil";
 import ReportStateBox from "../components/Report/ReportStateBox";
 import ReportEvent from "../components/Report/ReportEvent";
+import ReportLineChart from "../components/Report/ReportLineChart";
 import "../styles/Report.css";
 
 export default function ReportPage() {
@@ -43,15 +44,17 @@ export default function ReportPage() {
         <div className="report-grid-container">
           <div className="report-stats-grid">
             <ReportStateBox title={"몸무게"} num={6.5} />
-            <ReportStateBox title={1} num={6.5} />
-            <ReportStateBox title={1} num={6.5} />
-            <ReportStateBox title={1} num={6.5} />
+            <ReportStateBox title={"title"} num={0} />
+            <ReportStateBox title={"title"} num={0} />
+            <ReportStateBox title={"title"} num={0} />
           </div>
           <div className="report-best-photo">
             <img src="path/to/best-photo.jpg" alt="Best Cat Photo" />
           </div>
           <ReportEvent />
-          <div className="report-graph">그래프</div>
+          <div className="report-graph">
+            <ReportLineChart />
+          </div>
         </div>
       </div>
     </>

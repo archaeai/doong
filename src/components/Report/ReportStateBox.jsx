@@ -2,7 +2,7 @@ export default function ReportStateBox({ title, num }) {
   return (
     <div className="report-state-box">
       <span className="report-state-box-title">{title}</span>
-      <sapn className="report-state-box-value">{num}</sapn>
+      <span className="report-state-box-value">{num}</span>
     </div>
   );
 }
