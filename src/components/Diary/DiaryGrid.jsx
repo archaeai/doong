@@ -61,7 +61,7 @@ export default function DiaryGrid({ selectedCat, diaryData }) {
     additionalMessages.push(`몸무게는 ${weight}kg`);
   }
   if (abnomal_act || abnomal_detail) {
-    let message = "특이행동은 ";
+    let message = "특이사항은 ";
     if (abnomal_act) {
       message += `${abnomal_act}`;
     }

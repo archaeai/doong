@@ -1,0 +1,121 @@
+.page-content.report-page-content {
+  padding: 0.625rem;
+}
+.report-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625rem;
+}
+
+.report-heading {
+  color: var(--color-navy);
+  text-decoration: underline;
+  text-decoration-color: var(--color-brown);
+  text-decoration-thickness: 4px;
+}
+
+.report-filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.report-filter-select {
+  margin-left: 0.625rem;
+  border: none;
+  background-color: var(--color-yellow1);
+  padding: 3px 6px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Gaegu";
+  color: var(--color-navy);
+}
+
+.report-grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.938rem;
+  margin-top: 0.625rem;
+  grid-template-areas:
+    "photo"
+    "stats"
+    "graph";
+}
+
+.report-stats-grid {
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.938rem;
+}
+
+.report-stat-box {
+  background: var(--color-yellow1);
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.report-best-photo {
+  grid-area: photo;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  padding: 0.625rem;
+}
+
+.report-best-photo img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.report-graph {
+  grid-area: graph;
+  padding: 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .page-content.report-page-content {
+    flex-direction: column;
+  }
+  .report-grid-container {
+    display: grid;
+    height: 85%;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto auto;
+    gap: 0.938rem;
+    grid-template-areas:
+      "stats photo"
+      "stats graph";
+  }
+
+  .report-stats-grid {
+    grid-area: stats;
+    grid-template-columns: 1fr;
+    gap: 0.625rem;
+  }
+
+  .report-best-photo {
+    grid-area: photo;
+  }
+
+  .report-graph {
+    grid-area: graph;
+  }
+}
+
+@media (min-width: 1024px) {
+  .report-stats-grid {
+    margin-right: 20px;
+  }
+  /* .report-grid-container {
+    gap: 30px;
+  } */
+}
