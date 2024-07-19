@@ -1,4 +1,6 @@
 import { getFormattedCurrentDate } from "../utils/dateUtil";
+import ReportStateBox from "../components/Report/ReportStateBox";
+import ReportEvent from "../components/Report/ReportEvent";
 import "../styles/Report.css";
 
 export default function ReportPage() {
@@ -7,7 +9,7 @@ export default function ReportPage() {
       <h1>{getFormattedCurrentDate()}</h1>
       <div className="page-content report-page-content">
         <div className="report-header">
-          <h3 className="report-heading">6월 리포트</h3>
+          <h2 className="report-heading">6월</h2>
           <div className="report-filters">
             <select
               className="report-filter-select"
@@ -40,14 +42,15 @@ export default function ReportPage() {
         </div>
         <div className="report-grid-container">
           <div className="report-stats-grid">
-            <div className="report-stat-box">Stat 1</div>
-            <div className="report-stat-box">Stat 2</div>
-            <div className="report-stat-box">Stat 3</div>
-            <div className="report-stat-box">Stat 4</div>
+            <ReportStateBox title={"몸무게"} num={6.5} />
+            <ReportStateBox title={1} num={6.5} />
+            <ReportStateBox title={1} num={6.5} />
+            <ReportStateBox title={1} num={6.5} />
           </div>
           <div className="report-best-photo">
             <img src="path/to/best-photo.jpg" alt="Best Cat Photo" />
           </div>
+          <ReportEvent />
           <div className="report-graph">그래프</div>
         </div>
       </div>
