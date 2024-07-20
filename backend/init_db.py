@@ -42,7 +42,7 @@ def create_test_data(db: Session):
         potato_num =  "2",
         potato_cond =  "정상",
         weight = 6.5,
-        abnomal_act = "없음",
+        abnormal_act = "없음",
         note = "강씨 방문",
         comment = "까칠",
         cat_profile = cat1,
