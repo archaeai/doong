@@ -161,7 +161,7 @@ async def delete_diary(diary_id: int, db: Session = Depends(get_db), current_use
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Diary not found")
     return deleted_diary
 
-@router.get("/cat/{cat_id}/{year}/{month}", summary="Get June 2024 weight data and diary info", description="Retrieve June 2024 weight data and diary information for a specific cat.")
+@router.get("/statistics/{cat_id}/{year}/{month}", summary="Get June 2024 weight data and diary info", description="Retrieve June 2024 weight data and diary information for a specific cat.")
 async def get_june_2024_diary(cat_id: int,year:int,month:int, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     """
     Get June 2024 weight data and diary information for a specific cat.
