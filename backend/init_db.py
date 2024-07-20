@@ -248,9 +248,9 @@ def add_diary_entries_to_db(db: Session):
             weight=6.5,
             abnormal_act="없음" if day % 6 == 0 else "구토" if day % 6 == 1 else "재채기" if day % 6 == 2 else "기타",
             note=f"{day}일 강씨 방문",
-            comment="까칠" if day % 2 == 0 else "온순",
+            comment="희주조아희주조아" if day % 2 == 0 else "온순",
             cat_id=1,
-            photo_url=''
+            photo_url=f'uploads/diaries/1/{day}.jpeg'
         ) for day in range(1, 31)
     ] 
     # 데이터베이스 세션 생성
