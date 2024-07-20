@@ -161,16 +161,39 @@ async def delete_diary(diary_id: int, db: Session = Depends(get_db), current_use
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Diary not found")
     return deleted_diary
 
-@router.get("/statistics/{cat_id}/{year}/{month}", summary="Get June 2024 weight data and diary info", description="Retrieve June 2024 weight data and diary information for a specific cat.")
-async def get_june_2024_diary(cat_id: int,year:int,month:int, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+@router.get("/statistics/{cat_id}/{year}/{month}", summary="Get monthly weight data and diary info", description="Retrieve monthly weight data and diary information for a specific cat.")
+async def get_monthly_diary(cat_id: int, year: int, month: int, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     """
-    Get June 2024 weight data and diary information for a specific cat.
+    Get monthly weight data and diary information for a specific cat.
     """
-    # Generate weight data for June 2024
-    june_2024_weights = [
-        {"date": (date(2024, 6, 1) + timedelta(days=i)).isoformat(), "weight": round(4.0 + 0.05 * i, 2)}
-        for i in range(30)
+    # Generate weight data for the specified month
+    num_days = (date(year, month % 12 + 1, 1) - timedelta(days=1)).day
+    weight_data = [
+        {"date": (date(year, month, 1) + timedelta(days=i)).isoformat(), "weight": round(4.0 + 0.05 * i, 2)}
+        for i in range(num_days)
     ]
+
+    # Generate poop (sweet potato) and pee (potato) data for the specified month
+    poop_data = [
+        {"date": (date(year, month, 1) + timedelta(days=i)).isoformat(), "sweet_potato_count": i % 3 + 1}
+        for i in range(num_days)
+    ]
+
+    pee_data = [
+        {"date": (date(year, month, 1) + timedelta(days=i)).isoformat(), "potato_count": i % 4 + 1}
+        for i in range(num_days)
+    ]
+    
+    # Generate daily task completion data for the specified month
+    daily_tasks = [
+        {"date": (date(year, month, 1) + timedelta(days=i)).isoformat(), "task_completed": (i % 2 == 0)}
+        for i in range(num_days)
+    ]
+
+    # Calculate the completion rate for daily tasks
+    total_tasks = len(daily_tasks)
+    completed_tasks = sum(1 for task in daily_tasks if task["task_completed"])
+    completion_rate = (completed_tasks / total_tasks) * 100
     
     # Specify overweigh status, butler score, special notes, and comments
     weight_status = "overweight"
@@ -179,6 +202,9 @@ async def get_june_2024_diary(cat_id: int,year:int,month:int, db: Session = Depe
         "2024-06-02": "구토",
         "2024-06-03": "구토"
     }
+
+    # Calculate butler rank (assuming the user is in the top 10%)
+    butler_rank_percentile = 10  # 상위 10% 예시
     
     # Fetch photo URLs from the uploads directory
     photo_dir = f"uploads/{current_user}/"
@@ -189,9 +215,14 @@ async def get_june_2024_diary(cat_id: int,year:int,month:int, db: Session = Depe
                 photo_urls.append(f"{photo_dir}{filename}")
 
     return {
-        "weight_data": june_2024_weights,
+        "weight_data": weight_data,
+        "poop_data": poop_data,
+        "pee_data": pee_data,
+        "daily_tasks": daily_tasks,
+        "daily_task_completion_rate": completion_rate,
         "weight_status": weight_status,
         "butler_score": butler_score,
+        "butler_rank_percentile": butler_rank_percentile,
         "special_notes": special_notes,
         "photo_urls": photo_urls
     }
