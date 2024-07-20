@@ -26,3 +26,5 @@ backend/uploads/diaries/tim/5d588dce-27b4-4237-8276-0e34a9e9f8f0.png
 backend/uploads/diaries/tim/6f273e9e-b671-4df5-b512-7296588987cc.png
 backend/test.db
 *.pyc
+*.jpeg
+*.db

@@ -4,6 +4,8 @@ from shutil import copyfileobj
 from typing import List, Optional
 from uuid import uuid4
 
+from datetime import datetime
+
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from backend.crud import cat_profile as crud_cat_profile
@@ -90,9 +92,6 @@ async def update_cat_profile(
     gender: Optional[str] = Form(None),
     birthday: Optional[str] = Form(None),
     adopted_day: Optional[str] = Form(None),
-    vaccine_date: Optional[str] = Form(None),
-    heart_warm_date: Optional[str] = Form(None),
-    litter_date: Optional[str] = Form(None),
     neutered: Optional[bool] = Form(None),
     weight: Optional[float] = Form(None),
     photo: UploadFile = File(None),
@@ -120,9 +119,6 @@ async def update_cat_profile(
         "gender": gender,
         "birthday": birthday,
         "adopted_day": adopted_day,
-        "vaccine_date": vaccine_date,
-        "heart_warm_date": heart_warm_date,
-        "litter_date": litter_date,
         "neutered": neutered,
         "weight": weight,
         "photo_url": photo_url,
@@ -131,6 +127,12 @@ async def update_cat_profile(
 
     # None 값을 제거합니다.
     cat_profile_data = {k: v for k, v in cat_profile_data.items() if v is not None}
+    # 'birthday'와 'adopted_day' 필드를 'date' 객체로 변환합니다.
+    if 'birthday' in cat_profile_data and cat_profile_data['birthday'] is not None:
+        cat_profile_data['birthday'] = datetime.strptime(cat_profile_data['birthday'], '%Y-%m-%d').date()
+    if 'adopted_day' in cat_profile_data and cat_profile_data['adopted_day'] is not None:
+        cat_profile_data['adopted_day'] = datetime.strptime(cat_profile_data['adopted_day'], '%Y-%m-%d').date()
+
 
     updated_cat_profile = crud_cat_profile.update_cat_profile(db=db, cat_profile_id=cat_profile_id, cat_profile_data=cat_profile_data)
     if not updated_cat_profile:
