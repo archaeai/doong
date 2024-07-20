@@ -8,7 +8,8 @@ from sqlalchemy.orm import Session
 from backend.crud import diary as crud_diary
 from backend.schemas import DiaryCreate, DiaryUpdate, DiaryResponse
 from backend.api.deps import get_db, get_current_user
-from datetime import datetime
+from datetime import datetime, timedelta, date
+
 
 router = APIRouter()
 
@@ -159,3 +160,38 @@ async def delete_diary(diary_id: int, db: Session = Depends(get_db), current_use
     if not deleted_diary:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Diary not found")
     return deleted_diary
+
+@router.get("/cat/{cat_id}/2024/6", summary="Get June 2024 weight data and diary info", description="Retrieve June 2024 weight data and diary information for a specific cat.")
+async def get_june_2024_diary(cat_id: int, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    """
+    Get June 2024 weight data and diary information for a specific cat.
+    """
+    # Generate weight data for June 2024
+    june_2024_weights = [
+        {"date": (date(2024, 6, 1) + timedelta(days=i)).isoformat(), "weight": round(4.0 + 0.05 * i, 2)}
+        for i in range(30)
+    ]
+    
+    # Specify overweigh status, butler score, special notes, and comments
+    weight_status = "overweight"
+    butler_score = 95
+    special_notes = {
+        "2024-06-02": "구토",
+        "2024-06-03": "구토"
+    }
+    
+    # Fetch photo URLs from the uploads directory
+    photo_dir = f"uploads/{current_user}/"
+    photo_urls = []
+    if os.path.exists(photo_dir):
+        for filename in os.listdir(photo_dir):
+            if filename.endswith((".jpg", ".jpeg", ".png", ".gif")):
+                photo_urls.append(f"{photo_dir}{filename}")
+
+    return {
+        "weight_data": june_2024_weights,
+        "weight_status": weight_status,
+        "butler_score": butler_score,
+        "special_notes": special_notes,
+        "photo_urls": photo_urls
+    }
