@@ -58,7 +58,7 @@ async def create_diary(
     db: Session = Depends(get_db),
     current_user: str = Depends(get_current_user)
 ):
-    UPLOAD_DIR = f"uploads/diaries/{current_user}/"
+    UPLOAD_DIR = f"uploads/diaries/{current_user}/{cat_id}/"
     if not os.path.exists(UPLOAD_DIR):
         os.makedirs(UPLOAD_DIR)
 
