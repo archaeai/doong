@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from backend.crud import diary as crud_diary
 from backend.schemas import DiaryCreate, DiaryUpdate, DiaryResponse
 from backend.api.deps import get_db, get_current_user
+from datetime import datetime
 
 router = APIRouter()
 
@@ -141,6 +142,10 @@ async def update_diary(
 
     # Filter out None values
     diary_data = {k: v for k, v in diary_data.items() if v is not None}
+        # 'date' 필드를 'date' 객체로 변환합니다.
+    if 'date' in diary_data and diary_data['date'] is not None:
+        diary_data['date'] = datetime.strptime(diary_data['date'], '%Y-%m-%d').date()
+
 
     updated_diary = crud_diary.update_diary(db=db, diary_id=diary_id, diary_data=diary_data)
     if not updated_diary:
