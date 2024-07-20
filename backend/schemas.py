@@ -59,8 +59,8 @@ class DiaryBase(BaseModel):
     potato_num: Optional[str] = None
     potato_cond: Optional[str] = None
     weight: Optional[float] = None
-    abnomal_act: Optional[str] = None
-    abnomal_detail: Optional[str] = None
+    abnormal_act: Optional[str] = None
+    abnormal_detail: Optional[str] = None
     note: Optional[str] = None
     comment: Optional[str] = None
     photo_url : Optional[str] = None

@@ -230,7 +230,48 @@ def create_test_data(db: Session):
     db.add_all([user1, cat1, diary1, vaccine_task, heartworm_task, task1, task2, task3,task4,task5,task6,task7,task8,task10,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1, non_daily_task_log2])
     db.commit()
 
+
+def add_diary_entries_to_db(db: Session):
+
+    # 6월 한 달 동안의 다이어리 데이터 생성
+    diary_entries = [
+        Diary(
+            date=date(2024, 6, day),
+            mood="행복" if day % 4 == 0 else "예민" if day % 4 == 1 else "불안" if day % 4 == 2 else "무기력",
+            activity_level="높음" if day % 3 == 0 else "보통" if day % 3 == 1 else "낮음",
+            portion_status="적정" if day % 3 == 0 else "부족" if day % 3 == 1 else "남음",
+            sweet_potato_num=str(day % 4) if day % 4 != 3 else "4개 이상",
+            sweet_potato_cond="정상" if day % 5 == 0 else "무름" if day % 5 == 1 else "마름" if day % 5 == 2 else "혈변" if day % 5 == 3 else "점액질",
+            potato_num=str(day % 4) if day % 4 != 3 else "4개 이상",
+            potato_cond="정상" if day % 5 == 0 else "무름" if day % 5 == 1 else "마름" if day % 5 == 2 else "혈변" if day % 5 == 3 else "점액질",
+            weight=6.5,
+            abnormal_act="없음" if day % 6 == 0 else "구토" if day % 6 == 1 else "재채기" if day % 6 == 2 else "기타",
+            note=f"{day}일 강씨 방문",
+            comment="까칠" if day % 2 == 0 else "온순",
+            cat_id=1,
+            photo_url=''
+        ) for day in range(1, 31)
+    ] 
+    # 데이터베이스 세션 생성
+    try:
+        # diary_entries 리스트에 있는 각 다이어리 객체를 데이터베이스에 추가
+        for diary_entry in diary_entries:
+            db.add(diary_entry)
+        
+        # 변경 사항 커밋
+        db.commit()
+    except Exception as e:
+        # 에러가 발생하면 롤백
+        db.rollback()
+        print(f"An error occurred: {e}")
+    finally:
+        # 세션 닫기
+        db.close()
+
+# diary_entries 리스트를 데이터베이스에 추가하는 함수 호출
 # 세션 생성 및 테스트 데이터 생성 함수 호출
 with Session(engine) as session:
     create_test_data(session)
+    add_diary_entries_to_db(session)
+    
     print("Test data created successfully.")
