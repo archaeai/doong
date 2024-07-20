@@ -28,6 +28,7 @@ def create_test_data(db: Session):
         adopted_day=date(2021, 6, 15),
         neutered=True,
         weight=6.5,
+        photo_url="uploads/tim/doong.jpeg",
         user=user1
     )
 
