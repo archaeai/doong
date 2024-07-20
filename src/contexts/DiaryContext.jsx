@@ -45,15 +45,30 @@ export const DiaryProvider = ({ children }) => {
   };
 
   const addDiaryEntry = async (diaryData) => {
-    console.log("Adding diary entry:", diaryData);
     try {
       const newEntry = await diaryApi.createDiary(diaryData);
       console.log("New diary entry:", newEntry);
-      setDiaryEntries((prevEntries) => [...prevEntries, newEntry]);
+      setDiaryEntries((prevEntries) => {
+        const updatedEntries = [...prevEntries, newEntry];
+        return updatedEntries;
+      });
       setIsError(false);
+      return newEntry;
     } catch (error) {
       setIsError(true);
-      console.error("Failed to add diary entry:", error);
+      if (error.response) {
+        if (error.response.status === 422) {
+          console.error("Validation error (422):", error.response.data);
+        } else {
+          console.error(
+            "Server error:",
+            error.response.status,
+            error.response.data
+          );
+        }
+      } else {
+        console.error("Failed to add diary entry:", error.message);
+      }
     }
   };
 

@@ -26,7 +26,7 @@ const DiaryForm = ({ closeModal, selectedCat }) => {
     photoPreview,
   } = useFormState(
     {
-      photo_url: null,
+      photo: null,
       date: getCurrentLocalISODateString(),
       cat_id: selectedCat.id,
       mood: "",
@@ -45,31 +45,15 @@ const DiaryForm = ({ closeModal, selectedCat }) => {
     validateDiaryForm
   );
 
-  const submitForm = async (diaryData) => {
+  const submitForm = (diaryData) => {
     try {
-      await addDiaryEntry(diaryData);
+      addDiaryEntry(diaryData);
       console.log("Submitted Data:", diaryData);
       closeModal();
     } catch (error) {
       console.error("Failed to submit the diary entry:", error);
     }
   };
-
-  // const submitForm = async (data) => {
-  //   const formData = new FormData();
-  //   for (const key in data) {
-  //     if (key === "photo") {
-  //       formData.append("photo", data[key]);
-  //     } else {
-  //       formData.append(key, data[key]);
-  //     }
-  //   }
-  //   await addDiaryEntry(formData);
-  //   closeModal();
-  //   console.log("Submitted Data:", formData, data.photo);
-  //   // closeModal();
-  //   // console.log("Submitted Data:", data);
-  // };
 
   return (
     <form
@@ -84,7 +68,7 @@ const DiaryForm = ({ closeModal, selectedCat }) => {
         <input
           id="photo"
           type="file"
-          name="photo_url"
+          name="photo"
           accept="image/*"
           onChange={handleChange}
         />
@@ -178,18 +162,18 @@ const DiaryForm = ({ closeModal, selectedCat }) => {
         </label>
         <RadioButton
           label="증상"
-          name="abnomal_act"
+          name="abnormal_act"
           options={symptomOptions}
           error={errors.symptoms}
           onChange={handleChange}
-          selectedValue={diaryData.abnomal_act}
+          selectedValue={diaryData.abnormal_act}
         />
         <input
           id="symptomsDetails"
           type="text"
-          name="abnomal_detail"
+          name="abnormal_detail"
           placeholder="색깔 등 상세 내용을 적어주세요"
-          value={diaryData.abnomal_detail}
+          value={diaryData.abnormal_detail}
           onChange={handleChange}
         />
       </div>

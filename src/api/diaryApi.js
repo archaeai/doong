@@ -55,22 +55,22 @@ export const getDiaryByCatAndDate = async (catId, date) => {
 };
 
 export const createDiary = async (diary) => {
-  try {
-    const formData = new FormData();
-    Object.keys(diary).forEach((key) => {
+  const formData = new FormData();
+  if (diary.photo) {
+    formData.append("photo", diary.photo);
+  }
+  Object.keys(diary).forEach((key) => {
+    if (key !== "photo") {
       formData.append(key, diary[key]);
-    });
-
-    console.log("FormData entries:");
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
     }
-
-    const response = await apiClient.post("/diary/", formData, {
+  });
+  try {
+    const response = await apiClient.post("/diary/", diary, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
+    console.log("API Response:", response);
     return response.data;
   } catch (error) {
     handleError(error);

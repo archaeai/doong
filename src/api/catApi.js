@@ -76,12 +76,16 @@ export const addCatProfile = async (data) => {
 
 export const updateCatProfile = async (catId, catData) => {
   const token = getToken();
+  const formData = new FormData();
+  if (catData.photo) {
+    formData.append("photo", catData.photo);
+  }
 
   try {
     const response = await axios.put(`${API_URL}${catId}`, catData, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
     });
 
