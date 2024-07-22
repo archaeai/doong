@@ -5,6 +5,7 @@ from backend.models import CatProfile, DefaultTask, DailyTaskLog
 from backend.schemas import CatProfileCreate, CatProfileUpdate
 from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
+import pytz
 
 
 def get_cat_profile(db: Session, cat_profile_id: int) -> Optional[CatProfile]:
@@ -43,6 +44,9 @@ def create_cat_profile(db: Session, task_dict: dict, cat_profile: CatProfileCrea
     heartworm_task = db.query(DefaultTask).filter(DefaultTask.note == "심장사상충 예방약 투여").first()
     litter_task = db.query(DefaultTask).filter(DefaultTask.note == "모래갈이").first()
     vaccine_task = db.query(DefaultTask).filter(DefaultTask.note == "연간 백신 접종").first()
+    
+    # 매일 해야하는 기본 업무 가져오기 (period_type이 "D"인 것들)
+    daily_default_tasks = db.query(DefaultTask).filter(DefaultTask.cat_id == 0, DefaultTask.period_type == "D").all()
 
     # task_dict에 있는 날짜를 이용하여 DailyTaskLog 생성
     for task_date_key, task_date_value in task_dict.items():
@@ -87,6 +91,19 @@ def create_cat_profile(db: Session, task_dict: dict, cat_profile: CatProfileCrea
                     )
                 db.add(daily_task_log)
                 next_date = calculate_next_date(next_date, task.period_type, task.period_int)
+    
+     # 매일 해야하는 기본 업무 추가
+    tz = pytz.timezone('Asia/Seoul')
+    now = datetime.now(tz=tz).date()
+    for daily_task in daily_default_tasks:
+        daily_task_log = DailyTaskLog(
+            date=now,
+            note=daily_task.note,
+            cat_id=db_cat_profile.id,
+            done=False,
+            task_id=daily_task.id,
+        )
+        db.add(daily_task_log)
     db.commit()
 
     return db_cat_profile
