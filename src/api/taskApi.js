@@ -27,7 +27,7 @@ apiClient.interceptors.request.use(
 );
 
 // default_task 관련 API(설정페이지의 루틴 설정)
-export const getAllDefaultTasks = async (catId, skip = 0, limit = 10) => {
+export const getAllDefaultTasks = async (catId, skip = 0, limit = 20) => {
   try {
     const response = await apiClient.get(`/default_task/${catId}`, {
       params: { skip, limit },
