@@ -224,5 +224,6 @@ async def get_monthly_diary(cat_id: int, year: int, month: int, db: Session = De
         "butler_score": butler_score,
         "butler_rank_percentile": butler_rank_percentile,
         "special_notes": special_notes,
+        'diary_skip_days':5,
         "photo_urls": photo_urls
     }
