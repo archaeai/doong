@@ -8,10 +8,12 @@ export const DiaryContext = createContext({
   addDiaryEntry: () => {},
   updateDiaryEntry: () => {},
   deleteDiaryEntry: () => {},
+  fetchStatisticsOfDiary: () => {},
 });
 
 export const DiaryProvider = ({ children }) => {
   const [diaryEntries, setDiaryEntries] = useState([]);
+  const [report, setReport] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -100,15 +102,36 @@ export const DiaryProvider = ({ children }) => {
     }
   };
 
+  const fetchStatisticsOfDiary = async (catId, year, month) => {
+    setIsLoading(true);
+    try {
+      const statistics = await diaryApi.getStatisticsOfDiary(
+        catId,
+        year,
+        month
+      );
+      console.log("Fetched statistics:", statistics);
+      setReport(statistics);
+      setIsError(false);
+    } catch (error) {
+      setIsError(true);
+      console.error("Failed to load statistics:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <DiaryContext.Provider
       value={{
         diaryEntries,
+        report,
         fetchDiariesByCat,
         fetchDiaryByCatAndDate,
         addDiaryEntry,
         updateDiaryEntry,
         deleteDiaryEntry,
+        fetchStatisticsOfDiary,
         isLoading,
         isError,
       }}

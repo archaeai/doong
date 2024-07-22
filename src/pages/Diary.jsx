@@ -55,7 +55,7 @@ export default function DiaryPage() {
           <div className="diary-illustration-area">
             <img
               src={
-                diaryEntries[0].photo_url
+                selectedCat && diaryEntries[0]
                   ? `backend/${diaryEntries[0].photo_url}`
                   : diaryDefaultImg
               }

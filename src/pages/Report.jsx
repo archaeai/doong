@@ -1,10 +1,33 @@
+import { useContext, useEffect, useState } from "react";
 import { getFormattedCurrentDate } from "../utils/dateUtil";
+import { DiaryContext } from "../contexts/DiaryContext";
+import { CatContext } from "../contexts/CatContext";
+import CatSelect from "../UI/CatSelect";
 import ReportStateBox from "../components/Report/ReportStateBox";
 import ReportEvent from "../components/Report/ReportEvent";
 import ReportLineChart from "../components/Report/ReportLineChart";
 import "../styles/Report.css";
 
 export default function ReportPage() {
+  const { fetchStatisticsOfDiary } = useContext(DiaryContext);
+  const { selectedCat } = useContext(CatContext);
+  const [selectedYear, setSelectedYear] = useState("2024");
+  const [selectedMonth, setSelectedMonth] = useState("06");
+
+  useEffect(() => {
+    if (selectedCat) {
+      fetchStatisticsOfDiary(selectedCat.id, selectedYear, selectedMonth);
+    }
+  }, []);
+
+  const handleYearChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
+
+  const handleMonthChange = (event) => {
+    setSelectedMonth(event.target.value);
+  };
+
   return (
     <>
       <h1>{getFormattedCurrentDate()}</h1>
@@ -12,9 +35,12 @@ export default function ReportPage() {
         <div className="report-header">
           <h2 className="report-heading">6월</h2>
           <div className="report-filters">
+            <CatSelect />
             <select
               className="report-filter-select"
               name="year"
+              value={selectedYear}
+              onChange={handleYearChange}
               aria-placeholder="년"
             >
               <option value="2024">2024년</option>
@@ -24,6 +50,8 @@ export default function ReportPage() {
             <select
               className="report-filter-select"
               name="month"
+              value={selectedMonth}
+              onChange={handleMonthChange}
               aria-placeholder="월"
             >
               <option value="01">1월</option>

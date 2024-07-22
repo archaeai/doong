@@ -102,3 +102,19 @@ export const deleteDiary = async (diaryId) => {
     handleError(error);
   }
 };
+
+export const getStatisticsOfDiary = async (catId, year, month) => {
+  try {
+    const response = await apiClient.get(
+      `/diary/statistics/${catId}/${year}/${month}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
