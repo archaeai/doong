@@ -79,12 +79,34 @@
   color: var(--color-navy);
   font-size: 1.25rem;
 }
-.report-best-photo {
+.report-photo-slider {
   grid-area: photo;
+  position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   text-align: center;
   padding: 0.936rem;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 12rem;
+}
+
+.report-photo-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: opacity 1s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+  object-fit: cover;
+}
+
+.report-photo-slide.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .report-best-photo img {

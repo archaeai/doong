@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { getFormattedCurrentDate } from "../utils/dateUtil";
 import { DiaryContext } from "../contexts/DiaryContext";
 import { CatContext } from "../contexts/CatContext";
@@ -6,6 +6,7 @@ import CatSelect from "../UI/CatSelect";
 import useDateSelect from "../hooks/useDateSelect";
 import ReportStateBox from "../components/Report/ReportStateBox";
 import ReportEvent from "../components/Report/ReportEvent";
+import ImageSlider from "../components/Report/ImageSlider";
 import ReportLineChart from "../components/Report/ReportLineChart";
 import "../styles/Report.css";
 
@@ -22,12 +23,11 @@ export default function ReportPage() {
   } = useDateSelect();
 
   useEffect(() => {
-    if (selectedCat) {
+    if (selectedCat && selectedYear && selectedMonth) {
       fetchStatisticsOfDiary(selectedCat.id, selectedYear, selectedMonth);
     }
-  }, [selectedCat]);
-
-  console.log("Report:", report.special_notes);
+    console.log("fetched report: ", report);
+  }, [selectedCat, selectedYear, selectedMonth, fetchStatisticsOfDiary]);
 
   return (
     <>
@@ -65,21 +65,23 @@ export default function ReportPage() {
             </select>
           </div>
         </div>
-        <div className="report-grid-container">
-          <div className="report-stats-grid">
-            <ReportStateBox title={"몸무게"} num={6.5} />
-            <ReportStateBox title={"title"} num={0} />
-            <ReportStateBox title={"title"} num={0} />
-            <ReportStateBox title={"title"} num={0} />
+        {report ? (
+          <div className="report-grid-container">
+            <div className="report-stats-grid">
+              <ReportStateBox title={"몸무게"} num={6.5} />
+              <ReportStateBox title={"title"} num={0} />
+              <ReportStateBox title={"title"} num={0} />
+              <ReportStateBox title={"title"} num={0} />
+            </div>
+            <ImageSlider report={report} />
+            <ReportEvent report={report} />
+            <div className="report-graph">
+              <ReportLineChart />
+            </div>
           </div>
-          <div className="report-best-photo">
-            <img src="path/to/best-photo.jpg" alt="Best Cat Photo" />
-          </div>
-          <ReportEvent report={report} />
-          <div className="report-graph">
-            <ReportLineChart />
-          </div>
-        </div>
+        ) : (
+          <div>데이터가 없습니다...</div>
+        )}
       </div>
     </>
   );

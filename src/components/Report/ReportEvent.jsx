@@ -1,6 +1,11 @@
 export default function ReportEvent({ report }) {
-  const specialNotes = Object.entries(report.special_notes);
+  if (!report || !report.special_notes) {
+    return (
+      <div className="report-note">특이사항 데이터를 가져오지 못했습니다.</div>
+    );
+  }
 
+  const specialNotes = Object.entries(report.special_notes);
   const generateKey = (date, note) => `${date}-${note}`;
 
   return (

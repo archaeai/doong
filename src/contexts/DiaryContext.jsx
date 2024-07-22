@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 import * as diaryApi from "../api/diaryApi";
 
 export const DiaryContext = createContext({
@@ -102,7 +102,7 @@ export const DiaryProvider = ({ children }) => {
     }
   };
 
-  const fetchStatisticsOfDiary = async (catId, year, month) => {
+  const fetchStatisticsOfDiary = useCallback(async (catId, year, month) => {
     setIsLoading(true);
     try {
       const statistics = await diaryApi.getStatisticsOfDiary(
@@ -119,7 +119,7 @@ export const DiaryProvider = ({ children }) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   return (
     <DiaryContext.Provider
