@@ -1,8 +1,20 @@
 import { useState } from "react";
 
-const useDateSelect = (initialYear, initialMonth) => {
-  const [selectedYear, setSelectedYear] = useState(initialYear);
-  const [selectedMonth, setSelectedMonth] = useState(initialMonth);
+const getInitialDate = () => {
+  const now = new Date();
+  const initialYear =
+    now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+  const initialMonth = now.getMonth() === 0 ? 12 : now.getMonth();
+  return {
+    year: initialYear.toString(),
+    month: initialMonth.toString().padStart(2, "0"),
+  };
+};
+
+const useDateSelect = () => {
+  const { year, month } = getInitialDate();
+  const [selectedYear, setSelectedYear] = useState(year);
+  const [selectedMonth, setSelectedMonth] = useState(month);
 
   const years = ["2024", "2023", "2022"];
   const months = [

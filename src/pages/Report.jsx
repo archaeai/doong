@@ -19,7 +19,7 @@ export default function ReportPage() {
     months,
     handleYearChange,
     handleMonthChange,
-  } = useDateSelect("2024", "06");
+  } = useDateSelect();
 
   useEffect(() => {
     if (selectedCat) {
