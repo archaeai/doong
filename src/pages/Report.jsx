@@ -10,7 +10,7 @@ import ReportLineChart from "../components/Report/ReportLineChart";
 import "../styles/Report.css";
 
 export default function ReportPage() {
-  const { fetchStatisticsOfDiary } = useContext(DiaryContext);
+  const { fetchStatisticsOfDiary, report } = useContext(DiaryContext);
   const { selectedCat } = useContext(CatContext);
   const {
     selectedYear,
@@ -26,6 +26,8 @@ export default function ReportPage() {
       fetchStatisticsOfDiary(selectedCat.id, selectedYear, selectedMonth);
     }
   }, [selectedCat]);
+
+  console.log("Report:", report.special_notes);
 
   return (
     <>
@@ -73,7 +75,7 @@ export default function ReportPage() {
           <div className="report-best-photo">
             <img src="path/to/best-photo.jpg" alt="Best Cat Photo" />
           </div>
-          <ReportEvent />
+          <ReportEvent report={report} />
           <div className="report-graph">
             <ReportLineChart />
           </div>
