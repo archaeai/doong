@@ -1,7 +1,7 @@
 # crud/cat_profile.py
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from backend.models import CatProfile, DefaultTask, DailyTaskLog
+from backend.models import CatProfile, DefaultTask, DailyTaskLog, NonDailyTaskLog
 from backend.schemas import CatProfileCreate, CatProfileUpdate
 from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
@@ -47,7 +47,10 @@ def create_cat_profile(db: Session, task_dict: dict, cat_profile: CatProfileCrea
     
     # 매일 해야하는 기본 업무 가져오기 (period_type이 "D"인 것들)
     daily_default_tasks = db.query(DefaultTask).filter(DefaultTask.cat_id == 0, DefaultTask.period_type == "D").all()
-
+    week_default_tasks = db.query(DefaultTask).filter(DefaultTask.cat_id == 0, DefaultTask.period_type == "W").all()
+    month_default_tasks = db.query(DefaultTask).filter(DefaultTask.cat_id == 0, DefaultTask.period_type == "M").all()
+    year_default_tasks = db.query(DefaultTask).filter(DefaultTask.cat_id == 0, DefaultTask.period_type == "Y").all()
+    
     # task_dict에 있는 날짜를 이용하여 DailyTaskLog 생성
     for task_date_key, task_date_value in task_dict.items():
         if task_date_value:
@@ -104,6 +107,38 @@ def create_cat_profile(db: Session, task_dict: dict, cat_profile: CatProfileCrea
             task_id=daily_task.id,
         )
         db.add(daily_task_log)
+        
+    for week_defalt_task in week_default_tasks:
+        non_daily_task_log = NonDailyTaskLog(
+            date=now + timedelta(weeks=1),
+            note=week_defalt_task.note,
+            cat_id=db_cat_profile.id,
+            done=False,
+            task_id=week_defalt_task.id,
+        )
+        db.add(non_daily_task_log)
+        
+    from dateutil.relativedelta import relativedelta
+    
+    for month_default_task in month_default_tasks:
+        non_daily_task_log = NonDailyTaskLog(
+            date=now + relativedelta(months=1),
+            note=month_default_task.note,
+            cat_id=db_cat_profile.id,
+            done=False,
+            task_id=month_default_task.id,
+        )
+        db.add(non_daily_task_log)
+        
+    for year_default_task in year_default_tasks:
+        non_daily_task_log = NonDailyTaskLog(
+            date=now + relativedelta(years=1),
+            note=year_default_task.note,
+            cat_id=db_cat_profile.id,
+            done=False,
+            task_id=year_default_task.id,
+        )
+        db.add(non_daily_task_log)
     db.commit()
 
     return db_cat_profile
