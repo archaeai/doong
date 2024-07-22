@@ -121,7 +121,7 @@ def create_test_data(db: Session):
         note="손톱"
     )
     task10 = DefaultTask(
-        period_type="W",
+        period_type="M",
         period_int=1,
         cat_id =0,
         note="모래갈이"
