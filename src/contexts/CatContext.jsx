@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback, useEffect } from "react";
 import {
   fetchCatProfiles as fetchCatProfilesApi,
   addCatProfile as addCatProfileApi,
@@ -21,7 +21,10 @@ export const CatContext = createContext({
 
 export const CatProvider = ({ children }) => {
   const [cats, setCats] = useState([]);
-  const [selectedCat, setSelectedCat] = useState(null);
+  const [selectedCat, setSelectedCat] = useState(() => {
+    const savedCat = localStorage.getItem("selectedCat");
+    return savedCat ? JSON.parse(savedCat) : null;
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");

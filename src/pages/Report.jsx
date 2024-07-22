@@ -25,7 +25,7 @@ export default function ReportPage() {
     if (selectedCat) {
       fetchStatisticsOfDiary(selectedCat.id, selectedYear, selectedMonth);
     }
-  }, []);
+  }, [selectedCat]);
 
   return (
     <>
