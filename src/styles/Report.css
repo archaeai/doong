@@ -63,7 +63,7 @@
 
 .report-state-box {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   padding: 0.936rem;
@@ -71,17 +71,6 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
-}
-
-.report-state-box::before {
-  content: "";
-  position: absolute;
-  left: 50%; /* 박스의 중앙에 위치 */
-  top: 20%; /* 선의 위쪽 위치 조정 */
-  bottom: 20%; /* 선의 아래쪽 위치 조정 */
-  transform: translateX(-50%);
-  width: 4px;
-  background-color: var(--color-yellow1); /* 선 색상 설정 */
 }
 
 .report-state-box-value {
@@ -168,7 +157,6 @@
     gap: 0.625rem;
   }
   .report-state-box {
-    flex-direction: column;
     padding: 0.625rem;
   }
   .report-state-box::before {

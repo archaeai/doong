@@ -68,10 +68,22 @@ export default function ReportPage() {
         {report ? (
           <div className="report-grid-container">
             <div className="report-stats-grid">
-              <ReportStateBox title={"몸무게"} num={6.5} />
-              <ReportStateBox title={"title"} num={0} />
-              <ReportStateBox title={"title"} num={0} />
-              <ReportStateBox title={"title"} num={0} />
+              <ReportStateBox
+                title={"집사랭킹"}
+                num={`${report.butler_rank_percentile}위`}
+              />
+              <ReportStateBox
+                title={"집사점수"}
+                num={`${report.butler_score}점`}
+              />
+              <ReportStateBox
+                title={"기록을 안한날"}
+                num={`${report.diary_skip_days}일`}
+              />
+              <ReportStateBox
+                title={"할일 완료도"}
+                num={`${report.daily_task_completion_rate}%`}
+              />
             </div>
             <ImageSlider report={report} />
             <ReportEvent report={report} />
