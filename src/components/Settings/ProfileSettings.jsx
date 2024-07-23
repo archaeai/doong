@@ -22,14 +22,6 @@ export default function ProfileSettings() {
   const [editCat, setEditCat] = useState({});
 
   useEffect(() => {
-    if (cats.length === 0) {
-      loadCats();
-    } else if (!selectedCat && cats.length > 0) {
-      selectCat(cats[0]);
-    }
-  }, [loadCats, cats.length, selectedCat, selectCat, cats]);
-
-  useEffect(() => {
     if (selectedCat) {
       setEditCat(selectedCat);
     }

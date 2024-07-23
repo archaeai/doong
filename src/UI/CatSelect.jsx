@@ -1,8 +1,16 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CatContext } from "../contexts/CatContext";
 
 export default function CatSelect() {
-  const { cats, selectedCat, selectCat } = useContext(CatContext);
+  const { cats, selectedCat, selectCat, loadCats } = useContext(CatContext);
+
+  useEffect(() => {
+    if (cats.length === 0) {
+      loadCats();
+    } else if (!selectedCat && cats.length > 0) {
+      selectCat(cats[0]);
+    }
+  }, [loadCats, cats.length, selectedCat, selectCat, cats]);
 
   const handleSelectChange = (e) => {
     const selectedCatId = Number(e.target.value);
