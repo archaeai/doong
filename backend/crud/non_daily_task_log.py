@@ -9,8 +9,43 @@ from backend.models import NonDailyTaskLog, DefaultTask
 from backend.schemas import NonDailyTaskLogCreate, NonDailyTaskLogUpdate
 import pytz
 from fastapi import APIRouter, Depends, HTTPException, status
+from datetime import datetime, timedelta
+from sqlalchemy.orm import Session
+from models import DefaultTask, NonDailyTaskLog  # 모델 임포트 경로는 실제 환경에 맞게 조정해야 합니다.
 
+def add_non_daily_task_logs_if_needed(db: Session, cat_id: int):
+    # period_type이 'D'가 아닌 DefaultTask 조회
+    default_tasks = db.query(DefaultTask).filter(
+        DefaultTask.cat_id == cat_id,
+        DefaultTask.period_type != 'D'
+    ).all()
 
+    for task in default_tasks:
+        # 해당 DefaultTask에 대해 done이 False인 NonDailyTaskLog가 있는지 확인
+        existing_log = db.query(NonDailyTaskLog).filter(
+            NonDailyTaskLog.task_id == task.id,
+            NonDailyTaskLog.done == False
+        ).first()
+
+        # 없으면 새로운 NonDailyTaskLog 생성
+        if not existing_log:
+            # period_type에 따라 날짜 계산
+            if task.period_type == 'W':
+                next_date = datetime.today() + relativedelta(weeks=+1)
+            elif task.period_type == 'M':
+                next_date = datetime.today() + relativedelta(months=+1)
+            elif task.period_type == 'Y':
+                next_date = datetime.today() + relativedelta(years=+1)
+            else:
+                next_date = datetime.today()  # 기본값, 추가적인 period_type에 대한 처리가 필요할 수 있음
+
+            new_log = NonDailyTaskLog(
+                task_id=task.id,
+                date=next_date.date(),  # relativedelta 결과를 date 객체로 변환
+                done=False  # 기본값 설정
+            )
+            db.add(new_log)
+    db.commit()  # 변경 사항 저장
 
 def get_non_daily_task_log(db: Session, non_daily_task_log_id: int) -> Optional[NonDailyTaskLog]:
     return db.query(NonDailyTaskLog).filter(NonDailyTaskLog.id == non_daily_task_log_id).first()
