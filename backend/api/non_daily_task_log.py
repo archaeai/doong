@@ -52,7 +52,6 @@ async def create_non_daily_task_log(non_daily_task_log: NonDailyTaskLogCreate, d
 async def update_non_daily_task_log(non_daily_task_log_id: int, non_daily_task_log: NonDailyTaskLogUpdate,
                                     db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     
-    print('*********************')
     
     updated_non_daily_task_log = crud_non_daily_task_log.update_non_daily_task_log(db=db,
                                                                                    non_daily_task_log_id=non_daily_task_log_id,
