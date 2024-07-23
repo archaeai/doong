@@ -64,7 +64,11 @@ async def create_diary(
 
     photo_url = None
     if photo:
-        filename = f"{uuid4()}.{photo.filename.split('.')[-1]}"
+        # 현재 날짜와 시간을 가져옵니다.
+        now = datetime.now()
+        # 파일 이름에 년도, 월, 일을 추가합니다.
+        formatted_date = now.strftime("%Y-%m-%d")
+        filename = f"{formatted_date}_{uuid4()}.{photo.filename.split('.')[-1]}"
         file_path = os.path.join(UPLOAD_DIR, filename)
         with open(file_path, "wb") as buffer:
             copyfileobj(photo.file, buffer)
@@ -166,64 +170,5 @@ async def get_monthly_diary(cat_id: int, year: int, month: int, db: Session = De
     """
     Get monthly weight data and diary information for a specific cat.
     """
-    # Generate weight data for the specified month
-    num_days = (date(year, month % 12 + 1, 1) - timedelta(days=1)).day
-    weight_data = [
-        {"date": (date(year, month, 1) + timedelta(days=i)).isoformat(), "weight": round(4.0 + 0.05 * i, 2)}
-        for i in range(num_days)
-    ]
-
-    # Generate poop (sweet potato) and pee (potato) data for the specified month
-    poop_data = [
-        {"date": (date(year, month, 1) + timedelta(days=i)).isoformat(), "sweet_potato_count": i % 3 + 1}
-        for i in range(num_days)
-    ]
-
-    pee_data = [
-        {"date": (date(year, month, 1) + timedelta(days=i)).isoformat(), "potato_count": i % 4 + 1}
-        for i in range(num_days)
-    ]
-    
-    # Generate daily task completion data for the specified month
-    daily_tasks = [
-        {"date": (date(year, month, 1) + timedelta(days=i)).isoformat(), "task_completed": (i % 2 == 0)}
-        for i in range(num_days)
-    ]
-
-    # Calculate the completion rate for daily tasks
-    total_tasks = len(daily_tasks)
-    completed_tasks = sum(1 for task in daily_tasks if task["task_completed"])
-    completion_rate = (completed_tasks / total_tasks) * 100
-    
-    # Specify overweigh status, butler score, special notes, and comments
-    weight_status = "overweight"
-    butler_score = 95
-    special_notes = {
-        "2024-06-02": "구토",
-        "2024-06-03": "구토"
-    }
-
-    # Calculate butler rank (assuming the user is in the top 10%)
-    butler_rank_percentile = 10  # 상위 10% 예시
-    
-    # Fetch photo URLs from the uploads directory
-    photo_dir = f"uploads/{current_user}/"
-    photo_urls = []
-    if os.path.exists(photo_dir):
-        for filename in os.listdir(photo_dir):
-            if filename.endswith((".jpg", ".jpeg", ".png", ".gif")):
-                photo_urls.append(f"{photo_dir}{filename}")
-
-    return {
-        "weight_data": weight_data,
-        "poop_data": poop_data,
-        "pee_data": pee_data,
-        "daily_tasks": daily_tasks,
-        "daily_task_completion_rate": completion_rate,
-        "weight_status": weight_status,
-        "butler_score": butler_score,
-        "butler_rank_percentile": butler_rank_percentile,
-        "special_notes": special_notes,
-        'diary_skip_days':5,
-        "photo_urls": photo_urls
-    }
+    statistics = crud_diary.get_monthly_diary(db, cat_id=cat_id, year=year, month=month, current_user=current_user)
+    return statistics
