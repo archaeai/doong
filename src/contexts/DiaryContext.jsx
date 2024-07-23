@@ -110,7 +110,6 @@ export const DiaryProvider = ({ children }) => {
         year,
         month
       );
-      console.log("Fetched statistics:", statistics);
       setReport(statistics);
       setIsError(false);
     } catch (error) {

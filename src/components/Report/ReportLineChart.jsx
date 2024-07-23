@@ -11,7 +11,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Register the components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -22,20 +21,56 @@ ChartJS.register(
   Legend
 );
 
-const ReportLineChart = () => {
+export default function ReportLineChart({ report, year, month }) {
+  if (!report || !report.pee_data || !report.poop_data || !report.weight_data) {
+    return <div>데이터가 없습니다.</div>;
+  }
+
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const dateLabels = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+  const getMappedData = (data, key) => {
+    return dateLabels.map((day) => {
+      const dataEntry = data.find(
+        (item) => new Date(item.date).getDate() === day
+      );
+      return dataEntry ? dataEntry[key] : null;
+    });
+  };
+
+  const peeData = getMappedData(report.pee_data, "potato_count");
+  const poopData = getMappedData(report.poop_data, "sweet_potato_count");
+  const weightData = getMappedData(report.weight_data, "weight");
+
+  const commonFontSettings = {
+    family: "Gaegu",
+    size: 14,
+  };
+
   const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: dateLabels,
     datasets: [
       {
-        label: "Dataset 1",
-        data: [65, 59, 80, 81, 56, 55, 40],
+        label: "몸무게",
+        data: weightData,
         fill: false,
         borderColor: "#dff0e6",
-        pointBorderColor: "#bde0fe",
-        tension: 0.1,
+        tension: 0.4,
         font: {
           family: "Gaegu",
         },
+      },
+      {
+        label: "감자 갯수",
+        data: peeData,
+        borderColor: "#f9e4b7",
+        fill: false,
+      },
+      {
+        label: "맛동산 갯수",
+        data: poopData,
+        borderColor: "#f9d5e5",
+        fill: false,
       },
     ],
   };
@@ -45,24 +80,11 @@ const ReportLineChart = () => {
     plugins: {
       legend: {
         position: "top",
-        align: "end",
+        align: "start",
         labels: {
           boxWidth: 20,
           padding: 15,
-          font: {
-            family: "Gaegu",
-            size: 14,
-          },
-        },
-      },
-      title: {
-        display: true,
-        text: "몸무게 변화",
-        align: "start",
-        color: "#2c3e50",
-        font: {
-          family: "Gaegu",
-          size: 16,
+          font: commonFontSettings,
         },
       },
     },
@@ -70,25 +92,17 @@ const ReportLineChart = () => {
       x: {
         ticks: {
           color: "#2c3e50",
-          font: {
-            family: "Gaegu",
-            size: 14,
-          },
+          font: commonFontSettings,
         },
       },
       y: {
         ticks: {
           color: "#2c3e50",
-          font: {
-            family: "Gaegu",
-            size: 14,
-          },
+          font: commonFontSettings,
         },
       },
     },
   };
 
   return <Line data={data} options={options} />;
-};
-
-export default ReportLineChart;
+}

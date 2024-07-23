@@ -26,7 +26,6 @@ export default function ReportPage() {
     if (selectedCat && selectedYear && selectedMonth) {
       fetchStatisticsOfDiary(selectedCat.id, selectedYear, selectedMonth);
     }
-    console.log("fetched report: ", report);
   }, [selectedCat, selectedYear, selectedMonth, fetchStatisticsOfDiary]);
 
   return (
@@ -88,7 +87,11 @@ export default function ReportPage() {
             <ImageSlider report={report} />
             <ReportEvent report={report} />
             <div className="report-graph">
-              <ReportLineChart />
+              <ReportLineChart
+                report={report}
+                year={selectedYear}
+                month={selectedMonth}
+              />
             </div>
           </div>
         ) : (
