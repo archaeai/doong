@@ -210,25 +210,8 @@ def create_test_data(db: Session):
         default_task=task9,
         cat_profile=cat1
     )
-    non_daily_task_log2 = NonDailyTaskLog(
-        task_id=0,
-        date=date(now_after_2w.year,now_after_2w.month , now_after_2w.day -10),
-        done=False,
-        cat_id=cat1.id,
-        note=task10.note,
-        cat_profile=cat1
-    )
-    non_daily_task_log2 = NonDailyTaskLog(
-        task_id=0,
-        date=date(now_after_2w.year,now_after_2w.month , now_after_2w.day -17),
-        done=True,
-        cat_id=cat1.id,
-        note=task10.note,
-        cat_profile=cat1
-    )
-
     # 데이터베이스에 추가
-    db.add_all([user1, cat1, diary1, vaccine_task, heartworm_task, task1, task2, task3,task4,task5,task6,task7,task8,task10,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1, non_daily_task_log2])
+    db.add_all([user1, cat1, diary1, vaccine_task, heartworm_task, task1, task2, task3,task4,task5,task6,task7,task8,task10,daily_task_log1, daily_task_log2, daily_task_log3, daily_task_log4, daily_task_log5, daily_task_log6, daily_task_log7,daily_task_log8,non_daily_task_log1])
     db.commit()
 
 
