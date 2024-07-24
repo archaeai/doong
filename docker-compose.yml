@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    environment:
+      - PYTHONPATH=/backend
+    volumes:
+      - ./backend/uploads:/backend/uploads
+    expose:
+      - 8000
+    networks:
+      - app-network
+    user: root
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    user: root
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./frontend/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./backend/uploads:/backend/uploads
+      - ./frontend/dist:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - app-network
+    user: root
+
+networks:
+  app-network:
+    driver: bridge
