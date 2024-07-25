@@ -31,10 +31,25 @@ def get_monthly_diary(db: Session, cat_id: int, year: int, month: int, current_u
     
     # 데이터 가공
     weight_data = [{"date": entry.date.isoformat(), "weight": round(entry.weight,2)} for entry in diary_entries if entry.weight is not None]
-    poop_data = [{"date": entry.date.isoformat(), "sweet_potato_count": entry.sweet_potato_num} for entry in diary_entries if entry.sweet_potato_num is not None]
-    pee_data = [{"date": entry.date.isoformat(), "potato_count": entry.potato_num} for entry in diary_entries if entry.potato_num is not None]
     special_notes = [{"date": entry.date.isoformat(), "note": entry.note} for entry in diary_entries if entry.note is not None]
     photo_urls = [entry.photo_url for entry in diary_entries if entry.photo_url is not None]
+    
+    # string 데이터를 숫자로 변환
+    poop_data = [
+    {
+        "date": entry.date.isoformat(), 
+        "sweet_potato_count": 1 if entry.sweet_potato_num == '1' else 2 if entry.sweet_potato_num == '2' else 3 if entry.sweet_potato_num == '3' else 4
+    } 
+    for entry in diary_entries if entry.sweet_potato_num is not None
+]
+
+    pee_data = [
+    {
+        "date": entry.date.isoformat(), 
+        "potato_count": 1 if entry.potato_num == '1' else 2 if entry.potato_num == '2' else 3 if entry.potato_num == '3' else 4
+    } 
+    for entry in diary_entries if entry.potato_num is not None
+]
     
     daily_tasks = db.query(DailyTaskLog).filter(
             DailyTaskLog.cat_id == cat_id,
