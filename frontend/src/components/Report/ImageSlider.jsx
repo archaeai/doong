@@ -28,7 +28,7 @@ export default function ImageSlider({ report }) {
       {report.photo_urls.map((url, index) => (
         <img
           key={index}
-          src={`backend/${url}`}
+          src={`${url}`}
           alt={`Slide ${index}`}
           className={`report-photo-slide ${
             index === currentIndex ? "active" : ""
