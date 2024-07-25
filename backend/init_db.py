@@ -337,7 +337,7 @@ def add_diary_entries_to_db(db: Session):
             note=random.choice(notes),
             comment=random.choice(comments),
             cat_id=1,
-            photo_url=f'uploads/diaries/1/{day}.jpeg'
+            photo_url=f'uploads/diaries/tim/1/{day}.jpeg'
         ) for day in range(1, 31)
     ]
     diary_entries2 = [
@@ -355,7 +355,7 @@ def add_diary_entries_to_db(db: Session):
             note=random.choice(notes),
             comment=random.choice(comments),
             cat_id=1,
-            photo_url=f'uploads/diaries/1/{day}.jpeg'
+            photo_url=f'uploads/diaries/tim/1/{day}.jpeg'
         ) for day in range(1, 31)
     ] 
     

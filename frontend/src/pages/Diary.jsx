@@ -56,7 +56,7 @@ export default function DiaryPage() {
             <img
               src={
                 selectedCat && diaryEntries[0]
-                  ? `backend/${diaryEntries[0].photo_url}`
+                  ? `${diaryEntries[0].photo_url}`
                   : diaryDefaultImg
               }
               alt="diary illustration"
